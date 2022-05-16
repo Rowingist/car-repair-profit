@@ -9,6 +9,23 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        Move();
+    }
+
+    private void Move()
+    {
+        Vector3 lookRotation = new Vector3(_joystick.Value.x, 0f, _joystick.Value.y);
         transform.position += new Vector3(_joystick.Value.x, 0f, _joystick.Value.y) * Time.deltaTime * _sensitivity;
+
+        Rotate(lookRotation);
+    }
+
+    private void Rotate(Vector3 direction)
+    {
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        lookRotation.x = 0;
+        lookRotation.z = 0;
+
+        transform.rotation = lookRotation;
     }
 }

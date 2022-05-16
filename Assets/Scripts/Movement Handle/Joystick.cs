@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class Joystick : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class Joystick : MonoBehaviour
     public Vector2 Value { get; private set; }
     public Vector2 Delta { get; private set; }
     public Vector2 OldValue => _oldValue;
+
+    public event UnityAction Pressed;
+    public event UnityAction Released;
+
 
     private void OnValidate()
     {
@@ -41,6 +46,8 @@ public class Joystick : MonoBehaviour
         _backGround.position = eventData.position;
         _currentFingerId = eventData.pointerId;
         _oldValue = Vector2.zero;
+
+        Pressed?.Invoke();
     }
 
     public void Up(PointerEventData eventData)
@@ -50,5 +57,7 @@ public class Joystick : MonoBehaviour
         _currentFingerId = -1;
         Value = Vector2.zero;
         Delta = Vector2.zero;
+
+        Released?.Invoke();
     }
 }
