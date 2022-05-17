@@ -3,38 +3,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
+
 public class PlayerAnimator : MonoBehaviour
 {
-    [SerializeField] private Animator _animator;
-    [SerializeField] private Joystick _joystick;
+    //[SerializeField] private Animator _animator;
+    //[SerializeField] private JoystickTemp _joystick;
+
+    private Animator _animator;
+    [SerializeField] private FloatingJoystick _joystick;
+
 
     private const string Speed = "Speed";
 
-    private void OnEnable()
+
+    private void Start()
     {
-        _joystick.Pressed += OnJoyscikDown;
-        _joystick.Released += OnJoyscikUp;
+        _animator = GetComponent<Animator>();
     }
 
-    private void OnJoyscikUp()
+    private void FixedUpdate()
     {
-        PlayIdleAnimation();
+        if (_joystick.Horizontal != 0 || _joystick.Vertical != 0)
+        {
+            if (Math.Abs(_joystick.Horizontal) > Math.Abs(_joystick.Vertical))  
+                PlayWalkAnimation(Math.Abs(_joystick.Horizontal));
+            else
+                PlayWalkAnimation(Math.Abs(_joystick.Vertical));
+        }
+        else
+            PlayIdleAnimation();
     }
 
-    private void OnJoyscikDown()
-    {
-        PlayWalkAnimation();
-    }
 
-    private void OnDisable()
+    private void PlayWalkAnimation(float value)
     {
-        _joystick.Pressed -= OnJoyscikDown;
-        _joystick.Released -= OnJoyscikUp;
-    }
-
-    private void PlayWalkAnimation()
-    {
-        _animator.SetFloat(Speed, 1);
+        _animator.SetFloat(Speed, value);
     }
 
     private void PlayIdleAnimation()

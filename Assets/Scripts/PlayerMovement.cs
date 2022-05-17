@@ -1,31 +1,42 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
+
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private Joystick _joystick;
-    [SerializeField] private float _sensitivity;
+    // [SerializeField] private JoystickTemp _joystick;
+    // [SerializeField] private float _sensitivity;
 
-    private void Update()
+    [SerializeField] private FloatingJoystick _joystick;
+    [SerializeField] private float _speed;
+
+    private Rigidbody _rigidbody;
+
+    private void Start()
     {
-        Move();
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
-    private void Move()
+    private void FixedUpdate()
     {
-        Vector3 lookRotation = new Vector3(_joystick.Value.x, 0f, _joystick.Value.y);
-        transform.position += new Vector3(_joystick.Value.x, 0f, _joystick.Value.y) * Time.deltaTime * _sensitivity;
+        // transform.position += new Vector3(_joystick.Value.x, 0f, _joystick.Value.y) * Time.deltaTime * _sensitivity;
 
-        Rotate(lookRotation);
+        _rigidbody.velocity = new Vector3(_joystick.Horizontal * _speed, _rigidbody.velocity.y, _joystick.Vertical * _speed);
+
+        if (_joystick.Horizontal != 0 || _joystick.Vertical != 0)
+            Rotate();
     }
 
-    private void Rotate(Vector3 direction)
+    private void Rotate()
     {
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        Quaternion lookRotation = Quaternion.LookRotation(_rigidbody.velocity);
         lookRotation.x = 0;
         lookRotation.z = 0;
 
         transform.rotation = lookRotation;
     }
 }
+

@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 public class JoystickActiveZone : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    [SerializeField] private Joystick _joystick;
+    [SerializeField] private JoystickTemp _joystick;
 
     public void OnPointerDown(PointerEventData eventData)
     {
