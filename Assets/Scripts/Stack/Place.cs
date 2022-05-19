@@ -9,7 +9,7 @@ public class Place : MonoBehaviour
 
     public bool IsAvailible { get; private set; }
 
-    public event UnityAction<Place> PlaceFree;
+
     private void Start()
     {
         IsAvailible = true;
@@ -18,13 +18,12 @@ public class Place : MonoBehaviour
     {
         IsAvailible = false;
         _whell = whell;
-        _whell.GetComponent<Collectable>().Taken += Free;
+       // _whell.GetComponent<CollectableArea>().Taken += Free;
     }
 
     public void Free()
     {
         IsAvailible = true;
-        PlaceFree?.Invoke(this);
-        _whell.GetComponent<Collectable>().Taken -= Free;
+        _whell.GetComponent<CollectableArea>().Taken -= Free;
     }
 }

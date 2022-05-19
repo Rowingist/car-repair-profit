@@ -16,7 +16,7 @@ public class Collectable : MonoBehaviour
 
             bag.Put();
 
-            Taken?.Invoke();
+            //Taken?.Invoke();
         }
     }
 
