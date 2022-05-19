@@ -11,7 +11,8 @@ public class PlayerMovement : MonoBehaviour
     // [SerializeField] private float _sensitivity;
 
     [SerializeField] private FloatingJoystick _joystick;
-    [SerializeField] private float _speed;
+    [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _rotationSpeed;
 
     private Rigidbody _rigidbody;
 
@@ -24,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // transform.position += new Vector3(_joystick.Value.x, 0f, _joystick.Value.y) * Time.deltaTime * _sensitivity;
 
-        _rigidbody.velocity = new Vector3(_joystick.Horizontal * _speed, _rigidbody.velocity.y, _joystick.Vertical * _speed);
+        _rigidbody.velocity = new Vector3(_joystick.Horizontal * _moveSpeed, _rigidbody.velocity.y, _joystick.Vertical * _moveSpeed);
 
         if (_joystick.Horizontal != 0 || _joystick.Vertical != 0)
             Rotate();
@@ -36,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
         lookRotation.x = 0;
         lookRotation.z = 0;
 
-        transform.rotation = lookRotation;
+        transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * _rotationSpeed);
     }
 }
 
