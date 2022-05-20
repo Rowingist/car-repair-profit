@@ -12,10 +12,9 @@ public class CarSpawner : MonoBehaviour
 
     private bool _isGarageFree = true;
 
-    public Car _currentCar; //temp
+    private Car _currentCar; 
 
     public Transform _deliveryPoint; // свойство
-    public Transform _fixedCarPoint; // свойство
 
     private void Start()
     {
