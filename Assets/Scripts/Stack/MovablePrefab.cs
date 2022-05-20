@@ -14,4 +14,9 @@ public class MovablePrefab : MonoBehaviour
         sequence.Append(transform.DOMoveY(FlyingEffectValue, FlightTime).SetRelative());
         sequence.Append(transform.DOMove(targetPosition, FlightTime));
     }
+
+    public void Unload()
+    {
+        Destroy(gameObject);
+    }
 }
