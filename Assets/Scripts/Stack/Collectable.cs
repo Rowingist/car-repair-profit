@@ -30,7 +30,6 @@ public class Collectable : MonoBehaviour
 
         transform.SetParent(bag.transform);
         transform.position = bag.Stack.Places[bag.Count].transform.position;
-      //  transform.rotation = bag.Stack.Places[bag.Count].transform.rotation;
     }
     //private void CollectToBag(Bag bag)
     //{
