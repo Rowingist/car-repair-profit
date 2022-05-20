@@ -10,6 +10,8 @@ public class Spawner : MonoBehaviour
   //  [SerializeField] private BoxCollider _collectableArea;
 
     // Валентин помогает
+    // жду от валентина коомиит
+
 
     private float _elapsedTime = 0;
     private float _currentSpawnDelay = 0.5f;
