@@ -25,8 +25,6 @@ public class DeliveryArea : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out Player player))
         {
-            Debug.Log("!!!!");
-
             EnterArea?.Invoke();
 
             CollectCoroutine = StartCoroutine(CollectFrom(player));

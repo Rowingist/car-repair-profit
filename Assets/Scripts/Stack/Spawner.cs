@@ -9,13 +9,8 @@ public class Spawner : MonoBehaviour
     [SerializeField] private Whell _whellTemplate;
   //  [SerializeField] private BoxCollider _collectableArea;
 
-    // Валентин помогает
-    // жду от валентина коомиит
-
-
     private float _elapsedTime = 0;
-    private float _currentSpawnDelay = 0.5f;
-    private float _amout;
+    private float _currentSpawnDelay = 0.1f;
 
     private void Update()
     {
@@ -32,13 +27,12 @@ public class Spawner : MonoBehaviour
     private void InstantiatePrefab()
     {
         Place place = _shopStack.Places.FirstOrDefault(place => place.IsAvailible);
-
         if (place != null)
         {
             Whell whell = Instantiate(_whellTemplate, _spawnPoint.position, _whellTemplate.transform.rotation);
+
             whell.GetComponent<MovablePrefab>().MoveOnShalve(place.transform.position);
 
-           // whell.transform.SetParent(_collectableArea.transform);
             place.Reserve(whell);
 
             _shopStack.Add();

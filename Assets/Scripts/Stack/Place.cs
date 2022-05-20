@@ -18,12 +18,12 @@ public class Place : MonoBehaviour
     {
         IsAvailible = false;
         _whell = whell;
-       // _whell.GetComponent<CollectableArea>().Taken += Free;
+        _whell.GetComponent<Collectable>().Taken += Free;
     }
 
     public void Free()
     {
         IsAvailible = true;
-        _whell.GetComponent<CollectableArea>().Taken -= Free;
+        _whell.GetComponent<Collectable>().Taken -= Free;
     }
 }

@@ -6,24 +6,24 @@ using System.Linq;
 
 public class CollectableArea : MonoBehaviour
 {
-    private Coroutine CollectCoroutine;
+    //private Coroutine CollectCoroutine;
 
-    public event UnityAction Taken;
+    //public event UnityAction Taken;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.TryGetComponent(out Bag bag))
-        {
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.TryGetComponent(out Bag bag))
+    //    {
 
-            Whell whell = GetComponentInChildren<Whell>();
+    //        Whell whell = GetComponentInChildren<Whell>();
 
-            whell.gameObject.transform.SetParent(bag.transform);
+    //        whell.gameObject.transform.SetParent(bag.transform);
 
             
-            Taken?.Invoke(); // пока нигде не используется
+    //        Taken?.Invoke(); // пока нигде не используется
 
-        }
-    }
+    //    }
+    //}
 
 
 }
