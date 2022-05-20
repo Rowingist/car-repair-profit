@@ -10,7 +10,7 @@ public class Spawner : MonoBehaviour
   //  [SerializeField] private BoxCollider _collectableArea;
 
     private float _elapsedTime = 0;
-    private float _currentSpawnDelay = 0.1f;
+    private float _currentSpawnDelay = 0.5f;
 
     private void Update()
     {
