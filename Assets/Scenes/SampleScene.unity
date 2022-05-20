@@ -2736,13 +2736,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f9363bd34b9d9f43ae9427ed6992eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _carsPrefabs:
-  - {fileID: 8047488698967090657, guid: cf3a91073436e264e855ed034b4e083e, type: 3}
-  - {fileID: 6570474037053752565, guid: 3d1d6b89913541743adc29fcc68639fe, type: 3}
-  - {fileID: 4594727770846994839, guid: ebac46eeb2923c84b983001d26902200, type: 3}
-  - {fileID: -8075553423762841220, guid: db0c5f496fb47664a8e8ca82910981e3, type: 3}
+  _carsPrefabs: []
   _deliveryArea: {fileID: 0}
   _spawnPoint: {fileID: 1876621961}
+  _car: {fileID: 0}
   _deliveryPoint: {fileID: 831942463}
   _fixedCarPoint: {fileID: 0}
 --- !u!1 &335573728
@@ -4489,13 +4486,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f9363bd34b9d9f43ae9427ed6992eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _carsPrefabs:
-  - {fileID: 8047488698967090657, guid: cf3a91073436e264e855ed034b4e083e, type: 3}
-  - {fileID: 6570474037053752565, guid: 3d1d6b89913541743adc29fcc68639fe, type: 3}
-  - {fileID: 4594727770846994839, guid: ebac46eeb2923c84b983001d26902200, type: 3}
-  - {fileID: -8075553423762841220, guid: db0c5f496fb47664a8e8ca82910981e3, type: 3}
+  _carsPrefabs: []
   _deliveryArea: {fileID: 0}
   _spawnPoint: {fileID: 276705733}
+  _car: {fileID: 0}
   _deliveryPoint: {fileID: 2037266399}
   _fixedCarPoint: {fileID: 0}
 --- !u!1 &502456357
@@ -9237,6 +9231,7 @@ MonoBehaviour:
   - {fileID: -8075553423762841220, guid: db0c5f496fb47664a8e8ca82910981e3, type: 3}
   _deliveryArea: {fileID: 919132147699459383}
   _spawnPoint: {fileID: 616783208}
+  _car: {fileID: 0}
   _deliveryPoint: {fileID: 52143389}
   _fixedCarPoint: {fileID: 1423325357}
 --- !u!1 &963158245
@@ -11204,13 +11199,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f9363bd34b9d9f43ae9427ed6992eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _carsPrefabs:
-  - {fileID: 8047488698967090657, guid: cf3a91073436e264e855ed034b4e083e, type: 3}
-  - {fileID: 6570474037053752565, guid: 3d1d6b89913541743adc29fcc68639fe, type: 3}
-  - {fileID: 4594727770846994839, guid: ebac46eeb2923c84b983001d26902200, type: 3}
-  - {fileID: -8075553423762841220, guid: db0c5f496fb47664a8e8ca82910981e3, type: 3}
+  _carsPrefabs: []
   _deliveryArea: {fileID: 0}
   _spawnPoint: {fileID: 333314622}
+  _car: {fileID: 0}
   _deliveryPoint: {fileID: 1587840849}
   _fixedCarPoint: {fileID: 0}
 --- !u!1 &1181568665

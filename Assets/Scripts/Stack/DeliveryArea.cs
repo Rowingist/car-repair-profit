@@ -33,20 +33,14 @@ public class DeliveryArea : MonoBehaviour
         }
 
         if (other.gameObject.TryGetComponent(out Car car))
-        {
-            Debug.Log("Car coming");
             _deliveryStack.gameObject.SetActive(true);
-        }
     }
+
 
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.TryGetComponent(out Car car))
-        {
-            
-            Debug.Log("Car left");
             _deliveryStack.gameObject.SetActive(false);
-        }
     }
 
     private void OnBrickCollected(Whell whell)
@@ -91,7 +85,7 @@ public class DeliveryArea : MonoBehaviour
 
     public bool CollectedAll()
     {
-        Place  place = _deliveryStack.Places.FirstOrDefault(place => place.IsAvailible);
+        Place place = _deliveryStack.Places.FirstOrDefault(place => place.IsAvailible);
         return (place == null);
     }
 }

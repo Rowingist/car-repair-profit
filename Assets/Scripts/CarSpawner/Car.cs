@@ -7,14 +7,14 @@ public class Car : MonoBehaviour
 {
     private CarSpawner _carSpawner;
 
-    private void Start()
-    {
-        MoveToGarage();
-    }
-
     public void InitSpawner(CarSpawner carSpawner)
     {
         _carSpawner = carSpawner;
+    }
+
+    private void Start()
+    {
+        MoveToGarage();
     }
 
     private void MoveToGarage()
@@ -23,12 +23,12 @@ public class Car : MonoBehaviour
         sequence.Append(transform.DOMove(_carSpawner._deliveryPoint.position, 2f));
     }
 
-    public void MoveAfterRepair(Car car)
+    public void MoveAfterRepair()
     {
-        Debug.Log("Машина уехала полсле ремонта");
         Sequence sequence = DOTween.Sequence();
         //sequence.Append(transform.DOMove(_carSpawner._spawnPoint .position, 2f));
-        sequence.Append(gameObject.transform.DOLocalMoveY(5,1));
-
+        sequence.Append(transform.DOLocalMoveY(5, 1));
+        //  gameObject.SetActive(false);
     }
+
 }
