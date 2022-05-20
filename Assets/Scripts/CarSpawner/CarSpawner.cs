@@ -14,10 +14,15 @@ public class CarSpawner : MonoBehaviour
     private float _currentSpawnDelay = 5;
     private bool _isGarageFree = true;
 
-    public Car _car; //temp
+    public Car _currentCar; //temp
 
     public Transform _deliveryPoint; // свойство
     public Transform _fixedCarPoint; // свойство
+
+    private void Start()
+    {
+        InstantiateCar();
+    }
 
     private void OnEnable()
     {
@@ -29,33 +34,21 @@ public class CarSpawner : MonoBehaviour
         _deliveryArea.CarFixed -= OnSpawnNew;
     }
 
-    private void Update()
-    {
-        _elapsedTime += Time.deltaTime;
-
-        if (_elapsedTime >= _currentSpawnDelay && _isGarageFree)
-        {
-            InstantiateCar();
-
-            _elapsedTime = 0;
-        }
-    }
-
     private void OnSpawnNew()
     {
-        Debug.Log("Машина починена");
         _isGarageFree = true;
 
-        _car.gameObject.SetActive(false);
-        //_car.MoveAfterRepair();
-        //this._car.MoveAfterRepair();
+        _currentCar.MoveAfterRepair();
+        _currentCar = null;
+        InstantiateCar();
     }
 
     private void InstantiateCar()
     {
-        Car newsds = Instantiate(_carsPrefabs[CalculateNumberPrebab()], _spawnPoint.position, _spawnPoint.rotation, null);
-        newsds.InitSpawner(this);
-        _car = newsds;
+        Car newCar = Instantiate(_carsPrefabs[CalculateNumberPrebab()], _spawnPoint.position, _spawnPoint.rotation, null);
+        newCar.InitSpawner(this);
+        newCar.MoveToGarage();
+        _currentCar = newCar;
         _isGarageFree = false;
     }
 

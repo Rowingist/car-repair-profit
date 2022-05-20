@@ -77,6 +77,7 @@ public class DeliveryArea : MonoBehaviour
             if (place == default)
             {
                 CarFixed?.Invoke();
+                yield break;
                 Debug.Log("Стак полный");
             }
             yield return new WaitForSeconds(_collectionDelay);

@@ -12,12 +12,7 @@ public class Car : MonoBehaviour
         _carSpawner = carSpawner;
     }
 
-    private void Start()
-    {
-        MoveToGarage();
-    }
-
-    private void MoveToGarage()
+    public void MoveToGarage()
     {
         Sequence sequence = DOTween.Sequence();
         sequence.Append(transform.DOMove(_carSpawner._deliveryPoint.position, 2f));
