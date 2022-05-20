@@ -11,6 +11,7 @@ public class Spawner : MonoBehaviour
 
     private float _elapsedTime = 0;
     private float _currentSpawnDelay = 0.5f;
+    private float _amout;
 
     private void Update()
     {
