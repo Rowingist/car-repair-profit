@@ -9,6 +9,8 @@ public class Spawner : MonoBehaviour
     [SerializeField] private Whell _whellTemplate;
   //  [SerializeField] private BoxCollider _collectableArea;
 
+    // Валентин помогает
+
     private float _elapsedTime = 0;
     private float _currentSpawnDelay = 0.5f;
 
