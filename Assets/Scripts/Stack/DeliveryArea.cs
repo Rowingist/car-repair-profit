@@ -13,12 +13,14 @@ public class DeliveryArea : MonoBehaviour
     private Coroutine CollectCoroutine;
 
     public event UnityAction<Whell> Collected;
-    public event UnityAction EnterArea;
-    public event UnityAction ExitArea;
+    public event UnityAction EnterArea; // пока не используется
+    public event UnityAction ExitArea; // пока не используется
+    public event UnityAction CarFixed;
 
     private void OnEnable()
     {
         Collected += OnBrickCollected;
+        _deliveryStack.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -28,6 +30,22 @@ public class DeliveryArea : MonoBehaviour
             EnterArea?.Invoke();
 
             CollectCoroutine = StartCoroutine(CollectFrom(player));
+        }
+
+        if (other.gameObject.TryGetComponent(out Car car))
+        {
+            Debug.Log("Car coming");
+            _deliveryStack.gameObject.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.TryGetComponent(out Car car))
+        {
+            
+            Debug.Log("Car left");
+            _deliveryStack.gameObject.SetActive(false);
         }
     }
 
@@ -61,6 +79,12 @@ public class DeliveryArea : MonoBehaviour
                     Collected?.Invoke(whell);
                 }
             }
+
+            if (place == default)
+            {
+                CarFixed?.Invoke();
+                Debug.Log("Стак полный");
+            }
             yield return new WaitForSeconds(_collectionDelay);
         }
     }
@@ -68,7 +92,6 @@ public class DeliveryArea : MonoBehaviour
     public bool CollectedAll()
     {
         Place  place = _deliveryStack.Places.FirstOrDefault(place => place.IsAvailible);
-
         return (place == null);
     }
 }
