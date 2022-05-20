@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -25,6 +24,13 @@ public class Stack : MonoBehaviour
     {
         AmountChanged?.Invoke(_needToBuy, _currentCollected);
     }
+
+    public void ClearPlaces()
+    {
+        for (int i = 0; i < _places.Count; i++)
+            _places[i].ClearStack();
+    }
+
 
     public void Add()
     {

@@ -26,4 +26,9 @@ public class Place : MonoBehaviour
         IsAvailible = true;
         _whell.GetComponent<Collectable>().Taken -= Free;
     }
+
+    public void ClearStack()
+    {
+        IsAvailible = true;
+    }
 }

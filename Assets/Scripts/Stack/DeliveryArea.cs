@@ -71,12 +71,14 @@ public class DeliveryArea : MonoBehaviour
                     place.Reserve(whell);
 
                     Collected?.Invoke(whell);
+                Debug.Log(place);
                 }
             }
 
             if (place == default)
             {
                 CarFixed?.Invoke();
+                _deliveryStack.ClearPlaces();
                 yield break;
             }
             yield return new WaitForSeconds(_collectionDelay);
