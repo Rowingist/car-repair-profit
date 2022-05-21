@@ -21,7 +21,7 @@ public class Bag : MonoBehaviour
     {
         _count++;
 
-        BrickCollected?.Invoke(_count);
+      //  BrickCollected?.Invoke(_count);
 
         if (_isFull)
             _brickCollector.enabled = false;

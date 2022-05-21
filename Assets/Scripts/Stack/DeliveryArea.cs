@@ -23,6 +23,11 @@ public class DeliveryArea : MonoBehaviour
         _deliveryStack.gameObject.SetActive(false);
     }
 
+    private void OnDisable()
+    {
+        Collected -= OnBrickCollected;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.TryGetComponent(out Player player))
@@ -39,8 +44,18 @@ public class DeliveryArea : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.gameObject.TryGetComponent(out Player player))
+        {
+            ExitArea?.Invoke();
+
+            if (CollectCoroutine != null)
+                StopCoroutine(CollectCoroutine);
+        }
+
         if (other.gameObject.TryGetComponent(out Car car))
+        {
             _deliveryStack.gameObject.SetActive(false);
+        }
     }
 
     private void OnBrickCollected(Whell whell)
@@ -71,7 +86,7 @@ public class DeliveryArea : MonoBehaviour
                     place.Reserve(whell);
 
                     Collected?.Invoke(whell);
-                Debug.Log(place);
+                    Debug.Log(place);
                 }
             }
 
