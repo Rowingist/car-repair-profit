@@ -10,9 +10,6 @@ public class Spawner : MonoBehaviour
     [SerializeField] private Whell _whellTemplate;
     [SerializeField] private Shop _shop;
 
-    private float _elapsedTime = 0;
-    private float _currentSpawnDelay = 0.5f;
-
     private void OnEnable()
     {
         _shop.OrderPlaced += OnDeliverParts;

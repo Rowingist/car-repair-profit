@@ -86,7 +86,6 @@ public class DeliveryArea : MonoBehaviour
                     place.Reserve(whell);
 
                     Collected?.Invoke(whell);
-                    Debug.Log(place);
                 }
             }
 
