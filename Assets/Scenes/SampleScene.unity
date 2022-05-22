@@ -2739,7 +2739,7 @@ MonoBehaviour:
   _carsPrefabs: []
   _deliveryArea: {fileID: 0}
   _spawnPoint: {fileID: 1876621961}
-  _car: {fileID: 0}
+  _currentCar: {fileID: 0}
   _deliveryPoint: {fileID: 831942463}
   _fixedCarPoint: {fileID: 0}
 --- !u!1 &335573728
@@ -4489,7 +4489,7 @@ MonoBehaviour:
   _carsPrefabs: []
   _deliveryArea: {fileID: 0}
   _spawnPoint: {fileID: 276705733}
-  _car: {fileID: 0}
+  _currentCar: {fileID: 0}
   _deliveryPoint: {fileID: 2037266399}
   _fixedCarPoint: {fileID: 0}
 --- !u!1 &502456357
@@ -9231,7 +9231,7 @@ MonoBehaviour:
   - {fileID: -8075553423762841220, guid: db0c5f496fb47664a8e8ca82910981e3, type: 3}
   _deliveryArea: {fileID: 919132147699459383}
   _spawnPoint: {fileID: 616783208}
-  _car: {fileID: 0}
+  _currentCar: {fileID: 0}
   _deliveryPoint: {fileID: 52143389}
   _fixedCarPoint: {fileID: 1423325357}
 --- !u!1 &963158245
@@ -9341,11 +9341,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: -4.4
   far clip plane: 100
   field of view: 60
   orthographic: 1
-  orthographic size: 12
+  orthographic size: 15.49
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -11202,7 +11202,7 @@ MonoBehaviour:
   _carsPrefabs: []
   _deliveryArea: {fileID: 0}
   _spawnPoint: {fileID: 333314622}
-  _car: {fileID: 0}
+  _currentCar: {fileID: 0}
   _deliveryPoint: {fileID: 1587840849}
   _fixedCarPoint: {fileID: 0}
 --- !u!1 &1181568665
