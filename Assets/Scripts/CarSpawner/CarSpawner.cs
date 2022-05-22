@@ -11,10 +11,8 @@ public class CarSpawner : MonoBehaviour
     [SerializeField] public Transform _spawnPoint;
 
     private bool _isGarageFree = true;
-
-    private Car _currentCar; 
-
-    public Transform _deliveryPoint; // свойство
+    private Car _currentCar;
+    public Transform _deliveryPoint;  
 
     private void Start()
     {

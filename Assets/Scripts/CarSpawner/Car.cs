@@ -24,5 +24,4 @@ public class Car : MonoBehaviour
         sequence.Append(transform.DOMove(_carSpawner._spawnPoint .position, 2f));
         Destroy(gameObject, 3);
     }
-
 }

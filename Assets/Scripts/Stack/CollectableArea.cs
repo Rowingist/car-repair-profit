@@ -3,27 +3,69 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
+using DG.Tweening;
 
 public class CollectableArea : MonoBehaviour
 {
-    //private Coroutine CollectCoroutine;
+    [SerializeField] private Stack _collectableStack;
+    [SerializeField] private float _collectionDelay;
+    [SerializeField] private BoxCollider _collectableArea;
 
-    //public event UnityAction Taken;
+    public event UnityAction Taken;
+    private Coroutine CollectCoroutine;
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.gameObject.TryGetComponent(out Bag bag))
-    //    {
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.TryGetComponent(out Bag bag))
+            CollectCoroutine = StartCoroutine(CollectFrom(bag));
+    }
 
-    //        Whell whell = GetComponentInChildren<Whell>();
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.TryGetComponent(out Bag bag))
+        {
+            if (CollectCoroutine != null)
+                StopCoroutine(CollectCoroutine);
+        }
+    }
 
-    //        whell.gameObject.transform.SetParent(bag.transform);
+    private void CollectToBag(Bag bag, Whell whell)
+    {
+        float flyingEffectValue = 1.5f;
+        float flightTime = 0.1f;
+        Vector3 rotateInStack = new Vector3(0, 0, -90);
 
-            
-    //        Taken?.Invoke(); // пока нигде не используется
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(whell.transform.DOLocalMoveZ(flyingEffectValue * (-1), flightTime).SetRelative());
+        sequence.Append(whell.transform.DOLocalMoveZ(flyingEffectValue, flightTime).SetRelative());
+        sequence.Append(whell.transform.DOLocalRotate(rotateInStack, 0.3f));
 
-    //    }
-    //}
+        whell.transform.SetParent(bag.transform);
+        whell.transform.position = bag.Stack.Places[bag.Count].transform.position;
+    }
 
+    private IEnumerator CollectFrom(Bag bag)
+    {
+        Whell whell = null;
 
+        while (Physics.CheckBox(_collectableArea.center, _collectableArea.size))
+        {
+            if (bag._isFull)
+                yield break;
+
+            Place place = _collectableStack.Places.FirstOrDefault(place => place.IsAvailible == false);
+            if (place != null)
+            {
+                whell = place.GetComponentInChildren<Whell>();
+                whell.transform.DOLocalMoveX(-3, 0.5f).SetRelative();
+                place.ClearStack();
+
+                CollectToBag(bag, whell);
+                bag.Put();
+                Taken?.Invoke();
+            }
+
+            yield return new WaitForSeconds(_collectionDelay);
+        }
+    }
 }

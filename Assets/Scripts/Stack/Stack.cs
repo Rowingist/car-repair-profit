@@ -9,6 +9,7 @@ public class Stack : MonoBehaviour
     private int _currentCollected;
 
     public IReadOnlyList<Place> Places => _places;
+
     private int _needToBuy => _places.Count;
 
     public event UnityAction<int, int> AmountChanged;
@@ -30,7 +31,6 @@ public class Stack : MonoBehaviour
         for (int i = 0; i < _places.Count; i++)
             _places[i].ClearStack();
     }
-
 
     public void Add()
     {
