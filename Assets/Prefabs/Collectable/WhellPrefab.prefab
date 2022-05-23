@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2620710594970904207}
   - component: {fileID: 8054930732924498632}
   - component: {fileID: 8307920263568120334}
-  - component: {fileID: -5158801135136806666}
   - component: {fileID: 3961258710273063906}
   m_Layer: 0
   m_Name: WhellPrefab
@@ -108,18 +107,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7738141b739542a498cbdd0ad5de21c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-5158801135136806666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388944382178019040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a20c681314509bb428013b5fab48e325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &3961258710273063906

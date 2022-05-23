@@ -9,22 +9,20 @@ public class Place : MonoBehaviour
 
     public bool IsAvailible { get; private set; }
 
-
     private void Start()
     {
         IsAvailible = true;
     }
+
     public void Reserve(Whell whell)
     {
         IsAvailible = false;
         _whell = whell;
-        _whell.GetComponent<Collectable>().Taken += Free;
     }
 
     public void Free()
     {
         IsAvailible = true;
-        _whell.GetComponent<Collectable>().Taken -= Free;
     }
 
     public void ClearStack()

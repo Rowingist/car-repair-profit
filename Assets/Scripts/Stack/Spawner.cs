@@ -23,9 +23,7 @@ public class Spawner : MonoBehaviour
     private void OnDeliverParts(int countParts)
     {
         for (int i = 0; i < countParts; i++)
-        {
             InstantiatePrefab();
-        }
     }
 
     private void InstantiatePrefab()
@@ -37,9 +35,10 @@ public class Spawner : MonoBehaviour
 
             whell.GetComponent<MovablePrefab>().MoveOnShalve(place.transform.position);
 
+            whell.transform.SetParent(place.transform);
+
             place.Reserve(whell);
 
-            _shopStack.Add();
             _shopStack.Add();
         }
     }

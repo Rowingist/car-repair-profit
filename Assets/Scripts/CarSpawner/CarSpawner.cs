@@ -7,14 +7,19 @@ using DG.Tweening;
 public class CarSpawner : MonoBehaviour
 {
     [SerializeField] private List<Car> _carsPrefabs;
+    [SerializeField] private RepairArea _repairArea;
     [SerializeField] private DeliveryArea _deliveryArea;
-    [SerializeField] public Transform _spawnPoint;
+
+
+    public Transform _spawnPoint; // свойста
+    public Transform _deliveryPoint;
+    public Transform _repairPointPoint;
+    public Transform _afterRepairPointPoint;
+
+
 
     private bool _isGarageFree = true;
-
-    private Car _currentCar; 
-
-    public Transform _deliveryPoint; // свойство
+    private Car _currentCar;
 
     private void Start()
     {
@@ -23,12 +28,12 @@ public class CarSpawner : MonoBehaviour
 
     private void OnEnable()
     {
-        _deliveryArea.CarFixed += OnSpawnNew;
+        //_repairArea.CarFixed += OnSpawnNew;
     }
 
     private void OnDisable()
     {
-        _deliveryArea.CarFixed -= OnSpawnNew;
+       // _repairArea.CarFixed -= OnSpawnNew;
     }
 
     private void OnSpawnNew()
@@ -36,6 +41,7 @@ public class CarSpawner : MonoBehaviour
         _isGarageFree = true;
 
         _currentCar.MoveAfterRepair();
+
         _currentCar = null;
         InstantiateCar();
     }
@@ -43,7 +49,7 @@ public class CarSpawner : MonoBehaviour
     private void InstantiateCar()
     {
         Car newCar = Instantiate(_carsPrefabs[CalculateNumberPrebab()], _spawnPoint.position, _spawnPoint.rotation, null);
-        newCar.InitSpawner(this);
+        newCar.InitSpawner(this, _deliveryArea); 
         newCar.MoveToGarage();
         _currentCar = newCar;
         _isGarageFree = false;

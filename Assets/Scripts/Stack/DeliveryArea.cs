@@ -1,21 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 using UnityEngine.Events;
 using System.Linq;
+
 
 public class DeliveryArea : MonoBehaviour
 {
     [SerializeField] private Stack _deliveryStack;
     [SerializeField] private BoxCollider _deliveryArea;
-    [SerializeField] private float _collectionDelay;
+    [SerializeField] private float _collectionDelay = 0.1f;
 
+    private Car _car;
     private Coroutine CollectCoroutine;
 
-    public event UnityAction<Whell> Collected;
-    public event UnityAction EnterArea; // пока не используется
-    public event UnityAction ExitArea; // пока не используется
+    public event UnityAction CarArrivaedToDelivery;
+    public event UnityAction PlayerTakeTheCar;
+
     public event UnityAction CarFixed;
+    public event UnityAction<Whell> Collected;
 
     private void OnEnable()
     {
@@ -32,30 +36,35 @@ public class DeliveryArea : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out Player player))
         {
-            EnterArea?.Invoke();
+            //  player.transform.SetParent(_car.transform);
+
+            // player.gameObject.SetActive(false);
+
+            PlayerTakeTheCar?.Invoke();
 
             CollectCoroutine = StartCoroutine(CollectFrom(player));
         }
 
         if (other.gameObject.TryGetComponent(out Car car))
-            _deliveryStack.gameObject.SetActive(true);
-    }
+        {
+            CarArrivaedToDelivery?.Invoke();
 
+            _car = car;
+
+            _deliveryStack.gameObject.SetActive(true);
+        }
+    }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.TryGetComponent(out Player player))
         {
-            ExitArea?.Invoke();
-
             if (CollectCoroutine != null)
                 StopCoroutine(CollectCoroutine);
         }
 
         if (other.gameObject.TryGetComponent(out Car car))
-        {
             _deliveryStack.gameObject.SetActive(false);
-        }
     }
 
     private void OnBrickCollected(Whell whell)
@@ -69,8 +78,6 @@ public class DeliveryArea : MonoBehaviour
 
         while (Physics.CheckBox(_deliveryArea.center, _deliveryArea.size))
         {
-            CollectedAll();
-
             Place place = _deliveryStack.Places.FirstOrDefault(place => place.IsAvailible);
 
             if (place != default)
@@ -99,9 +106,5 @@ public class DeliveryArea : MonoBehaviour
         }
     }
 
-    public bool CollectedAll()
-    {
-        Place place = _deliveryStack.Places.FirstOrDefault(place => place.IsAvailible);
-        return (place == null);
-    }
+
 }
