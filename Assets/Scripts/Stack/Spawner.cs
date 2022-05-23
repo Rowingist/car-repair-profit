@@ -1,26 +1,30 @@
 using System.Linq;
 using UnityEngine;
 using DG.Tweening;
+using System;
 
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private Stack _shopStack;
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private Whell _whellTemplate;
-  //  [SerializeField] private BoxCollider _collectableArea;
+    [SerializeField] private Shop _shop;
 
-    private float _elapsedTime = 0;
-    private float _currentSpawnDelay = 0.1f;
-
-    private void Update()
+    private void OnEnable()
     {
-        _elapsedTime += Time.deltaTime;
+        _shop.OrderPlaced += OnDeliverParts;
+    }
 
-        if (_elapsedTime >= _currentSpawnDelay)
+    private void OnDisable()
+    {
+        _shop.OrderPlaced -= OnDeliverParts;
+    }
+
+    private void OnDeliverParts(int countParts)
+    {
+        for (int i = 0; i < countParts; i++)
         {
             InstantiatePrefab();
-
-            _elapsedTime = 0;
         }
     }
 

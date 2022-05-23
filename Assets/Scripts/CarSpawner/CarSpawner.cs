@@ -10,14 +10,11 @@ public class CarSpawner : MonoBehaviour
     [SerializeField] private DeliveryArea _deliveryArea;
     [SerializeField] public Transform _spawnPoint;
 
-    private float _elapsedTime = 0;
-    private float _currentSpawnDelay = 5;
     private bool _isGarageFree = true;
 
-    public Car _currentCar; //temp
+    private Car _currentCar; 
 
     public Transform _deliveryPoint; // свойство
-    public Transform _fixedCarPoint; // свойство
 
     private void Start()
     {
@@ -55,19 +52,5 @@ public class CarSpawner : MonoBehaviour
     private int CalculateNumberPrebab()
     {
         return Random.Range(0, _carsPrefabs.Count);
-    }
-
-    private IEnumerator HideOn(Car car)
-    {
-        float timeLeft = 10;
-
-        while (timeLeft > 0)
-        {
-            timeLeft -= Time.deltaTime;
-            yield return null;
-        }
-        // car.gameObject.SetActive(false);
-        //car.transform.position = new Vector3(5, 5, 5);
-        Destroy(car.gameObject);
     }
 }

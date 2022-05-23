@@ -21,9 +21,8 @@ public class Car : MonoBehaviour
     public void MoveAfterRepair()
     {
         Sequence sequence = DOTween.Sequence();
-        //sequence.Append(transform.DOMove(_carSpawner._spawnPoint .position, 2f));
-        sequence.Append(transform.DOLocalMoveY(5, 1));
-        //  gameObject.SetActive(false);
+        sequence.Append(transform.DOMove(_carSpawner._spawnPoint .position, 2f));
+        Destroy(gameObject, 3);
     }
 
 }

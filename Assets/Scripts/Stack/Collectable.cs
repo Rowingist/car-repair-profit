@@ -20,28 +20,16 @@ public class Collectable : MonoBehaviour
 
     private void CollectToBag(Bag bag)
     {
-        float FlyingEffectValue = 0.5f;
-        float FlightTime = 0.05f;
+        float flyingEffectValue = 1.5f;
+        float flightTime = 0.1f;
+        Vector3 rotateInStack = new Vector3(0, 0, -90);
 
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(transform.DOLocalMoveZ(FlyingEffectValue * (-1), FlightTime).SetRelative());
-        sequence.Append(transform.DOLocalMoveZ(FlyingEffectValue, FlightTime).SetRelative());
-        sequence.Append(transform.DOLocalRotate(new Vector3(0, 0, -90f), 0f));
+        sequence.Append(transform.DOLocalMoveZ(flyingEffectValue * (-1), flightTime).SetRelative());
+        sequence.Append(transform.DOLocalMoveZ(flyingEffectValue, flightTime).SetRelative());
+        sequence.Append(transform.DOLocalRotate(rotateInStack, 0.3f));
 
         transform.SetParent(bag.transform);
         transform.position = bag.Stack.Places[bag.Count].transform.position;
     }
-    //private void CollectToBag(Bag bag)
-    //{
-    //    float FlyingEffectValue = 2f;
-    //    float FlightTime = 0.1f;
-
-    //    Sequence sequence = DOTween.Sequence();
-    //    sequence.Append(transform.DOLocalMoveZ(FlyingEffectValue, FlightTime).SetRelative());
-    //    sequence.Append(transform.DOLocalMoveZ(FlyingEffectValue * (-1), FlightTime).SetRelative());
-
-    //    transform.SetParent(bag.transform);
-    //    transform.position = bag.Stack.Places[bag.Count].transform.position;
-    //   // transform.rotation = bag.Stack.Places[bag.Count].transform.rotation;
-    //}
 }
