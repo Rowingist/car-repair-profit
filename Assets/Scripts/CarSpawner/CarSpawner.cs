@@ -28,12 +28,12 @@ public class CarSpawner : MonoBehaviour
 
     private void OnEnable()
     {
-        _repairArea.CarFixed += OnSpawnNew;
+        //_repairArea.CarFixed += OnSpawnNew;
     }
 
     private void OnDisable()
     {
-        _repairArea.CarFixed -= OnSpawnNew;
+       // _repairArea.CarFixed -= OnSpawnNew;
     }
 
     private void OnSpawnNew()

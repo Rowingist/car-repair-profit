@@ -15,18 +15,18 @@ public class Car : MonoBehaviour
     private Driver _driver;
     private CarSpawner _carSpawner;
     private DeliveryArea _deliveryArea;
-    private Car _car;
+   // private Car _car;
 
     private void Start()
     {
         _deliveryArea.CarArrivaedToDelivery += DropDriver;
-        _deliveryArea.PlayerTakeTheCar  += MoveToRepair;
+       // _deliveryArea.PlayerTakeTheCar  += MoveToRepair; // логика для плеера, если он садится в машину
     }
 
     private void OnDisable()
     {
-        _deliveryArea.CarArrivaedToDelivery -= DropDriver;  // Валентина спросить, где можно отписываться, что бы он не спаунился при уничтожении машинки
-        _deliveryArea.PlayerTakeTheCar -= MoveToRepair;
+        _deliveryArea.CarArrivaedToDelivery -= DropDriver;
+       // _deliveryArea.PlayerTakeTheCar -= MoveToRepair;// логика для плеера, если он садится в машину
     }
 
     public void InitSpawner(CarSpawner carSpawner, DeliveryArea deliveryArea)
@@ -41,7 +41,7 @@ public class Car : MonoBehaviour
         _driver.transform.SetParent(null);
     }
   
-    private void MoveToRepair()
+    private void MoveToRepair() // если надо ехать в зону. Добавить метод для возвращения из зоны
     {
         Sequence sequence = DOTween.Sequence();
         sequence.Append(transform.DOMove(_carSpawner._repairPointPoint.position, 3f));
@@ -56,7 +56,9 @@ public class Car : MonoBehaviour
     {
         Destroy(_driver.gameObject, 0.1f);
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(transform.DOMove(_carSpawner._afterRepairPointPoint.position, 2f));
+        // sequence.Append(transform.DOMove(_carSpawner._afterRepairPointPoint.position, 2f));
+        sequence.Append(transform.DOMove(_carSpawner._spawnPoint.position, 2f));
+
         Destroy(gameObject, 3);
     }
 

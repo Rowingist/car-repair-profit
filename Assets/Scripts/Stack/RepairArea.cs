@@ -11,88 +11,88 @@ public class RepairArea : MonoBehaviour
     [SerializeField] private float _collectionDelay;
     [SerializeField] private Player _player;
 
-    private Coroutine CollectCoroutine;
-    public event UnityAction<Whell> Collected;
-    public event UnityAction CarFixed;
+    //private Coroutine CollectCoroutine;
+    //public event UnityAction<Whell> Collected;
+    //public event UnityAction CarFixed;
 
-    private void OnEnable()
-    {
-        Collected += OnBrickCollected;
-        _deliveryStack.gameObject.SetActive(false);
-    }
+    //private void OnEnable()
+    //{
+    //    Collected += OnBrickCollected;
+    //    _deliveryStack.gameObject.SetActive(false);
+    //}
 
-    private void OnDisable()
-    {
-        Collected -= OnBrickCollected;
-    }
+    //private void OnDisable()
+    //{
+    //    Collected -= OnBrickCollected;
+    //}
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.TryGetComponent(out Player player))
-        {
-            CollectCoroutine = StartCoroutine(CollectFrom(player));
-        }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.TryGetComponent(out Player player))
+    //    {
+    //        CollectCoroutine = StartCoroutine(CollectFrom(player));
+    //    }
 
-        if (other.gameObject.TryGetComponent(out Car car))
-        {
-            _player.transform.SetParent(null);
-            _player.gameObject.SetActive(true);
+    //    if (other.gameObject.TryGetComponent(out Car car))
+    //    {
+    //        _player.transform.SetParent(null);
+    //        _player.gameObject.SetActive(true);
 
-            car.MoveDriverToCar();
+    //        car.MoveDriverToCar();
 
-            _deliveryStack.gameObject.SetActive(true);
-        }
-    }
+    //        _deliveryStack.gameObject.SetActive(true);
+    //    }
+    //}
 
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.TryGetComponent(out Player player))
-        {
-            if (CollectCoroutine != null)
-                StopCoroutine(CollectCoroutine);
-        }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.gameObject.TryGetComponent(out Player player))
+    //    {
+    //        if (CollectCoroutine != null)
+    //            StopCoroutine(CollectCoroutine);
+    //    }
 
-        if (other.gameObject.TryGetComponent(out Car car)) 
-            _deliveryStack.gameObject.SetActive(false);
-    }
+    //    if (other.gameObject.TryGetComponent(out Car car)) 
+    //        _deliveryStack.gameObject.SetActive(false);
+    //}
 
-    private void OnBrickCollected(Whell whell)
-    {
-        _deliveryStack.Add();
-    }
+    //private void OnBrickCollected(Whell whell)
+    //{
+    //    _deliveryStack.Add();
+    //}
 
-    private IEnumerator CollectFrom(Player player)
-    {
-        Whell whell = null;
+    //private IEnumerator CollectFrom(Player player)
+    //{
+    //    Whell whell = null;
 
-        while (Physics.CheckBox(_repairArea.center, _repairArea.size))
-        {
-            Place place = _deliveryStack.Places.FirstOrDefault(place => place.IsAvailible);
+    //    while (Physics.CheckBox(_repairArea.center, _repairArea.size))
+    //    {
+    //        Place place = _deliveryStack.Places.FirstOrDefault(place => place.IsAvailible);
 
-            if (place != default)
-            {
-                whell = player.Bag.Sell();
+    //        if (place != default)
+    //        {
+    //            whell = player.Bag.Sell();
 
-                if (whell != null)
-                {
-                    MovablePrefab movable = whell.GetComponent<MovablePrefab>();
+    //            if (whell != null)
+    //            {
+    //                MovablePrefab movable = whell.GetComponent<MovablePrefab>();
 
-                    movable.Unload();
+    //                movable.Unload();
 
-                    place.Reserve(whell);
+    //                place.Reserve(whell);
 
-                    Collected?.Invoke(whell);
-                }
-            }
+    //                Collected?.Invoke(whell);
+    //            }
+    //        }
 
-            if (place == default)
-            {
-                CarFixed?.Invoke();
-                _deliveryStack.ClearPlaces();
-                yield break;
-            }
-            yield return new WaitForSeconds(_collectionDelay);
-        }
-    }
+    //        if (place == default)
+    //        {
+    //            CarFixed?.Invoke();
+    //            _deliveryStack.ClearPlaces();
+    //            yield break;
+    //        }
+    //        yield return new WaitForSeconds(_collectionDelay);
+    //    }
+    //}
 }

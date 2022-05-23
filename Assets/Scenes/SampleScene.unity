@@ -8456,7 +8456,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _carsPrefabs:
+  - {fileID: 8047488698967090657, guid: cf3a91073436e264e855ed034b4e083e, type: 3}
   - {fileID: 6570474037053752565, guid: 3d1d6b89913541743adc29fcc68639fe, type: 3}
+  - {fileID: 4594727770846994839, guid: ebac46eeb2923c84b983001d26902200, type: 3}
+  - {fileID: -8075553423762841220, guid: db0c5f496fb47664a8e8ca82910981e3, type: 3}
   _repairArea: {fileID: 919132147699459383}
   _deliveryArea: {fileID: 1589177276}
   _spawnPoint: {fileID: 616783208}
@@ -14031,6 +14034,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e1041b8711dd749b368b796a463f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _deliveryStack: {fileID: 284106381}
+  _deliveryArea: {fileID: 1589177277}
+  _collectionDelay: 0.1
 --- !u!65 &1589177277
 BoxCollider:
   m_ObjectHideFlags: 0
