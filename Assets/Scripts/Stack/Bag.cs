@@ -13,9 +13,6 @@ public class Bag : MonoBehaviour
 
     public bool _isFull => _count >= _stack.Places.Count;
 
-    public event UnityAction<int> BrickCollected;
-    public event UnityAction<int> BrickSell;
-
     public void Put()
     {
         _count++;
@@ -30,8 +27,6 @@ public class Bag : MonoBehaviour
             _count--;
 
             whell = transform.GetChild(_count).GetComponent<Whell>();
-
-            BrickSell?.Invoke(_count);
         }
 
         return whell;

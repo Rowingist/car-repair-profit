@@ -1,89 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 using UnityEngine.Events;
-using System.Linq;
+
 
 public class DeliveryArea : MonoBehaviour
 {
-    [SerializeField] private Stack _deliveryStack;
-    [SerializeField] private BoxCollider _deliveryArea;
-    [SerializeField] private float _collectionDelay;
-
-    private Coroutine CollectCoroutine;
-
-    public event UnityAction<Whell> Collected;
-    public event UnityAction CarFixed;
-
-    private void OnEnable()
-    {
-        Collected += OnBrickCollected;
-        _deliveryStack.gameObject.SetActive(false);
-    }
-
-    private void OnDisable()
-    {
-        Collected -= OnBrickCollected;
-    }
+    private Car _car;
+    
+    public event UnityAction CarArrivaedToDelivery;
+    public event UnityAction PlayerTakeTheCar;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out Player player))
-            CollectCoroutine = StartCoroutine(CollectFrom(player));
-
         if (other.gameObject.TryGetComponent(out Car car))
-            _deliveryStack.gameObject.SetActive(true);
-    }
-
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.TryGetComponent(out Player player))
         {
-            if (CollectCoroutine != null)
-                StopCoroutine(CollectCoroutine);
+            CarArrivaedToDelivery?.Invoke();
+
+            _car = car;
         }
 
-        if (other.gameObject.TryGetComponent(out Car car))
-            _deliveryStack.gameObject.SetActive(false);
-    }
-
-    private void OnBrickCollected(Whell whell)
-    {
-        _deliveryStack.Add();
-    }
-
-    private IEnumerator CollectFrom(Player player)
-    {
-        Whell whell = null;
-
-        while (Physics.CheckBox(_deliveryArea.center, _deliveryArea.size))
+        if (other.gameObject.TryGetComponent(out Player player))
         {
-            Place place = _deliveryStack.Places.FirstOrDefault(place => place.IsAvailible);
+            player.transform.SetParent(_car.transform);
 
-            if (place != default)
-            {
-                whell = player.Bag.Sell();
+            player.gameObject.SetActive(false);
 
-                if (whell != null)
-                {
-                    MovablePrefab movable = whell.GetComponent<MovablePrefab>();
-
-                    movable.Unload();
-
-                    place.Reserve(whell);
-
-                    Collected?.Invoke(whell);
-                }
-            }
-
-            if (place == default)
-            {
-                CarFixed?.Invoke();
-                _deliveryStack.ClearPlaces();
-                yield break;
-            }
-            yield return new WaitForSeconds(_collectionDelay);
+            PlayerTakeTheCar?.Invoke();
         }
     }
 }
