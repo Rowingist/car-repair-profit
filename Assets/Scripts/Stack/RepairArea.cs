@@ -35,12 +35,7 @@ public class RepairArea : MonoBehaviour
 
         if (other.gameObject.TryGetComponent(out CarRepair car))
         {
-            _player.transform.SetParent(null);
-            _player.gameObject.SetActive(true);
-
-           // car.MoveDriverToCar();
-
-            _deliveryStack.gameObject.SetActive(true);
+            StartCoroutine(EnableOnTimer());
         }
     }
 
@@ -55,6 +50,21 @@ public class RepairArea : MonoBehaviour
 
         if (other.gameObject.TryGetComponent(out CarRepair car))
             _deliveryStack.gameObject.SetActive(false);
+    }
+
+    private IEnumerator EnableOnTimer()
+    {
+        float timeLeft = 1;
+        while (timeLeft > 0)
+        {
+            timeLeft -= Time.deltaTime;
+
+            yield return null;
+        }
+
+        _player.transform.SetParent(null);
+        _player.gameObject.SetActive(true);
+        _deliveryStack.gameObject.SetActive(true);
     }
 
     private void OnBrickCollected(Whell whell)

@@ -23,11 +23,14 @@ public class DeliveryArea : MonoBehaviour
 
         if (other.gameObject.TryGetComponent(out Player player))
         {
-            player.transform.SetParent(_car.transform);
+            if (_car.IsInDeliveryZone)
+            {
+                player.transform.SetParent(_car.transform);
 
-            player.gameObject.SetActive(false);
+                player.gameObject.SetActive(false);
 
-            PlayerTakeTheCar?.Invoke();
+                PlayerTakeTheCar?.Invoke();
+            }
         }
     }
 }

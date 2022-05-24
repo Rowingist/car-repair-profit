@@ -15,9 +15,13 @@ public class CarRepair : MonoBehaviour
     private CarSpawnRepair _carSpawnerRepair;
     private DeliveryArea _deliveryArea;
     private CarRepair _car;
+    private BoxCollider _boxCollider;
+
+    public bool IsInDeliveryZone = true; // свойство
 
     void Start()
     {
+        _boxCollider = GetComponent<BoxCollider>();
         _deliveryArea.CarArrivaedToDelivery += DropDriver;
         _deliveryArea.PlayerTakeTheCar += MoveToRepair;
     }
@@ -36,33 +40,34 @@ public class CarRepair : MonoBehaviour
 
     private void DropDriver()
     {
-        _driver = Instantiate(_driverPrefab, _driverPlace.position, _driverPlace.rotation, null);
-        // _driver.transform.SetParent(this.transform);
-        _driver.transform.SetParent(null);
+        StartCoroutine(SpawnOnTimer());
+    }
 
+    private IEnumerator SpawnOnTimer()
+    {
+        float timeLeft = 1;
+        while (timeLeft > 0)
+        {
+            timeLeft -= Time.deltaTime;
+
+            yield return null;
+        }
+
+        _driver = Instantiate(_driverPrefab, _driverPlace.position, _driverPlace.rotation);
     }
 
     private void MoveToRepair()
     {
+        IsInDeliveryZone = false;
         Sequence sequence = DOTween.Sequence();
         sequence.Append(transform.DOMove(_carSpawnerRepair._repairPointPoint.position, 3f));
     }
 
-    public void MoveDriverToCar()
-    {
-        _driver.transform.DOMove(_afterRepairPlace.position, 4);
-    }
-
-
     public void MoveAfterRepair()
     {
-        Destroy(_driver.gameObject, 0.1f);
+        _boxCollider.gameObject.SetActive(false);
         Sequence sequence = DOTween.Sequence();
         sequence.Append(transform.DOMove(_carSpawnerRepair._afterRepairPoint.position, 2f));
-        Destroy(gameObject, 3);
-
-        //_driver.gameObject.SetActive(false);
-
     }
 
     public void MoveToGarage()

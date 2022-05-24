@@ -32,9 +32,20 @@ public class CarWhell : MonoBehaviour
 
     private void DropDriver()
     {
-        _driver = Instantiate(_driverPrefab, _driverPlace.position, _driverPlace.rotation, null);
-        _driver.transform.SetParent(this.transform);
+        StartCoroutine(SpawnOnTimer());
+    }
 
+    private IEnumerator SpawnOnTimer()
+    {
+        float timeLeft = 1;
+        while (timeLeft > 0)
+        {
+            timeLeft -= Time.deltaTime;
+
+            yield return null;
+        }
+
+        _driver = Instantiate(_driverPrefab, _driverPlace.position, _driverPlace.rotation);
     }
 
     public void MoveAfterRepair()
