@@ -4434,6 +4434,7 @@ MonoBehaviour:
   _spawnPoint: {fileID: 1700301431}
   _deliveryPoint: {fileID: 1242340447}
   _repairPointPoint: {fileID: 1130382722}
+  _afterRepairPoint: {fileID: 1700301431}
 --- !u!1 &521134697
 GameObject:
   m_ObjectHideFlags: 0
@@ -8831,7 +8832,7 @@ GameObject:
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &915421302
 Transform:
   m_ObjectHideFlags: 0
