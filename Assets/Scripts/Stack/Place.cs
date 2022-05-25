@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class Place : MonoBehaviour
 {
-    private Whell _whell;
+    private Wheel _whell;
 
     public bool IsAvailible { get; private set; }
 
@@ -14,7 +14,7 @@ public class Place : MonoBehaviour
         IsAvailible = true;
     }
 
-    public void Reserve(Whell whell)
+    public void Reserve(Wheel whell)
     {
         IsAvailible = false;
         _whell = whell;

@@ -11,7 +11,6 @@ public class Car : MonoBehaviour
     [SerializeField] private Transform _driverPlace;
     [SerializeField] private Transform _afterRepairPlace;
 
-
     private Driver _driver;
     private CarSpawner _carSpawner;
     private DeliveryArea _deliveryArea;

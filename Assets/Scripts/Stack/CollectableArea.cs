@@ -29,7 +29,7 @@ public class CollectableArea : MonoBehaviour
         }
     }
 
-    private void CollectToBag(Bag bag, Whell whell)
+    private void CollectToBag(Bag bag, Wheel whell)
     {
         float flyingEffectValue = 1.5f;
         float flightTime = 0.1f;
@@ -46,7 +46,7 @@ public class CollectableArea : MonoBehaviour
 
     private IEnumerator CollectFrom(Bag bag)
     {
-        Whell whell = null;
+        Wheel whell = null;
 
         while (Physics.CheckBox(_collectableArea.center, _collectableArea.size))
         {
@@ -56,7 +56,7 @@ public class CollectableArea : MonoBehaviour
             Place place = _collectableStack.Places.FirstOrDefault(place => place.IsAvailible == false);
             if (place != null)
             {
-                whell = place.GetComponentInChildren<Whell>();
+                whell = place.GetComponentInChildren<Wheel>();
                 whell.transform.DOLocalMoveX(-3, 0.5f).SetRelative();
                 place.ClearStack();
 

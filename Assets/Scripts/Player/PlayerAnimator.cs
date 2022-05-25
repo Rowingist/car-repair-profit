@@ -10,12 +10,14 @@ public class PlayerAnimator : MonoBehaviour
     //[SerializeField] private Animator _animator;
     //[SerializeField] private JoystickTemp _joystick;
 
-    private Animator _animator;
     [SerializeField] private FloatingJoystick _joystick;
+    [SerializeField] private Bag _playerBag;
+    [SerializeField] private float _transitionSpeed = 10f;
+    [SerializeField] private int _caryingLayerIndex = 1;
 
-
-    private const string Speed = "Speed";
-
+    private const string SPEED = "Speed";
+    private Animator _animator;
+    private float _currentLayerWeight = 0f;
 
     private void Start()
     {
@@ -24,6 +26,8 @@ public class PlayerAnimator : MonoBehaviour
 
     private void FixedUpdate()
     {
+        TransitToCaryingWeight();
+
         if (_joystick.Horizontal != 0 || _joystick.Vertical != 0)
         {
             if (Math.Abs(_joystick.Horizontal) > Math.Abs(_joystick.Vertical))  
@@ -35,14 +39,20 @@ public class PlayerAnimator : MonoBehaviour
             PlayIdleAnimation();
     }
 
-
     private void PlayWalkAnimation(float value)
     {
-        _animator.SetFloat(Speed, value);
+        _animator.SetFloat(SPEED, value);
     }
 
     private void PlayIdleAnimation()
     {
-        _animator.SetFloat(Speed, 0);
+        _animator.SetFloat(SPEED, 0);
+    }
+
+    private void TransitToCaryingWeight()
+    {
+        int caryingStack = _playerBag.Count > 0 ? 1 : 0;
+        _currentLayerWeight = Mathf.Lerp(_currentLayerWeight, caryingStack, Time.deltaTime * _transitionSpeed);
+        _animator.SetLayerWeight(_caryingLayerIndex, _currentLayerWeight);
     }
 }

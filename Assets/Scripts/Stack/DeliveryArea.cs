@@ -19,7 +19,7 @@ public class DeliveryArea : MonoBehaviour
     public event UnityAction PlayerTakeTheCar;
 
     public event UnityAction CarFixed;
-    public event UnityAction<Whell> Collected;
+    public event UnityAction<Wheel> Collected;
 
     private void OnEnable()
     {
@@ -67,14 +67,14 @@ public class DeliveryArea : MonoBehaviour
             _deliveryStack.gameObject.SetActive(false);
     }
 
-    private void OnBrickCollected(Whell whell)
+    private void OnBrickCollected(Wheel whell)
     {
         _deliveryStack.Add();
     }
 
     private IEnumerator CollectFrom(Player player)
     {
-        Whell whell = null;
+        Wheel whell = null;
 
         while (Physics.CheckBox(_deliveryArea.center, _deliveryArea.size))
         {

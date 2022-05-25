@@ -18,15 +18,15 @@ public class Bag : MonoBehaviour
         _count++;
     }
 
-    public Whell Sell()
+    public Wheel Sell()
     {
-        Whell whell = null;
+        Wheel whell = null;
 
         if (_count > 0)
         {
             _count--;
 
-            whell = transform.GetChild(_count).GetComponent<Whell>();
+            whell = transform.GetChild(_count).GetComponent<Wheel>();
         }
 
         return whell;
