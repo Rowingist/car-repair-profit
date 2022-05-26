@@ -7,6 +7,8 @@ using System;
 
 public class Upload : MonoBehaviour
 {
+    [SerializeField] private MoneyPrefab _moneyPrefab;
+
     public int _neeedToFix = 3; // свойство
 
     private int _currentUpload = 0;
@@ -18,7 +20,6 @@ public class Upload : MonoBehaviour
     public event UnityAction CarFixed;
     public event UnityAction CarArrivedToDelivery;
     public event UnityAction<int, int> CountPartChanged;
-    public static Action MainScoreChanged;
 
     private void Start()
     {
@@ -74,7 +75,6 @@ public class Upload : MonoBehaviour
             if (whell != null)
             {
                 _currentUpload++;
-                MainScoreChanged?.Invoke(); // static norm?
                 CountPartChanged?.Invoke(_currentUpload, _neeedToFix);
 
                 MovablePrefab movable = whell.GetComponent<MovablePrefab>();
@@ -83,6 +83,8 @@ public class Upload : MonoBehaviour
 
                 if (_currentUpload >= _neeedToFix)
                 {
+                    SpawnMoney(_currentUpload);
+
                     CarFixed?.Invoke();
                     _currentUpload = 0;
                     CountPartChanged?.Invoke(_currentUpload, _neeedToFix);
@@ -90,6 +92,16 @@ public class Upload : MonoBehaviour
                 }
             }
             yield return new WaitForSeconds(_collectionDelay);
+        }
+    }
+
+    private void SpawnMoney(int money)
+    {
+        for (int i = 0; i < money; i++)
+        {
+            Vector3 positionSpawnMoney = new Vector3(transform.position.x + i + 5, transform.position.y, transform.position.z);
+
+            MoneyPrefab monye = Instantiate(_moneyPrefab, positionSpawnMoney, transform.rotation, null);
         }
     }
 }

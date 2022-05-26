@@ -8,29 +8,33 @@ public class MoneyOnScreen : MonoBehaviour
 {
     [SerializeField] private TMP_Text _textInWidget;
 
-    private int _currentPoint;
+    public int _currentMoney; // свойство сделать
 
     private void OnEnable()
     {
-        Upload.MainScoreChanged += OnScoreChanged;
-        MoneyPrefab.MainScoreChanged += OnScoreChanged;
+        MoneyPrefab.PlayersMoneyChanged += OnMoneyChanged;
     }
 
     void Start()
     {
-        _currentPoint = 0;
-        _textInWidget.text = _currentPoint.ToString();
+        _currentMoney = 0;
+        _textInWidget.text = _currentMoney.ToString();
     }
 
     private void OnDisable()
     {
-        Upload.MainScoreChanged -= OnScoreChanged;
-        MoneyPrefab.MainScoreChanged -= OnScoreChanged;
+        MoneyPrefab.PlayersMoneyChanged -= OnMoneyChanged;
     }
 
-    private void OnScoreChanged()
+    private void OnMoneyChanged()
     {
-        _currentPoint++;
-        _textInWidget.text = _currentPoint.ToString();
+        _currentMoney++;
+        _textInWidget.text = _currentMoney.ToString();
+    }
+
+    public void MakePurchase(int moneySpent)
+    {
+        _currentMoney -= moneySpent;
+        _textInWidget.text = _currentMoney.ToString();
     }
 }

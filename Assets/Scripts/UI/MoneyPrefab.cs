@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class MoneyPrefab : MonoBehaviour
 {
-    public static Action MainScoreChanged;
+    public static Action PlayersMoneyChanged;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.TryGetComponent(out Player player))
         {
-            MainScoreChanged?.Invoke();
+            PlayersMoneyChanged?.Invoke();
 
             Destroy(this.gameObject);
         }
