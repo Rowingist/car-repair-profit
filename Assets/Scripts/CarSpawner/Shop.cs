@@ -1,21 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using Cinemachine;
 
 public class Shop : MonoBehaviour
 {
-    public event UnityAction<int> OrderPlaced;
+    public UnityEvent GotInto;
+    public UnityEvent WentOut;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out Player player))
-            OrderPlaced?.Invoke(CalculatePartsCount());
+        if (other.GetComponent<Player>())
+        {
+            print("player");
+            GotInto?.Invoke();
+        }
     }
 
-    private int CalculatePartsCount()
+    private void OnTriggerExit(Collider other)
     {
-        return Random.Range(1, 10);
+        if (other.GetComponent<Player>())
+        {
+            WentOut?.Invoke();
+        }
     }
 }

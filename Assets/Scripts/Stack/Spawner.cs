@@ -5,20 +5,20 @@ using System;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private Stack _shopStack;
+    //[SerializeField] private StackPack _shopStack;
     [SerializeField] private Transform _spawnPoint;
-    [SerializeField] private Wheel _whellTemplate;
+    [SerializeField] private Item _whellTemplate;
     [SerializeField] private Shop _shop;
 
-    private void OnEnable()
-    {
-        _shop.OrderPlaced += OnDeliverParts;
-    }
+    //private void OnEnable()
+    //{
+    //    _shop.GotInto += OnDeliverParts;
+    //}
 
-    private void OnDisable()
-    {
-        _shop.OrderPlaced -= OnDeliverParts;
-    }
+    //private void OnDisable()
+    //{
+    //    _shop.GotInto -= OnDeliverParts;
+    //}
 
     private void OnDeliverParts(int countParts)
     {
@@ -28,18 +28,18 @@ public class Spawner : MonoBehaviour
 
     private void InstantiatePrefab()
     {
-        Place place = _shopStack.Places.FirstOrDefault(place => place.IsAvailible);
-        if (place != null)
-        {
-            Wheel whell = Instantiate(_whellTemplate, _spawnPoint.position, _whellTemplate.transform.rotation);
+        //Tower place = _shopStack.Places.FirstOrDefault(place => place.IsAvailible);
+        //if (place != null)
+        //{
+        //    Item whell = Instantiate(_whellTemplate, _spawnPoint.position, _whellTemplate.transform.rotation);
 
-            whell.GetComponent<MovablePrefab>().MoveOnShalve(place.transform.position);
+        //    whell.GetComponent<MovablePrefab>().MoveOnShalve(place.transform.position);
 
-            whell.transform.SetParent(place.transform);
+        //    whell.transform.SetParent(place.transform);
 
-            place.Reserve(whell);
+        //    place.Reserve(whell);
 
-            _shopStack.Add();
-        }
+        //    _shopStack.Add();
+        //}
     }
 }

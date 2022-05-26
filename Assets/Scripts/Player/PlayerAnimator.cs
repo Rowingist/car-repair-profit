@@ -11,7 +11,7 @@ public class PlayerAnimator : MonoBehaviour
     //[SerializeField] private JoystickTemp _joystick;
 
     [SerializeField] private FloatingJoystick _joystick;
-    [SerializeField] private Bag _playerBag;
+    [SerializeField] private Stock _playerBag;
     [SerializeField] private float _transitionSpeed = 10f;
     [SerializeField] private int _caryingLayerIndex = 1;
 
@@ -51,7 +51,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private void TransitToCaryingWeight()
     {
-        int caryingStack = _playerBag.Count > 0 ? 1 : 0;
+        int caryingStack = _playerBag.NotEmpty ? 1 : 0;
         _currentLayerWeight = Mathf.Lerp(_currentLayerWeight, caryingStack, Time.deltaTime * _transitionSpeed);
         _animator.SetLayerWeight(_caryingLayerIndex, _currentLayerWeight);
     }

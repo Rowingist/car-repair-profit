@@ -5,14 +5,14 @@ using DG.Tweening;
 using UnityEngine.Events;
 using System;
 
-public class CarWhell : MonoBehaviour
+public class CarWheel : MonoBehaviour
 {
     [SerializeField] private Driver _driverPrefab;
     [SerializeField] private Transform _driverPlace;
 
     private Driver _driver;
-    private CarSpawnerWhell _carSpawnerWhell;
-    private WhellArea _deliveryArea;
+    private CarSpawnerWhell _carSpawnerWheel;
+    private WheelArea _deliveryArea;
 
     private void Start()
     {
@@ -24,9 +24,9 @@ public class CarWhell : MonoBehaviour
         _deliveryArea.CarArrivaedToWhell -= DropDriver;
     }
 
-    public void InitSpawner(CarSpawnerWhell carSpawner, WhellArea deliveryArea)
+    public void InitSpawner(CarSpawnerWhell carSpawner, WheelArea deliveryArea)
     {
-        _carSpawnerWhell = carSpawner;
+        _carSpawnerWheel = carSpawner;
         _deliveryArea = deliveryArea;
     }
 
@@ -52,7 +52,7 @@ public class CarWhell : MonoBehaviour
     {
         _driver.gameObject.SetActive(false);
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(transform.DOMove(_carSpawnerWhell._spawnPoint.position, 2f));
+        sequence.Append(transform.DOMove(_carSpawnerWheel._spawnPoint.position, 2f));
 
         Destroy(gameObject, 3);
     }
@@ -60,6 +60,6 @@ public class CarWhell : MonoBehaviour
     public void MoveToGarage()
     {
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(transform.DOMove(_carSpawnerWhell._deliveryPoint.position, 2f));
+        sequence.Append(transform.DOMove(_carSpawnerWheel._deliveryPoint.position, 2f));
     }
 }

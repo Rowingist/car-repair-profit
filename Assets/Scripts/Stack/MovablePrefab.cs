@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class MovablePrefab : MonoBehaviour // можно вынести в класс Whell
+public class MovablePrefab : MonoBehaviour
 {
     public void MoveOnShalve(Vector3 targetPosition)
     {

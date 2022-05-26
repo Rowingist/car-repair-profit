@@ -7,7 +7,7 @@ using DG.Tweening;
 
 public class CollectableArea : MonoBehaviour
 {
-    [SerializeField] private Stack _collectableStack;
+    //[SerializeField] private StackPack _collectableStack;
     [SerializeField] private float _collectionDelay;
     [SerializeField] private BoxCollider _collectableArea;
 
@@ -16,20 +16,20 @@ public class CollectableArea : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out Bag bag))
-            CollectCoroutine = StartCoroutine(CollectFrom(bag));
+        //if (other.TryGetComponent(out Bag bag))
+            //CollectCoroutine = StartCoroutine(CollectFrom(bag));
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out Bag bag))
+        if (other.GetComponent<Stock>())
         {
             if (CollectCoroutine != null)
                 StopCoroutine(CollectCoroutine);
         }
     }
 
-    private void CollectToBag(Bag bag, Wheel whell)
+    private void CollectToBag(Stock bag, Item whell)
     {
         float flyingEffectValue = 1.5f;
         float flightTime = 0.1f;
@@ -41,31 +41,31 @@ public class CollectableArea : MonoBehaviour
         sequence.Append(whell.transform.DOLocalRotate(rotateInStack, 0.3f));
 
         whell.transform.SetParent(bag.transform);
-        whell.transform.position = bag.Stack.Places[bag.Count].transform.position;
+        //whell.transform.position = bag.Stack.Places[bag.Count].transform.position;
     }
 
-    private IEnumerator CollectFrom(Bag bag)
-    {
-        Wheel whell = null;
+    //private IEnumerator CollectFrom(Bag bag)
+    //{
+    //    Item whell = null;
 
-        while (Physics.CheckBox(_collectableArea.center, _collectableArea.size))
-        {
-            if (bag._isFull)
-                yield break;
+    //    while (Physics.CheckBox(_collectableArea.center, _collectableArea.size))
+    //    {
+    //        //if (bag._isFull)
+    //        //    yield break;
 
-            Place place = _collectableStack.Places.FirstOrDefault(place => place.IsAvailible == false);
-            if (place != null)
-            {
-                whell = place.GetComponentInChildren<Wheel>();
-                whell.transform.DOLocalMoveX(-3, 0.5f).SetRelative();
-                place.ClearStack();
+    //        //Tower place = _collectableStack.Places.FirstOrDefault(place => place.IsAvailible == false);
+    //        if (place != null)
+    //        {
+    //            whell = place.GetComponentInChildren<Item>();
+    //            whell.transform.DOLocalMoveX(-3, 0.5f).SetRelative();
+    //            //place.ClearStack();
 
-                CollectToBag(bag, whell);
-                bag.Put();
-                Taken?.Invoke();
-            }
+    //            CollectToBag(bag, whell);
+    //            //bag.Put();
+    //            Taken?.Invoke();
+    //        }
 
-            yield return new WaitForSeconds(_collectionDelay);
-        }
-    }
+    //        yield return new WaitForSeconds(_collectionDelay);
+    //    }
+    //}
 }

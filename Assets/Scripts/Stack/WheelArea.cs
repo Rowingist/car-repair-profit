@@ -1,29 +1,32 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
 
-public class RepairArea : MonoBehaviour
-{
-    //[SerializeField] private StackPack _deliveryStack;
-    [SerializeField] private BoxCollider _repairArea;
-    [SerializeField] private float _collectionDelay;
-    [SerializeField] private Player _player;
 
+public class WheelArea : MonoBehaviour
+{
+    //[SerializeField] private StackPack _whellStack;
+    [SerializeField] private BoxCollider _whellArea;
+    [SerializeField] private float _collectionDelay = 0.1f;
+
+    private CarWheel _car;
     private Coroutine CollectCoroutine;
-    public event UnityAction<Item> Collected;
+
+    public event UnityAction CarArrivaedToWhell;
+
     public event UnityAction CarFixed;
+    public event UnityAction<Item> Collected;
 
     private void OnEnable()
     {
-        Collected += OnBrickCollected;
-        //_deliveryStack.gameObject.SetActive(false);
+        Collected += OnWhellCollected;
+        //_whellStack.gameObject.SetActive(false);
     }
 
     private void OnDisable()
     {
-        Collected -= OnBrickCollected;
+        Collected -= OnWhellCollected;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -33,12 +36,15 @@ public class RepairArea : MonoBehaviour
             //CollectCoroutine = StartCoroutine(CollectFrom(player));
         }
 
-        if (other.gameObject.TryGetComponent(out CarRepair car))
+        if (other.gameObject.TryGetComponent(out CarWheel car))
         {
-            StartCoroutine(EnableOnTimer());
+            CarArrivaedToWhell?.Invoke();
+
+            _car = car;
+
+            //_whellStack.gameObject.SetActive(true);
         }
     }
-
 
     private void OnTriggerExit(Collider other)
     {
@@ -48,37 +54,23 @@ public class RepairArea : MonoBehaviour
                 StopCoroutine(CollectCoroutine);
         }
 
-        //if (other.gameObject.TryGetComponent(out CarRepair car))
-            //_deliveryStack.gameObject.SetActive(false);
+        //if (other.gameObject.TryGetComponent(out CarWheel car))
+            //_whellStack.gameObject.SetActive(false);
     }
 
-    private IEnumerator EnableOnTimer()
+
+    private void OnWhellCollected(Item whell)
     {
-        float timeLeft = 1;
-        while (timeLeft > 0)
-        {
-            timeLeft -= Time.deltaTime;
-
-            yield return null;
-        }
-
-        _player.transform.SetParent(null);
-        _player.gameObject.SetActive(true);
-        //_deliveryStack.gameObject.SetActive(true);
-    }
-
-    private void OnBrickCollected(Item whell)
-    {
-        //_deliveryStack.Add();
+        //_whellStack.Add();
     }
 
     //private IEnumerator CollectFrom(Player player)
     //{
     //    Item whell = null;
 
-    //    while (Physics.CheckBox(_repairArea.center, _repairArea.size))
+    //    while (Physics.CheckBox(_whellArea.center, _whellArea.size))
     //    {
-    //        //Tower place = _deliveryStack.Places.FirstOrDefault(place => place.IsAvailible);
+    //        Tower place = _whellStack.Places.FirstOrDefault(place => place.IsAvailible);
 
     //        if (place != default)
     //        {
@@ -99,7 +91,7 @@ public class RepairArea : MonoBehaviour
     //        if (place == default)
     //        {
     //            CarFixed?.Invoke();
-    //            _deliveryStack.ClearPlaces();
+    //            _whellStack.ClearPlaces();
     //            yield break;
     //        }
     //        yield return new WaitForSeconds(_collectionDelay);

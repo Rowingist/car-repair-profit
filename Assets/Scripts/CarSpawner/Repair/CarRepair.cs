@@ -12,7 +12,7 @@ public class CarRepair : MonoBehaviour
     [SerializeField] private Transform _afterRepairPlace;
 
     private Driver _driver;
-    private CarSpawnRepair _carSpawnerRepair;
+    private CarSpawner _carSpawnerRepair;
     private DeliveryArea _deliveryArea;
     private CarRepair _car;
     private BoxCollider _boxCollider;
@@ -32,7 +32,7 @@ public class CarRepair : MonoBehaviour
         _deliveryArea.PlayerTakeTheCar -= MoveToRepair;
     }
 
-    public void InitSpawner(CarSpawnRepair carSpawner, DeliveryArea deliveryArea)
+    public void InitSpawner(CarSpawner carSpawner, DeliveryArea deliveryArea)
     {
         _carSpawnerRepair = carSpawner;
         _deliveryArea = deliveryArea;

@@ -6,14 +6,14 @@ using DG.Tweening;
 
 public class CarSpawnerWhell : MonoBehaviour
 {
-    [SerializeField] private List<CarWhell> _carsPrefabs;
-    [SerializeField] private WhellArea _whellArea;
+    [SerializeField] private List<CarWheel> _carsPrefabs;
+    [SerializeField] private WheelArea _whellArea;
 
     public Transform _spawnPoint; // свойста
     public Transform _deliveryPoint;
 
     private bool _isGarageFree = true;
-    private CarWhell _currentCar;
+    private CarWheel _currentCar;
 
     private void Start()
     {
@@ -42,7 +42,7 @@ public class CarSpawnerWhell : MonoBehaviour
 
     private void InstantiateCar()
     {
-        CarWhell newCar = Instantiate(_carsPrefabs[CalculateNumberPrebab()], _spawnPoint.position, _spawnPoint.rotation, null);
+        CarWheel newCar = Instantiate(_carsPrefabs[CalculateNumberPrebab()], _spawnPoint.position, _spawnPoint.rotation, null);
         newCar.InitSpawner(this, _whellArea); 
         newCar.MoveToGarage();
         _currentCar = newCar;
