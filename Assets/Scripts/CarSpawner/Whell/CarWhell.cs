@@ -10,24 +10,24 @@ public class CarWhell : MonoBehaviour
     [SerializeField] private Driver _driverPrefab;
     [SerializeField] private Transform _driverPlace;
 
+    private CarSpawnerNew _carSpawnerNew;
+    private Upload _upload;
     private Driver _driver;
-    private CarSpawnerWhell _carSpawnerWhell;
-    private WhellArea _deliveryArea;
 
     private void Start()
     {
-        _deliveryArea.CarArrivaedToWhell += DropDriver;
+        _upload.CarArrivedToDelivery += DropDriver;
     }
 
     private void OnDisable()
     {
-        _deliveryArea.CarArrivaedToWhell -= DropDriver;
+        _upload.CarArrivedToDelivery -= DropDriver;
     }
 
-    public void InitSpawner(CarSpawnerWhell carSpawner, WhellArea deliveryArea)
+    public void InitSpawner(CarSpawnerNew carSpawner, Upload upload)
     {
-        _carSpawnerWhell = carSpawner;
-        _deliveryArea = deliveryArea;
+        _carSpawnerNew = carSpawner;
+        _upload = upload;
     }
 
     private void DropDriver()
@@ -45,14 +45,15 @@ public class CarWhell : MonoBehaviour
             yield return null;
         }
 
-        _driver = Instantiate(_driverPrefab, _driverPlace.position, _driverPlace.rotation);
+        _driver = Instantiate(_driverPrefab, _driverPlace.position, _driverPlace.rotation, this.transform);
+        _driver.Init(_upload);
     }
 
     public void MoveAfterRepair()
     {
         _driver.gameObject.SetActive(false);
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(transform.DOMove(_carSpawnerWhell._spawnPoint.position, 2f));
+        sequence.Append(transform.DOMove(_carSpawnerNew._spawnPoint.position, 2f));
 
         Destroy(gameObject, 3);
     }
@@ -60,6 +61,6 @@ public class CarWhell : MonoBehaviour
     public void MoveToGarage()
     {
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(transform.DOMove(_carSpawnerWhell._deliveryPoint.position, 2f));
+        sequence.Append(transform.DOMove(_carSpawnerNew._deliveryPoint.position, 2f));
     }
 }

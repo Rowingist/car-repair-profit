@@ -46,7 +46,7 @@ public class CarSpawnRepair : MonoBehaviour
     private void InstantiateCar()
     {
         CarRepair newCar = Instantiate(_carsPrefabs[CalculateNumberPrebab()], _spawnPoint.position, _spawnPoint.rotation, null);
-        newCar.InitSpawner(this, _deliveryArea);
+      //  newCar.InitSpawner(this, _deliveryArea);
         newCar.MoveToGarage();
         _currentCar = newCar;
         _isGarageFree = false;

@@ -8,12 +8,13 @@ using System.Linq;
 
 public class WhellArea : MonoBehaviour
 {
-    [SerializeField] private Stack _whellStack;
+    //[SerializeField] private Stack _whellStack;
     [SerializeField] private BoxCollider _whellArea;
     [SerializeField] private float _collectionDelay = 0.1f;
 
     private CarWhell _car;
     private Coroutine CollectCoroutine;
+    private int _countDelivery;
 
     public event UnityAction CarArrivaedToWhell;
 
@@ -23,7 +24,7 @@ public class WhellArea : MonoBehaviour
     private void OnEnable()
     {
         Collected += OnWhellCollected;
-        _whellStack.gameObject.SetActive(false);
+      //  _whellStack.gameObject.SetActive(false);
     }
 
     private void OnDisable()
@@ -44,7 +45,7 @@ public class WhellArea : MonoBehaviour
 
             _car = car;
 
-            _whellStack.gameObject.SetActive(true);
+          //  _whellStack.gameObject.SetActive(true);
         }
     }
 
@@ -56,13 +57,13 @@ public class WhellArea : MonoBehaviour
                 StopCoroutine(CollectCoroutine);
         }
 
-        if (other.gameObject.TryGetComponent(out CarWhell car))
-            _whellStack.gameObject.SetActive(false);
+       // if (other.gameObject.TryGetComponent(out CarWhell car))
+           // _whellStack.gameObject.SetActive(false);
     }
 
     private void OnWhellCollected(Whell whell)
     {
-        _whellStack.Add();
+      //  _whellStack.Add();
     }
 
     private IEnumerator CollectFrom(Player player)
@@ -71,9 +72,9 @@ public class WhellArea : MonoBehaviour
 
         while (Physics.CheckBox(_whellArea.center, _whellArea.size))
         {
-            Place place = _whellStack.Places.FirstOrDefault(place => place.IsAvailible);
+         //   Place place = _whellStack.Places.FirstOrDefault(place => place.IsAvailible);
 
-            if (place != default)
+         //   if (place != default)
             {
                 whell = player.Bag.Sell();
 
@@ -83,16 +84,16 @@ public class WhellArea : MonoBehaviour
 
                     movable.Unload();
 
-                    place.Reserve(whell);
+                //    place.Reserve(whell);
 
                     Collected?.Invoke(whell);
                 }
             }
 
-            if (place == default)
+           // if (place == default)
             {
                 CarFixed?.Invoke();
-                _whellStack.ClearPlaces();
+             //   _whellStack.ClearPlaces();
                 yield break;
             }
             yield return new WaitForSeconds(_collectionDelay);

@@ -1,19 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using DG.Tweening;
 
-public class CarSpawnerWhell : MonoBehaviour
+public class CarSpawnerNewBox : MonoBehaviour
 {
-    [SerializeField] private List<CarWhell> _carsPrefabs;
-    [SerializeField] private WhellArea _whellArea;
-
-    public Transform _spawnPoint; // свойста
+    [SerializeField] private List<CarRepair> _carsPrefabs;
+    public Transform _spawnPoint;
     public Transform _deliveryPoint;
+    public Transform _repairPoint;
 
+    private Upload _upload;
     private bool _isGarageFree = true;
-    private CarWhell _currentCar;
+    private CarRepair _currentCar;
+
+    private void Awake()
+    {
+        _upload = GetComponentInChildren<Upload>();
+    }
 
     private void Start()
     {
@@ -22,12 +25,12 @@ public class CarSpawnerWhell : MonoBehaviour
 
     private void OnEnable()
     {
-        _whellArea.CarFixed += OnSpawnNew;
+        _upload.CarFixed += OnSpawnNew;
     }
 
     private void OnDisable()
     {
-        _whellArea.CarFixed -= OnSpawnNew;
+       _upload.CarFixed -= OnSpawnNew;
     }
 
     private void OnSpawnNew()
@@ -42,8 +45,8 @@ public class CarSpawnerWhell : MonoBehaviour
 
     private void InstantiateCar()
     {
-        CarWhell newCar = Instantiate(_carsPrefabs[CalculateNumberPrebab()], _spawnPoint.position, _spawnPoint.rotation, null);
-       // newCar.InitSpawner(this, _whellArea); 
+        CarRepair newCar = Instantiate(_carsPrefabs[CalculateNumberPrebab()], _spawnPoint.position, _spawnPoint.rotation, null);
+        newCar.InitSpawner(this, _upload);
         newCar.MoveToGarage();
         _currentCar = newCar;
         _isGarageFree = false;
