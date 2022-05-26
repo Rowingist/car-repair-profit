@@ -45,17 +45,17 @@ public class CarWhell : MonoBehaviour
             yield return null;
         }
 
-        _driver = Instantiate(_driverPrefab, _driverPlace.position, _driverPlace.rotation, this.transform);
+        _driver = Instantiate(_driverPrefab, _driverPlace.position, _driverPlace.rotation, null);
         _driver.Init(_upload);
     }
 
     public void MoveAfterRepair()
     {
-        _driver.gameObject.SetActive(false);
+        Destroy(_driver.gameObject);
         Sequence sequence = DOTween.Sequence();
         sequence.Append(transform.DOMove(_carSpawnerNew._spawnPoint.position, 2f));
 
-        Destroy(gameObject, 3);
+        Destroy(gameObject, 2);
     }
 
     public void MoveToGarage()

@@ -5,9 +5,11 @@ using UnityEngine;
 public class CarSpawnerNewBox : MonoBehaviour
 {
     [SerializeField] private List<CarRepair> _carsPrefabs;
-    public Transform _spawnPoint;
+
+    public Transform _spawnPoint; //свойства
     public Transform _deliveryPoint;
     public Transform _repairPoint;
+    public Transform _afterRepairPoint;
 
     private Upload _upload;
     private bool _isGarageFree = true;

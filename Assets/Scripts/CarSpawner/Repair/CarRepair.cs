@@ -11,23 +11,27 @@ public class CarRepair : MonoBehaviour
     [SerializeField] private Transform _driverPlace;
 
     private CarSpawnerNewBox _carSpawnerNewBox;
+    private DeliveryArea _deliveryArea;
     private Upload _upload;
     private Driver _driver;
 
-    void Start()
-    {
-        _upload.CarArrivedToDelivery += DropDriver;
-    }
-
     private void OnDisable()
     {
-        _upload.CarArrivedToDelivery -= DropDriver; 
+        _deliveryArea.CarArrivedToDelivery -= DropDriver;
+        _deliveryArea.PlayerTakeTheCar -= MoveToRepair;
     }
 
     public void InitSpawner(CarSpawnerNewBox carSpawner, Upload upload)
     {
         _carSpawnerNewBox = carSpawner;
         _upload = upload;
+    }
+
+    public void InitDelivery(DeliveryArea deliveryArea)
+    {
+        _deliveryArea = deliveryArea;
+        _deliveryArea.CarArrivedToDelivery += DropDriver;
+        _deliveryArea.PlayerTakeTheCar += MoveToRepair;
     }
 
     private void DropDriver()
@@ -44,18 +48,18 @@ public class CarRepair : MonoBehaviour
 
             yield return null;
         }
-        _driver = Instantiate(_driverPrefab, _driverPlace.position, _driverPlace.rotation, this.transform);
+        _driver = Instantiate(_driverPrefab, _driverPlace.position, _driverPlace.rotation, null);
         _driver.Init(_upload);
     }
 
 
     public void MoveAfterRepair()
     {
-        _driver.gameObject.SetActive(false);
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(transform.DOMove(_carSpawnerNewBox._spawnPoint.position, 2f));
 
-        Destroy(gameObject, 3);
+        _driver.transform.SetParent(this.transform);
+        sequence.Append(transform.DOMove(_carSpawnerNewBox._afterRepairPoint.position, 2f));
+        Destroy(gameObject, 2);
     }
 
     public void MoveToGarage()
@@ -64,11 +68,9 @@ public class CarRepair : MonoBehaviour
         sequence.Append(transform.DOMove(_carSpawnerNewBox._deliveryPoint.position, 2f));
     }
 
-    //private void MoveToRepair()
-    //{
-    //    IsInDeliveryZone = false;
-    //    Sequence sequence = DOTween.Sequence();
-    //    //  sequence.Append(transform.DOMove(_carSpawnerNewBox._repairPointPoint.position, 3f));
-    //}
-
+    private void MoveToRepair()
+    {
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(transform.DOMove(_carSpawnerNewBox._repairPoint.position, 2f));
+    }
 }

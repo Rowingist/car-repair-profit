@@ -11,6 +11,7 @@ public class DeliveryArea : MonoBehaviour
     private CarRepair _carRepair;
 
     public event UnityAction CarArrivedToDelivery;
+    public event UnityAction PlayerTakeTheCar;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -18,47 +19,29 @@ public class DeliveryArea : MonoBehaviour
         {
             if (_isCarArrivedToDelivery)
             {
-                Debug.Log("Player enter in delivery");
+                player.transform.DOScale(new Vector3(0.01f, 0.01f, 0.01f), 0); // нужно другое решение скрытия плеера
+
                 player.transform.SetParent(_carRepair.transform);
-                player.gameObject.SetActive(false);
-                // PlayerTakeTheCar?.Invoke();
+
+                PlayerTakeTheCar?.Invoke();
             }
         }
 
         if (other.gameObject.TryGetComponent(out CarRepair carRepair))
         {
             _carRepair = carRepair;
+            _carRepair.InitDelivery(this);
 
             CarArrivedToDelivery?.Invoke();
             _isCarArrivedToDelivery = true;
         }
     }
 
-
-    //private CarRepair _car;
-
-    //public event UnityAction CarArrivaedToDelivery;
-    //public event UnityAction PlayerTakeTheCar;
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.gameObject.TryGetComponent(out CarRepair car))
-    //    {
-    //        CarArrivaedToDelivery?.Invoke();
-
-    //        _car = car;
-    //    }
-
-    //    if (other.gameObject.TryGetComponent(out Player player))
-    //    {
-    //        if (_car.IsInDeliveryZone)
-    //        {
-    //            player.transform.SetParent(_car.transform);
-
-    //            player.gameObject.SetActive(false);
-
-    //            PlayerTakeTheCar?.Invoke();
-    //        }
-    //    }
-    //}
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.TryGetComponent(out CarRepair carRepair))
+        {
+            _isCarArrivedToDelivery = false;
+        }
+    }
 }

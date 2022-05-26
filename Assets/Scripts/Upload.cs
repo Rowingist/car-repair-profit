@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using DG.Tweening;
+
 
 public class Upload : MonoBehaviour
 {
     public int _neeedToFix = 3; // свойство
 
-    private int _currentUpload = 0; 
+    private int _currentUpload = 0;
     private float _collectionDelay = 0.2f;
     private Coroutine CollectCoroutine;
     private BoxCollider _boxCollider;
@@ -15,7 +17,7 @@ public class Upload : MonoBehaviour
 
     public event UnityAction CarFixed;
     public event UnityAction CarArrivedToDelivery;
-    public event UnityAction<int,int> CountPartChanged;
+    public event UnityAction<int, int> CountPartChanged;
 
     private void Start()
     {
@@ -26,6 +28,9 @@ public class Upload : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out Player player))
         {
+            player.transform.SetParent(null);
+            player.transform.DOScale(new Vector3(1, 1, 1), 0.5f);
+
             if (_isCarArrivedToRepair)
                 CollectCoroutine = StartCoroutine(CollectFrom(player));
         }
@@ -34,6 +39,12 @@ public class Upload : MonoBehaviour
         {
             CarArrivedToDelivery?.Invoke();
             _isCarArrivedToRepair = true;
+        }
+
+        if (other.gameObject.TryGetComponent(out CarRepair carRepair))
+        {
+            _isCarArrivedToRepair = true;
+            CarArrivedToDelivery?.Invoke();
         }
     }
 
