@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using DG.Tweening;
-
+using System;
 
 public class Upload : MonoBehaviour
 {
@@ -18,6 +18,7 @@ public class Upload : MonoBehaviour
     public event UnityAction CarFixed;
     public event UnityAction CarArrivedToDelivery;
     public event UnityAction<int, int> CountPartChanged;
+    public static Action MainScoreChanged;
 
     private void Start()
     {
@@ -73,6 +74,7 @@ public class Upload : MonoBehaviour
             if (whell != null)
             {
                 _currentUpload++;
+                MainScoreChanged?.Invoke(); // static norm?
                 CountPartChanged?.Invoke(_currentUpload, _neeedToFix);
 
                 MovablePrefab movable = whell.GetComponent<MovablePrefab>();
