@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +6,6 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField] private Stock _stock;
     [SerializeField] private Item _item;
-    [SerializeField] private Button _buy;
     [SerializeField] private int _startSpawn = 0;
 
     private Item _newItem;
@@ -16,13 +13,15 @@ public class Spawner : MonoBehaviour
     private void OnEnable()
     {
         Spawn();
-        if (_startSpawn > 0)
-            DepayedSpawn();
-
-        _buy.onClick.AddListener(Push);
     }
 
-    private void DepayedSpawn()
+    private void Start()
+    {
+        if (_startSpawn > 0)
+            DelayedSpawn();
+    }
+
+    private void DelayedSpawn()
     {
         StartCoroutine(SpawnArray());
     }
@@ -33,15 +32,11 @@ public class Spawner : MonoBehaviour
         for (int i = 0; i < _startSpawn; i++)
         {
             Push();
+            yield return new WaitForSeconds(0.005f);
         }
     }
 
-    private void OnDisable()
-    {
-        _buy.onClick.RemoveListener(Push);
-    }
-
-    private void Push()
+    public void Push()
     {
         if (_stock.Filled)
             return;
@@ -54,6 +49,7 @@ public class Spawner : MonoBehaviour
     private void Spawn()
     {
         Item newItem = Instantiate(_item);
+        newItem.transform.position = transform.position;
         _newItem = newItem;
         _newItem.gameObject.SetActive(false);
     }

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class Player : Area
 {
     [SerializeField] private Button _buyButton;
+    [SerializeField] private Transform _walletPoint;
+
     private float _spentTimeAfterPut;
     private IWallet _wallet = new Wallet(0);
 
@@ -35,6 +37,7 @@ public class Player : Area
                 GameCash cash = (GameCash)item;
                 _wallet.Replenish(cash.Value);
                 GotCash?.Invoke();
+                Stock.MoveToDestination(cash, _walletPoint);
                 cash.Collect();
                 return;
             }

@@ -1,22 +1,36 @@
 using MoreMountains.Feedbacks;
+using System.Collections;
 using UnityEngine;
 
 public class ItemMover : MonoBehaviour
 {
-    [SerializeField] private MMFeedbackPosition _moveFeedback;
+    [SerializeField] private Transform _item;
+    [SerializeField] private AnimationCurve _scaleCurve;
+    [SerializeField] private MMFeedbacks _scaleFeedback;
 
-    public void SetTarget(Item item)
+    private Transform _target;
+
+    public void SetDestination(Transform destination)
     {
-        _moveFeedback.AnimatePositionTarget = item.gameObject;
+        _target = destination;
     }
 
-    public void SetInitialPosition(Vector3 initialPosistion)
+    public void Move()
     {
-        _moveFeedback.InitialPosition = initialPosistion;
+        StartCoroutine(UpdateInitialPosition(1f));
+        _scaleFeedback.Initialization();
+        _scaleFeedback?.PlayFeedbacks();
     }
 
-    public void SetDestination(Vector3 destinationPosition)
+    private IEnumerator UpdateInitialPosition(float updateTime)
     {
-        _moveFeedback.DestinationPosition = destinationPosition;
+        float t = 0;
+        while (t < 1)
+        {
+            _item.transform.position = Vector3.Lerp(_item.transform.position, _target.position, t);
+            t += Time.deltaTime / updateTime;
+            yield return null;
+        }
     }
+
 }

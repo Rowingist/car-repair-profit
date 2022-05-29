@@ -2,15 +2,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CellsSequence), typeof(ItemMover))]
+[RequireComponent(typeof(CellsSequence))]
 public class Stock : MonoBehaviour
 {
     [SerializeField] private StockType _stockType;
     [SerializeField] private ItemType _itemsType;
-    
 
     private CellsSequence _cellsSequense;
-    private ItemMover _itemMover;
 
     private Stack<Item> _itemsPlacedInStack = new Stack<Item>();
 
@@ -24,7 +22,6 @@ public class Stock : MonoBehaviour
     private void Start()
     {
         _cellsSequense = GetComponent<CellsSequence>();
-        _itemMover = GetComponent<ItemMover>();
     }
 
     public void Push(Item item)
@@ -67,13 +64,18 @@ public class Stock : MonoBehaviour
         if (firstEmpty)
         {
             _itemsPlacedInStack.Push(item);
-            _itemMover.SetTarget(item);
-            _itemMover.SetInitialPosition(item.transform.position);
-            item.transform.position = firstEmpty.transform.position;
+            MoveToDestination(item, firstEmpty.transform);
+
             item.transform.localRotation = firstEmpty.transform.rotation;
             item.transform.parent = firstEmpty.transform;
             firstEmpty.Fill();
         }
+    }
+
+    public void MoveToDestination(Item item, Transform destination)
+    {
+        item.ItemMover.SetDestination(destination);
+        item.ItemMover.Move();
     }
 
     private void UnparentTop()
