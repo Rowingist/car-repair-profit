@@ -10,7 +10,7 @@ public class CarWhell : MonoBehaviour
     [SerializeField] private Driver _driverPrefab;
     [SerializeField] private Transform _driverPlace;
 
-    private CarSpawnerNew _carSpawnerNew;
+    private CarSpawnerWhell _carSpawnerNew;
     private Upload _upload;
     private Driver _driver;
 
@@ -24,7 +24,7 @@ public class CarWhell : MonoBehaviour
         _upload.CarArrivedToDelivery -= DropDriver;
     }
 
-    public void InitSpawner(CarSpawnerNew carSpawner, Upload upload)
+    public void InitSpawner(CarSpawnerWhell carSpawner, Upload upload)
     {
         _carSpawnerNew = carSpawner;
         _upload = upload;

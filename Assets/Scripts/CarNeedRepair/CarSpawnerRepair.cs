@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarSpawnerNewBox : MonoBehaviour
+public class CarSpawnerRepair : MonoBehaviour
 {
     [SerializeField] private List<CarRepair> _carsPrefabs;
 

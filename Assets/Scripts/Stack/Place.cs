@@ -6,6 +6,8 @@ using UnityEngine.Events;
 public class Place : MonoBehaviour
 {
     private Whell _whell;
+    private PartOne _part;
+
 
     public bool IsAvailible { get; private set; }
 
@@ -18,6 +20,12 @@ public class Place : MonoBehaviour
     {
         IsAvailible = false;
         _whell = whell;
+    }
+
+    public void ReservePart(PartOne part)//
+    {
+        IsAvailible = false;
+        _part = part;
     }
 
     public void Free()

@@ -946,7 +946,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7607554733789974492}
   - component: {fileID: 7607554733782491146}
-  - component: {fileID: 358758114071984086}
+  - component: {fileID: 6714680255984118546}
   m_Layer: 0
   m_Name: DriverPart
   m_TagString: Untagged
@@ -995,7 +995,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &358758114071984086
+--- !u!114 &6714680255984118546
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1004,9 +1004,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7607554733789877180}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 932828686c15ba64f9ee4696477c065a, type: 3}
+  m_Script: {fileID: 11500000, guid: cb47e6f6e4c6eb845aed752e823c86a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _textInWidget: {fileID: 3153454824385930651}
+  _panelWidget: {fileID: 3153454823028168034}
 --- !u!1 &7607554733789877182
 GameObject:
   m_ObjectHideFlags: 0
@@ -1933,3 +1935,19 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3516871934145279986, guid: 0aa88600a8e346147a4212698ded2a34, type: 3}
   m_PrefabInstance: {fileID: 1949251667154245679}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3153454823028168034 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3516871935487577421, guid: 0aa88600a8e346147a4212698ded2a34, type: 3}
+  m_PrefabInstance: {fileID: 1949251667154245679}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3153454824385930651 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3516871934632721844, guid: 0aa88600a8e346147a4212698ded2a34, type: 3}
+  m_PrefabInstance: {fileID: 1949251667154245679}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

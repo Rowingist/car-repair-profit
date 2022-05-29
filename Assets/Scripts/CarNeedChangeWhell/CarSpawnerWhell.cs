@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarSpawnerNew : MonoBehaviour
+public class CarSpawnerWhell : MonoBehaviour
 {
     [SerializeField] private List<CarWhell> _carsPrefabs;
     public Transform _spawnPoint;

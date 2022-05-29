@@ -30,8 +30,9 @@ public class Upload : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out Player player))
         {
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(player.transform.DOScale(new Vector3(1, 1, 1), 0f));
             player.transform.SetParent(null);
-            player.transform.DOScale(new Vector3(1, 1, 1), 0.5f);
 
             if (_isCarArrivedToRepair)
                 CollectCoroutine = StartCoroutine(CollectFrom(player));
@@ -59,9 +60,10 @@ public class Upload : MonoBehaviour
         }
 
         if (other.gameObject.TryGetComponent(out CarWhell carWhell))
-        {
             _isCarArrivedToRepair = false;
-        }
+
+        if (other.gameObject.TryGetComponent(out CarRepair carRepair))
+            _isCarArrivedToRepair = false;
     }
 
     private IEnumerator CollectFrom(Player player)

@@ -8,7 +8,7 @@ public class Shop : MonoBehaviour
 {
     [SerializeField] private MoneyOnScreen _moneyOnScreen;
 
-    private int _purchasePrice = 3;
+    private int _purchasePrice = 1;
 
     public event UnityAction<int> OrderPlaced;
 

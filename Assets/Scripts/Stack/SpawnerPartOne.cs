@@ -1,13 +1,13 @@
-using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
-using System;
+using System.Linq;
 
-public class Spawner : MonoBehaviour
-{
+public class SpawnerPartOne : MonoBehaviour
+{   
     [SerializeField] private Stack _shopStack;
     [SerializeField] private Transform _spawnPoint;
-    [SerializeField] private Whell _whellTemplate;
+    [SerializeField] private PartOne _partOneTemplate;
     [SerializeField] private Shop _shop;
 
     private void OnEnable()
@@ -31,13 +31,13 @@ public class Spawner : MonoBehaviour
         Place place = _shopStack.Places.FirstOrDefault(place => place.IsAvailible);
         if (place != null)
         {
-            Whell whell = Instantiate(_whellTemplate, _spawnPoint.position, _whellTemplate.transform.rotation);
+            PartOne part = Instantiate(_partOneTemplate, _spawnPoint.position, _partOneTemplate.transform.rotation);
 
-            whell.GetComponent<MovablePrefab>().MoveOnShalve(place.transform.position);
+            part.GetComponent<MovablePrefab>().MoveOnShalve(place.transform.position);
 
-            whell.transform.SetParent(place.transform);
+            part.transform.SetParent(place.transform);
 
-            place.Reserve(whell);
+            place.ReservePart(part);
 
             _shopStack.Add();
         }

@@ -10,7 +10,7 @@ public class CarRepair : MonoBehaviour
     [SerializeField] private Driver _driverPrefab;
     [SerializeField] private Transform _driverPlace;
 
-    private CarSpawnerNewBox _carSpawnerNewBox;
+    private CarSpawnerRepair _carSpawnerNewBox;
     private DeliveryArea _deliveryArea;
     private Upload _upload;
     private Driver _driver;
@@ -21,7 +21,7 @@ public class CarRepair : MonoBehaviour
         _deliveryArea.PlayerTakeTheCar -= MoveToRepair;
     }
 
-    public void InitSpawner(CarSpawnerNewBox carSpawner, Upload upload)
+    public void InitSpawner(CarSpawnerRepair carSpawner, Upload upload)
     {
         _carSpawnerNewBox = carSpawner;
         _upload = upload;
