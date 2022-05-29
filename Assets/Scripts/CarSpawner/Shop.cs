@@ -1,25 +1,24 @@
 using UnityEngine;
-using UnityEngine.Events;
 
-public class Shop : MonoBehaviour
+public class Shop : Area
 {
-    public UnityEvent GotInto;
-    public UnityEvent WentOut;
+    [SerializeField] private ShopView _shopView;
 
-    private void OnTriggerEnter(Collider other)
+
+
+    public override void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Player>())
-        {
-            print("player");
-            GotInto?.Invoke();
-        }
+        base.OnTriggerEnter(other);
+        if (Player)
+            _shopView.gameObject.SetActive(true);
     }
 
-    private void OnTriggerExit(Collider other)
+    public override void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<Player>())
-        {
-            WentOut?.Invoke();
-        }
+        base.OnTriggerExit(other);
+        if (Player)
+            _shopView.gameObject.SetActive(false);
     }
+
+
 }
