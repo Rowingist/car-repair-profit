@@ -1,45 +1,60 @@
+using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 using UnityEngine;
-using DG.Tweening;
-using System;
+using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
-    //[SerializeField] private StackPack _shopStack;
-    [SerializeField] private Transform _spawnPoint;
-    [SerializeField] private Item _whellTemplate;
-    [SerializeField] private Shop _shop;
+    [SerializeField] private Stock _stock;
+    [SerializeField] private Item _item;
+    [SerializeField] private Button _buy;
+    [SerializeField] private int _startSpawn = 0;
 
-    //private void OnEnable()
-    //{
-    //    _shop.GotInto += OnDeliverParts;
-    //}
+    private Item _newItem;
 
-    //private void OnDisable()
-    //{
-    //    _shop.GotInto -= OnDeliverParts;
-    //}
-
-    private void OnDeliverParts(int countParts)
+    private void OnEnable()
     {
-        for (int i = 0; i < countParts; i++)
-            InstantiatePrefab();
+        Spawn();
+        if (_startSpawn > 0)
+            DepayedSpawn();
+
+        _buy.onClick.AddListener(Push);
     }
 
-    private void InstantiatePrefab()
+    private void DepayedSpawn()
     {
-        //Tower place = _shopStack.Places.FirstOrDefault(place => place.IsAvailible);
-        //if (place != null)
-        //{
-        //    Item whell = Instantiate(_whellTemplate, _spawnPoint.position, _whellTemplate.transform.rotation);
+        StartCoroutine(SpawnArray());
+    }
 
-        //    whell.GetComponent<MovablePrefab>().MoveOnShalve(place.transform.position);
+    private IEnumerator SpawnArray()
+    {
+        yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < _startSpawn; i++)
+        {
+            Push();
+        }
+    }
 
-        //    whell.transform.SetParent(place.transform);
+    private void OnDisable()
+    {
+        _buy.onClick.RemoveListener(Push);
+    }
 
-        //    place.Reserve(whell);
+    private void Push()
+    {
+        if (_stock.Filled)
+            return;
 
-        //    _shopStack.Add();
-        //}
+        _newItem.gameObject.SetActive(true);
+        _stock.Push(_newItem);
+        Spawn();
+    }
+
+    private void Spawn()
+    {
+        Item newItem = Instantiate(_item);
+        _newItem = newItem;
+        _newItem.gameObject.SetActive(false);
     }
 }

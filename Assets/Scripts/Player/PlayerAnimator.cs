@@ -51,7 +51,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private void TransitToCaryingWeight()
     {
-        int caryingStack = _playerBag.NotEmpty ? 1 : 0;
+        int caryingStack = _playerBag.Empty ? 0 : 1;
         _currentLayerWeight = Mathf.Lerp(_currentLayerWeight, caryingStack, Time.deltaTime * _transitionSpeed);
         _animator.SetLayerWeight(_caryingLayerIndex, _currentLayerWeight);
     }

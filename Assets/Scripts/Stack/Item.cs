@@ -9,8 +9,10 @@ public class Item : MonoBehaviour
 
 public enum ItemType
 {
+    Multiple,
     Wheel,
     Engine,
     Oil,
-    Paint
+    Paint,
+    Money
 }
