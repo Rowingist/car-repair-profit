@@ -17,7 +17,7 @@ public class PushingArea : Area
             _spentTimeAfterPush = 0;
             if (Player)
             {
-                if (Player.Stock.Filled)
+                if (Player.Stock.Filled && Stock.StockType != StockType.ForMoney)
                     return;
 
                 Item transmitting = Stock.Pull();

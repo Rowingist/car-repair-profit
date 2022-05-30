@@ -26,7 +26,7 @@ public class Stock : MonoBehaviour
 
     public void Push(Item item)
     {
-        if (Filled)
+        if (Filled && item.ItemType != ItemType.Money)
             return;
 
         if (_stockType == StockType.Single)
@@ -40,8 +40,11 @@ public class Stock : MonoBehaviour
             return;
         }
 
-        LocateAccordingToCells(item);
-        TakenItem?.Invoke();
+        if (_stockType == StockType.Multiple)
+        {
+            LocateAccordingToCells(item);
+            TakenItem?.Invoke();
+        }
     }
 
     public Item Pull()
