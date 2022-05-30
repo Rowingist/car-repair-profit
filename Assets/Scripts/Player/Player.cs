@@ -9,6 +9,7 @@ public class Player : Area
 
     private float _spentTimeAfterPut;
     private IWallet _wallet = new Wallet(0);
+    private Stock _onStayingStock;
 
     public event Action Payed;
     public event Action GotCash;
@@ -21,6 +22,14 @@ public class Player : Area
     private void Update()
     {
         _spentTimeAfterPut += Time.deltaTime;
+    }
+
+    public override void OnTriggerEnter(Collider other)
+    {
+        if(other.TryGetComponent(out PullingArea onStaingArea))
+        {
+            _onStayingStock = onStaingArea.Stock;
+        }
     }
 
     private void OnDisable()
@@ -53,7 +62,22 @@ public class Player : Area
 
     public Item Pull()
     {
-        return Stock.Pull();
+        if(_onStayingStock.StockType == StockType.Single)
+        {
+            print(_onStayingStock.StockType);
+
+            if (_onStayingStock) 
+            {
+                if (Stock.GetTopItem().ItemType == _onStayingStock.ItemsType)
+                    return Stock.Pull();
+            }
+        }
+        else if(_onStayingStock.StockType == StockType.Multiple)
+        {
+            return Stock.Pull();
+        }
+
+        return null;
     }
 
     public void Pay(int cash)

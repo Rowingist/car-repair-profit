@@ -18,6 +18,7 @@ public class Stock : MonoBehaviour
     public bool Empty => _itemsPlacedInStack.Count == 0;
     public bool Filled => _cellsSequense.AllCellsAreFilled();
     public StockType StockType => _stockType;
+    public ItemType ItemsType => _itemsType;
 
     private void Start()
     {
@@ -40,11 +41,10 @@ public class Stock : MonoBehaviour
             return;
         }
 
-        if (_stockType == StockType.Multiple)
-        {
+
             LocateAccordingToCells(item);
             TakenItem?.Invoke();
-        }
+
     }
 
     public Item Pull()
