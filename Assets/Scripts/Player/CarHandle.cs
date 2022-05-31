@@ -53,12 +53,12 @@ public class CarHandle : MonoBehaviour
 
     private void OnDriveInGarage()
     {
-        StartCoroutine(Driwing());
+        StartCoroutine(Driving());
     }
 
-    private IEnumerator Driwing()
+    private IEnumerator Driving()
     {
-        yield return new WaitForSeconds(0.55f);
+        yield return new WaitForSeconds(0.15f);
         if (_pullingArea.Stock.Filled)
         {
             _carAnimator.SetTrigger(_driveToExit);
