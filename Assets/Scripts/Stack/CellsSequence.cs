@@ -51,4 +51,17 @@ public class CellsSequence : MonoBehaviour
         var firstFilled = _cells.FirstOrDefault(c => c.IsEmpty == true);
         return firstFilled == null;
     }
+
+    public void ClearAllCells()
+    {
+        foreach (var cell in _cells)
+        {
+            cell.Clear();
+        }
+    }
+
+    public int GetCount()
+    {
+        return _cells.Count;
+    }
 }

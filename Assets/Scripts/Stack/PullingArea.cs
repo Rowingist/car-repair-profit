@@ -1,8 +1,14 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class PullingArea : Area
 {
+    [SerializeField] private bool _disablingItems;
+
     private float _spentTimeAfterPut;
+
+    public event Action Complited;
 
     private void Update()
     {
@@ -28,8 +34,20 @@ public class PullingArea : Area
                 {
                     Stock.Push(transmitting);
                 }
-
+                if(_disablingItems)
+                {
+                    StartCoroutine(DisablingItem(transmitting));  
+                }
             }
         }
+
+        if (Stock.Filled)
+            Complited?.Invoke();
+    }
+
+    private IEnumerator DisablingItem(Item transmitting)
+    {
+        yield return new WaitForSeconds(ActionInterval + 0.2f);
+        transmitting.gameObject.SetActive(false);
     }
 }

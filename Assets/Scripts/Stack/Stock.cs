@@ -17,6 +17,7 @@ public class Stock : MonoBehaviour
 
     public bool Empty => _itemsPlacedInStack.Count == 0;
     public bool Filled => _cellsSequense.AllCellsAreFilled();
+    public bool Blocked { get; private set; } 
     public StockType StockType => _stockType;
     public ItemType ItemsType => _itemsType;
 
@@ -94,6 +95,31 @@ public class Stock : MonoBehaviour
     public Item GetTopItem()
     {
         return _itemsPlacedInStack.Peek();
+    }
+
+    public void BlockSock()
+    {
+        Blocked = true;
+    }
+
+    public void UnblockSock()
+    {
+        Blocked = false;
+    }
+
+    public void CleanStock()
+    {
+        foreach(var item in _itemsPlacedInStack)
+        {
+            Destroy(item.gameObject);
+        }
+        _cellsSequense.ClearAllCells();
+        _itemsPlacedInStack.Clear();
+    }
+
+    public int GetDemandedCount()
+    {
+        return _cellsSequense.GetCount() - _itemsPlacedInStack.Count;
     }
 }
 

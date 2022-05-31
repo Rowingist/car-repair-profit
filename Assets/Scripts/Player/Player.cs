@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class Player : Area
 {
-    [SerializeField] private Button _buyButton;
     [SerializeField] private Transform _walletPoint;
 
     private float _spentTimeAfterPut;
@@ -14,11 +13,8 @@ public class Player : Area
     public event Action Payed;
     public event Action GotCash;
 
-    private void OnEnable()
-    {
-        _buyButton.onClick.AddListener(OnPay);
+    public ItemType ByingItemType { get; private set;
     }
-
     private void Update()
     {
         _spentTimeAfterPut += Time.deltaTime;
@@ -30,11 +26,6 @@ public class Player : Area
         {
             _onStayingStock = onStaingArea.Stock;
         }
-    }
-
-    private void OnDisable()
-    {
-        _buyButton.onClick.RemoveListener(OnPay);
     }
 
     public void Push(Item item)
@@ -62,6 +53,11 @@ public class Player : Area
 
     public Item Pull()
     {
+        if(_onStayingStock)
+            if (_onStayingStock.Blocked)
+                return null;
+        
+
         if(_onStayingStock.StockType == StockType.Single)
         {
             print(_onStayingStock.StockType);
@@ -82,7 +78,9 @@ public class Player : Area
 
     public void Pay(int cash)
     {
-        _wallet.Withdraw(cash);
+        bool canPay = _wallet.TryWithdraw(cash);
+        if (canPay)
+            Payed?.Invoke();
     }
 
     public int GetWalletCash()
@@ -90,9 +88,8 @@ public class Player : Area
         return _wallet.GetCashAmount();
     }
 
-    private void OnPay()
+    public void SetByingItemType(ItemType itemType)
     {
-        _wallet.Withdraw(10);
-        Payed?.Invoke();
+        ByingItemType = itemType;
     }
 }

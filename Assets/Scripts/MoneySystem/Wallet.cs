@@ -20,15 +20,16 @@ public class Wallet : IWallet
         _cash += cash;
     }
 
-    public void Withdraw(int cash)
+    public bool TryWithdraw(int cash)
     {
         if (cash > _cash)
         {
             Debug.LogError("Not enough money");
-            return;
+            return false;
         }
 
         _cash -= cash;
+        return true;
     }
 
     public int GetCashAmount()
@@ -40,6 +41,6 @@ public class Wallet : IWallet
 public interface IWallet
 {
     public void Replenish(int cash);
-    public void Withdraw(int cash);
+    public bool TryWithdraw(int cash);
     public int GetCashAmount();
 }

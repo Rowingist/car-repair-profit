@@ -1,49 +1,70 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private Stock _stock;
     [SerializeField] private Item _item;
     [SerializeField] private int _startSpawn = 0;
+    [SerializeField] private Player _player;
+    [SerializeField] private float _firstInitDelay = 0.5f;
+    [SerializeField] private float _secondsBetweenArraySpawn = 0.005f;
 
     private Item _newItem;
 
     private void OnEnable()
     {
         Spawn();
+        _player.Payed += Push;
     }
 
     private void Start()
     {
         if (_startSpawn > 0)
-            DelayedSpawn();
+            DelayedSpawn(_startSpawn, _firstInitDelay, _secondsBetweenArraySpawn);
     }
 
-    private void DelayedSpawn()
+    private void OnDisable()
     {
-        StartCoroutine(SpawnArray());
+        _player.Payed -= Push;
     }
 
-    private IEnumerator SpawnArray()
+    public void DelayedSpawn(int amount, float delay = 0.5f, float sesondsBetween = 0.005f)
     {
-        yield return new WaitForSeconds(0.5f);
-        for (int i = 0; i < _startSpawn; i++)
+        StartCoroutine(SpawningArray(amount, delay, sesondsBetween));
+    }
+
+    private IEnumerator SpawningArray(int startSpawn, float delay, float sesondsBetween)
+    {
+        yield return new WaitForSeconds(delay);
+        for (int i = 0; i < startSpawn; i++)
         {
             Push();
-            yield return new WaitForSeconds(0.005f);
+            yield return new WaitForSeconds(sesondsBetween);
         }
     }
 
-    public void Push()
+    private void Push()
     {
         if (_stock.Filled)
             return;
 
-        _newItem.gameObject.SetActive(true);
-        _stock.Push(_newItem);
-        Spawn();
+        if (_item.ItemType != ItemType.Money && _player.ByingItemType == _item.ItemType)
+        {
+            _newItem.gameObject.SetActive(true);
+            _stock.Push(_newItem);
+            Spawn();
+        }
+        else if(_item.ItemType == ItemType.Money)
+        {
+            _newItem.gameObject.SetActive(true);
+            _stock.Push(_newItem);
+            Spawn();
+        }
+        else
+        {
+            return;
+        }
     }
 
     private void Spawn()
