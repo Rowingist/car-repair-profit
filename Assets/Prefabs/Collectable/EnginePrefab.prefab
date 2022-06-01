@@ -139,7 +139,15 @@ PrefabInstance:
     - target: {fileID: 1963792510541831826, guid: d6d3fe6cf4391c342bfbd431c0232e23, type: 3}
       propertyPath: _item
       value: 
+      objectReference: {fileID: 136633968855245346}
+    - target: {fileID: 1963792510541831826, guid: d6d3fe6cf4391c342bfbd431c0232e23, type: 3}
+      propertyPath: _itemTransform
+      value: 
       objectReference: {fileID: 5587350723017077184}
+    - target: {fileID: 1963792510541831826, guid: d6d3fe6cf4391c342bfbd431c0232e23, type: 3}
+      propertyPath: _transitionTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1963792510541831827, guid: d6d3fe6cf4391c342bfbd431c0232e23, type: 3}
       propertyPath: m_RootOrder
       value: 0

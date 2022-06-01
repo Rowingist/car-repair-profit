@@ -57,6 +57,9 @@ public class Spawner : MonoBehaviour
         }
         else if(_item.ItemType == ItemType.Money)
         {
+            if (_player.InShop)
+                return;
+
             _newItem.gameObject.SetActive(true);
             _stock.Push(_newItem);
             Spawn();

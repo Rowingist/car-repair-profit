@@ -11,7 +11,7 @@ public class PlayerToCarTransition : MonoBehaviour
     {
         _playerStock.gameObject.SetActive(false);
         _bodyForparenting.parent = _carSeat;
-        StartCoroutine(Transition(0.5f, _carSeat));
+        StartCoroutine(Transition(0.15f, _carSeat));
         StartCoroutine(Scaling(0.5f, Vector3.zero));
     }
 
@@ -19,7 +19,7 @@ public class PlayerToCarTransition : MonoBehaviour
     {
         _playerStock.gameObject.SetActive(true);
         _bodyForparenting.parent = null;
-        StartCoroutine(Transition(0.5f, _carExit));
+        StartCoroutine(Transition(0.15f, _carExit));
         StartCoroutine(Scaling(0.5f, Vector3.one));
     }
 
@@ -34,6 +34,7 @@ public class PlayerToCarTransition : MonoBehaviour
             yield return null;
         }
     }
+
     private IEnumerator Scaling(float animationTime, Vector3 scale)
     {
         float t = 0;

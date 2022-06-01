@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ItemMover : MonoBehaviour
 {
-    [SerializeField] private Transform _item;
-    [SerializeField] private AnimationCurve _scaleCurve;
+    [SerializeField] private Transform _itemTransform;
+    [SerializeField] private float _transitionTime;
     [SerializeField] private MMFeedbacks _scaleFeedback;
 
     private Transform _target;
@@ -17,7 +17,7 @@ public class ItemMover : MonoBehaviour
 
     public void Move()
     {
-        StartCoroutine(UpdateInitialPosition(1f));
+        StartCoroutine(UpdateInitialPosition(_transitionTime));
         _scaleFeedback.Initialization();
         _scaleFeedback?.PlayFeedbacks();
     }
@@ -27,7 +27,7 @@ public class ItemMover : MonoBehaviour
         float t = 0;
         while (t < 1)
         {
-            _item.transform.position = Vector3.Lerp(_item.transform.position, _target.position, t);
+            _itemTransform.transform.position = Vector3.Lerp(_itemTransform.transform.position, _target.position, t);
             t += Time.deltaTime / updateTime;
             yield return null;
         }

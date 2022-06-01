@@ -17,7 +17,7 @@ public class Stock : MonoBehaviour
 
     public bool Empty => _itemsPlacedInStack.Count == 0;
     public bool Filled => _cellsSequense.AllCellsAreFilled();
-    public bool Blocked { get; private set; } 
+    public bool Blocked { get; private set; }
     public StockType StockType => _stockType;
     public ItemType ItemsType => _itemsType;
 
@@ -42,10 +42,8 @@ public class Stock : MonoBehaviour
             return;
         }
 
-
-            LocateAccordingToCells(item);
-            TakenItem?.Invoke();
-
+        LocateAccordingToCells(item);
+        TakenItem?.Invoke();
     }
 
     public Item Pull()
@@ -70,7 +68,7 @@ public class Stock : MonoBehaviour
             _itemsPlacedInStack.Push(item);
             MoveToDestination(item, firstEmpty.transform);
 
-            item.transform.localRotation = firstEmpty.transform.rotation;
+            item.transform.rotation = firstEmpty.transform.rotation;
             item.transform.parent = firstEmpty.transform;
             firstEmpty.Fill();
         }
@@ -109,7 +107,7 @@ public class Stock : MonoBehaviour
 
     public void CleanStock()
     {
-        foreach(var item in _itemsPlacedInStack)
+        foreach (var item in _itemsPlacedInStack)
         {
             Destroy(item.gameObject);
         }

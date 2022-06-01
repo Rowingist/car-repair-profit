@@ -16,7 +16,7 @@ public class Area : MonoBehaviour
     private void Start()
     {
         if (_stock.StockType == StockType.ForMoney)
-            ActionInterval = 0.01f;
+            ActionInterval = 0.0002f;
     }
 
     public virtual void OnTriggerEnter(Collider other)

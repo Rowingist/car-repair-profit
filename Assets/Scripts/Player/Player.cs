@@ -13,8 +13,9 @@ public class Player : Area
     public event Action Payed;
     public event Action GotCash;
 
-    public ItemType ByingItemType { get; private set;
-    }
+    public ItemType ByingItemType { get; private set; }
+    public bool InShop { get; private set; }
+
     private void Update()
     {
         _spentTimeAfterPut += Time.deltaTime;
@@ -91,5 +92,10 @@ public class Player : Area
     public void SetByingItemType(ItemType itemType)
     {
         ByingItemType = itemType;
+    }
+
+    public void EnterInShop(bool isInside)
+    {
+        InShop = isInside;
     }
 }
