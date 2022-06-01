@@ -34,6 +34,7 @@ public class PlayerToCarTransition : MonoBehaviour
             yield return null;
         }
     }
+
     private IEnumerator Scaling(float animationTime, Vector3 scale)
     {
         float t = 0;

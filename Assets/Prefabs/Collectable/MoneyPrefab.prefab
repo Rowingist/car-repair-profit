@@ -143,7 +143,7 @@ MonoBehaviour:
   _itemType: 5
   _itemMover: {fileID: 2693167301626575100}
   _value: 1
-  _deactivateAfrterCollectTime: 0.2
+  _deactivateAfrterCollectTime: 0.05
 --- !u!1001 &4476797409913808494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -170,7 +170,15 @@ PrefabInstance:
     - target: {fileID: 1963792510541831826, guid: d6d3fe6cf4391c342bfbd431c0232e23, type: 3}
       propertyPath: _item
       value: 
+      objectReference: {fileID: 2356204100219360105}
+    - target: {fileID: 1963792510541831826, guid: d6d3fe6cf4391c342bfbd431c0232e23, type: 3}
+      propertyPath: _itemTransform
+      value: 
       objectReference: {fileID: 7192145407238794551}
+    - target: {fileID: 1963792510541831826, guid: d6d3fe6cf4391c342bfbd431c0232e23, type: 3}
+      propertyPath: _transitionTime
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 1963792510541831827, guid: d6d3fe6cf4391c342bfbd431c0232e23, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -223,6 +231,10 @@ PrefabInstance:
       propertyPath: AnimateScaleTarget
       value: 
       objectReference: {fileID: 7053351167315028126}
+    - target: {fileID: 8202731933959801398, guid: d6d3fe6cf4391c342bfbd431c0232e23, type: 3}
+      propertyPath: AnimateScaleDuration
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d3fe6cf4391c342bfbd431c0232e23, type: 3}
 --- !u!4 &2693167301626575101 stripped

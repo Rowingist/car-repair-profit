@@ -37,7 +37,7 @@ public class CarHandle : MonoBehaviour
     private void OnDisable()
     {
         _carPlatform.Entered -= OnDriveInGarage;
-        _pullingArea.Complited += OnLiftDown;
+        _pullingArea.Complited -= OnLiftDown;
     }
 
     private void InitCars()
