@@ -24,4 +24,13 @@ public class WashingHandle : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out Player player))
+        {
+
+        }
+    }
+
 }

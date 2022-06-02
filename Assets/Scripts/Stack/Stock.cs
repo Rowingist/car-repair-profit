@@ -119,7 +119,13 @@ public class Stock : MonoBehaviour
     {
         return _cellsSequense.GetCount() - _itemsPlacedInStack.Count;
     }
+
+    public void FillAllCells()
+    {
+        _cellsSequense.FillAllCells();
+    }
 }
+
 
 public enum StockType
 {

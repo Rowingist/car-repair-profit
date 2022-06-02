@@ -64,4 +64,12 @@ public class CellsSequence : MonoBehaviour
     {
         return _cells.Count;
     }
+
+    public void FillAllCells() // shram
+    {
+        foreach (var cell in _cells)
+        {
+            cell.Fill();
+        }
+    }
 }

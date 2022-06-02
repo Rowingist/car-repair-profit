@@ -95,6 +95,8 @@ public class CarHandle : MonoBehaviour
     {
         _moneySpawner.DelayedSpawn(100);
         _carAnimator.SetTrigger(_leftGarage);
+
+        IsInBox = false; //shram
     }
 
     public void OnGetIntoGarage()
@@ -122,7 +124,10 @@ public class CarHandle : MonoBehaviour
     //shram scripts
     public void PushButtonStartWash()
     {
+        _stock.FillAllCells();
+       // _pullingArea.Stock.CleanStock();
+        //_stock.CleanStock();
+        _carAnimator.SetTrigger(_startWashing);
         print("washing start");
-        _stock.UnblockSock();
     }
 }

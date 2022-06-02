@@ -7753,7 +7753,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1135246192 stripped
 Transform:
@@ -8075,6 +8075,14 @@ PrefabInstance:
       propertyPath: _sitInCar
       value: 
       objectReference: {fileID: 1782267249}
+    - target: {fileID: 2791203848794950718, guid: bb249aaa1a82b1647b8c6515e409b3e9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2791203848794950718, guid: bb249aaa1a82b1647b8c6515e409b3e9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1.467
+      objectReference: {fileID: 0}
     - target: {fileID: 2791203848980449862, guid: bb249aaa1a82b1647b8c6515e409b3e9, type: 3}
       propertyPath: m_Icon
       value: 
@@ -8097,7 +8105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2791203849144312093, guid: bb249aaa1a82b1647b8c6515e409b3e9, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 2791203849144312093, guid: bb249aaa1a82b1647b8c6515e409b3e9, type: 3}
       propertyPath: m_LocalScale.x
@@ -11035,6 +11043,14 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 1782267248}
+    - target: {fileID: 6457863583331311016, guid: c64036cf3eca1e04f892cbcff55665bb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6457863583331311016, guid: c64036cf3eca1e04f892cbcff55665bb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1.349
+      objectReference: {fileID: 0}
     - target: {fileID: 6457863583672283275, guid: c64036cf3eca1e04f892cbcff55665bb, type: 3}
       propertyPath: m_RootOrder
       value: 19
