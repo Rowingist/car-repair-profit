@@ -11,6 +11,7 @@ public class CarHandle : MonoBehaviour
     [SerializeField] private string _liftDown = "LiftDown";
     [SerializeField] private string _driveToExit = "DriveToExit";
     [SerializeField] private string _leftGarage = "LeftGarage";
+    [SerializeField] private string _startWashing = "StartWashing"; //shram script
     [SerializeField] private CarDoor _carPlatform;
     [SerializeField] private PullingArea _pullingArea;
     [SerializeField] private GameObject[] _vihiclePrefabs;
@@ -18,9 +19,13 @@ public class CarHandle : MonoBehaviour
     [SerializeField] private Spawner _moneySpawner;
     [SerializeField] private PlayerToCarTransition _sitInCar;
 
+    [SerializeField] private Stock _stock; //shram script
+
     private int _activeCarIndex;
-    
+
     private List<GameObject> _cars = new List<GameObject>();
+
+    public bool IsInBox = false; //shram script
 
     private void OnEnable()
     {
@@ -82,6 +87,8 @@ public class CarHandle : MonoBehaviour
     {
         _carAnimator.SetTrigger(_liftUp);
         _pullingArea.Stock.UnblockSock();
+
+        IsInBox = true; //shram
     }
 
     public void OnLeftGarage()
@@ -101,7 +108,7 @@ public class CarHandle : MonoBehaviour
     {
         if (_cars[_activeCarIndex].gameObject.activeSelf)
             _cars[_activeCarIndex].gameObject.SetActive(false);
-        
+
         int random = Random.Range(0, _cars.Count);
         _activeCarIndex = random;
         _cars[_activeCarIndex].gameObject.SetActive(true);
@@ -110,5 +117,12 @@ public class CarHandle : MonoBehaviour
     public void GetPlayerOut()
     {
         _sitInCar.Exit(_carPlatform.transform);
+    }
+
+    //shram scripts
+    public void PushButtonStartWash()
+    {
+        print("washing start");
+        _stock.UnblockSock();
     }
 }
