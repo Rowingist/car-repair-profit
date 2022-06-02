@@ -4,43 +4,45 @@ using UnityEngine;
 public class Area : MonoBehaviour
 {
     [SerializeField] private Stock _stock;
-
-    protected float ActionInterval = 0.2f;
-    protected Player Player;
-
-    public Stock Stock => _stock;
+    [SerializeField] private float _transitionInterval = 0.2f;
 
     public event Action Entered;
     public event Action Left;
 
-    private void Start()
-    {
-        if (_stock.StockType == StockType.ForMoney)
-            ActionInterval = 0.0002f;
-    }
+    public Area ConnectedArea { get; private set; }
+    public Stock Stock => _stock;
+    public float TransitionInterval => _transitionInterval;
 
-    public virtual void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Player player))
-        {
+        if (other.GetComponent<Area>())
             Entered?.Invoke();
-            Player = player;
-        }
-    }
 
-    public virtual void OnTriggerStay(Collider other)
-    {
-        if(other.TryGetComponent(out Player player))
+        if (other.TryGetComponent(out PullingArea pullArea))
         {
-            Player = player;
+            ConnectedArea = pullArea;
+        }
+        else if (other.TryGetComponent(out PushingArea pushArea))
+        {
+            ConnectedArea = pushArea;
         }
     }
 
-    public virtual void OnTriggerExit(Collider other)
+    public void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<Player>())
+        if (other.GetComponent<Area>())
         {
             Left?.Invoke();
         }
+    }
+
+    public void Push(Item item)
+    {
+        _stock.PushToLastFreeCell(item);
+    }
+
+    public Item Pull()
+    {
+        return _stock.Pull(ConnectedArea.Stock.ItemsType);
     }
 }

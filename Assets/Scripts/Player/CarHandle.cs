@@ -25,7 +25,7 @@ public class CarHandle : MonoBehaviour
     private void OnEnable()
     {
         _carPlatform.Entered += OnDriveInGarage;
-        _pullingArea.Complited += OnLiftDown;
+        _pullingArea.Completed += OnLiftDown;
     }
 
     private void Start()
@@ -37,7 +37,7 @@ public class CarHandle : MonoBehaviour
     private void OnDisable()
     {
         _carPlatform.Entered -= OnDriveInGarage;
-        _pullingArea.Complited -= OnLiftDown;
+        _pullingArea.Completed -= OnLiftDown;
     }
 
     private void InitCars()
@@ -62,7 +62,7 @@ public class CarHandle : MonoBehaviour
         if (_pullingArea.Stock.Filled)
         {
             _carAnimator.SetTrigger(_driveToExit);
-            _pullingArea.Stock.CleanStock();
+            _pullingArea.Stock.Clear();
             yield break;
         }
         else

@@ -1,81 +1,58 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class Player : Area
+public class Player : MonoBehaviour
 {
     [SerializeField] private Transform _walletPoint;
+    [SerializeField] private PushingArea _pushArea;
+    [SerializeField] private PullingArea _pullArea;
 
-    private float _spentTimeAfterPut;
     private IWallet _wallet = new Wallet(0);
-    private Stock _onStayingStock;
 
     public event Action Payed;
     public event Action GotCash;
 
     public ItemType ByingItemType { get; private set; }
-    public bool InShop { get; private set; }
+    public PlayerStayingOn PlayerStayingOn { get; private set; }
 
-    private void Update()
+    private void Start()
     {
-        _spentTimeAfterPut += Time.deltaTime;
+        _wallet.Replenish(1000);
+        _pushArea.enabled = false;
+        _pullArea.enabled = false;
     }
 
-    public override void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent(out PullingArea onStaingArea))
+        if (other.GetComponent<PushingArea>()) { _pullArea.enabled = true; }
+        else if (other.GetComponent<PullingArea>()) { _pushArea.enabled = true; }     
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.GetComponent<Area>())
         {
-            _onStayingStock = onStaingArea.Stock;
+            _pushArea.enabled = false;
+            _pullArea.enabled = false;
         }
     }
 
-    public void Push(Item item)
-    {
-        if (item)
-        {
-            if(item.ItemType == ItemType.Money)
-            {
-                GameCash cash = (GameCash)item;
-                _wallet.Replenish(cash.Value);
-                GotCash?.Invoke();
-                Stock.MoveToDestination(cash, _walletPoint);
-                cash.Collect();
-                return;
-            }
+    //public void Push(Item item)
+    //{
+    //    if (item)
+    //    {
+    //        if (item.ItemType == ItemType.Money)
+    //        {
+    //            GameCash cash = (GameCash)item;
+    //            _wallet.Replenish(cash.Value);
+    //            GotCash?.Invoke();
+    //            cash.Collect();
+    //            return;
+    //        }
 
-            if (_spentTimeAfterPut >= ActionInterval)
-            {
-                _spentTimeAfterPut = 0;
-                Stock.Push(item);
-            }
-        }
-    }
-
-
-    public Item Pull()
-    {
-        if(_onStayingStock)
-            if (_onStayingStock.Blocked)
-                return null;
-        
-
-        if(_onStayingStock.StockType == StockType.Single)
-        {
-            print(_onStayingStock.StockType);
-
-            if (_onStayingStock) 
-            {
-                if (Stock.GetTopItem().ItemType == _onStayingStock.ItemsType)
-                    return Stock.Pull();
-            }
-        }
-        else if(_onStayingStock.StockType == StockType.Multiple)
-        {
-            return Stock.Pull();
-        }
-
-        return null;
-    }
+    //        _stock.PushToLastFreeCell(item);
+    //    }
+    //}
 
     public void Pay(int cash)
     {
@@ -94,8 +71,21 @@ public class Player : Area
         ByingItemType = itemType;
     }
 
-    public void EnterInShop(bool isInside)
+    public void EnterShop()
     {
-        InShop = isInside;
+        PlayerStayingOn = PlayerStayingOn.ShopArea;
     }
+
+    public void ExitShop()
+    {
+        PlayerStayingOn = PlayerStayingOn.Floor;
+    }
+}
+
+public enum PlayerStayingOn
+{
+    ShopArea,
+    PullArea,
+    PushArea,
+    Floor
 }

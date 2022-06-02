@@ -9,24 +9,25 @@ public class PushingArea : Area
         _spentTimeAfterPush += Time.deltaTime;
     }
 
-    public override void OnTriggerStay(Collider other)
+    public void OnTriggerStay(Collider other)
     {
-        base.OnTriggerStay(other);
-        if (_spentTimeAfterPush >= ActionInterval)
+        if (ConnectedArea)
+        {
+            if (ConnectedArea.Stock.Blocked)
+                return;
+            if (ConnectedArea.Stock.Filled)
+                return;
+        }
+
+        if (_spentTimeAfterPush >= TransitionInterval)
         {
             _spentTimeAfterPush = 0;
-            if (Player)
+
+            Item transmitting = Stock.Pull(Stock.ItemsType);
+            if (transmitting)
             {
-                if (Player.Stock.Filled && Stock.StockType != StockType.ForMoney)
-                    return;
-
-                Item transmitting = Stock.Pull();
-                if (transmitting)
-                {
-                    Player.Push(transmitting);
-                }
+                ConnectedArea.Push(transmitting);
             }
-
         }
     }
 }

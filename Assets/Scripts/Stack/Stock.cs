@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [RequireComponent(typeof(CellsSequence))]
 public class Stock : MonoBehaviour
@@ -10,13 +11,13 @@ public class Stock : MonoBehaviour
 
     private CellsSequence _cellsSequense;
 
-    private Stack<Item> _itemsPlacedInStack = new Stack<Item>();
+    private List<Item> _itemsPlacedInStack = new List<Item>();
 
     public event Action TakenItem;
     public event Action DroppedItem;
 
     public bool Empty => _itemsPlacedInStack.Count == 0;
-    public bool Filled => _cellsSequense.AllCellsAreFilled();
+    public bool Filled => _cellsSequense.CheckIfAllCellsAreNonEmpty();
     public bool Blocked { get; private set; }
     public StockType StockType => _stockType;
     public ItemType ItemsType => _itemsType;
@@ -26,73 +27,122 @@ public class Stock : MonoBehaviour
         _cellsSequense = GetComponent<CellsSequence>();
     }
 
-    public void Push(Item item)
+    public void PushToLastFreeCell(Item item)
     {
-        if (Filled && item.ItemType != ItemType.Money)
+        if (Blocked)
+            return;
+
+        if (Filled)
             return;
 
         if (_stockType == StockType.Single)
         {
-            if (item.ItemType == _itemsType)
+            if (ItemsType == item.ItemType)
             {
-                LocateAccordingToCells(item);
-                TakenItem?.Invoke();
+                Push(item);
                 return;
             }
+        }
+
+        if (item.ItemType == ItemType.Money)
+        {
+            MoveToDestination(item, transform);
             return;
         }
 
-        LocateAccordingToCells(item);
-        TakenItem?.Invoke();
-    }
-
-    public Item Pull()
-    {
-        if (!Empty)
+        if (_stockType == StockType.Multiple)
         {
-            DroppedItem?.Invoke();
-            UnparentTop();
-            Item removing = GetTopItem();
-            _itemsPlacedInStack.Pop();
-            return removing;
-        }
-
-        return null;
-    }
-
-    private void LocateAccordingToCells(Item item)
-    {
-        Cell firstEmpty = _cellsSequense.GetFreeCellLocation();
-        if (firstEmpty)
-        {
-            _itemsPlacedInStack.Push(item);
-            MoveToDestination(item, firstEmpty.transform);
-
-            item.transform.rotation = firstEmpty.transform.rotation;
-            item.transform.parent = firstEmpty.transform;
-            firstEmpty.Fill();
+            Push(item);
         }
     }
 
-    public void MoveToDestination(Item item, Transform destination)
+    private void Push(Item item)
+    {
+        Cell lastEmpty = _cellsSequense.GetFirstEmptyCell();
+        if (lastEmpty)
+        {
+            _itemsPlacedInStack.Add(item);
+            LocateInEmptyCell(lastEmpty, item);
+            lastEmpty.Fill();
+            TakenItem?.Invoke();
+        }
+    }
+
+    private void LocateInEmptyCell(Cell empty, Item item)
+    {
+        MoveToDestination(item, empty.transform);
+        item.transform.rotation = empty.transform.rotation;
+        item.transform.parent = empty.transform;
+    }
+
+    private void MoveToDestination(Item item, Transform destination)
     {
         item.ItemMover.SetDestination(destination);
         item.ItemMover.Move();
     }
 
-    private void UnparentTop()
+    public Item Pull(ItemType itemType)
     {
-        Cell lastFilled = _cellsSequense.GetFirstFilledCell();
-        if (lastFilled)
+        if (Empty)
+            return null;
+
+        if (_stockType == StockType.Single)
         {
-            lastFilled.Clear();
-            GetTopItem().transform.parent = null;
+            return UnparentTopItem();
+        }
+
+        if (_stockType == StockType.Multiple)
+        {
+            return Unparent(itemType);
+        }
+
+        return null;
+    }
+
+    private Item UnparentTopItem()
+    {
+        Item removing = _itemsPlacedInStack[_itemsPlacedInStack.Count - 1];
+        removing.transform.parent = null;
+        _itemsPlacedInStack.Remove(removing);
+        _cellsSequense.GetTopNonEmptyCell().Clear();
+        return removing;
+    }
+
+    private Item Unparent(ItemType itemType)
+    {
+        List<Item> items = new List<Item>();
+        foreach (var item in _itemsPlacedInStack)
+        {
+            if (item.ItemType == itemType)
+                items.Add(item);
+        }
+
+        int removeIndex = items.Count - 1;
+        print(removeIndex + " Item index");
+        items[removeIndex].transform.parent = null;
+        _itemsPlacedInStack.RemoveAt(removeIndex);
+        _cellsSequense.GetCellByNumber(removeIndex).Clear();
+        print(_cellsSequense.GetCellByNumber(removeIndex) + " Cell by index");
+        print(_cellsSequense.GetCellByNumber(removeIndex).IsEmpty + " Cell isEmpty");
+
+        //ShiftDown();
+        return items[removeIndex];
+    }
+
+    private void ShiftDown()
+    {
+        for (int i = 0; i < _cellsSequense.GetCount() + 1; i++)
+        {
+            if (_cellsSequense.GetCellByNumber(i).IsEmpty)
+            {
+
+            }
         }
     }
 
     public Item GetTopItem()
     {
-        return _itemsPlacedInStack.Peek();
+        return _itemsPlacedInStack[_itemsPlacedInStack.Count - 1];
     }
 
     public void BlockSock()
@@ -105,7 +155,7 @@ public class Stock : MonoBehaviour
         Blocked = false;
     }
 
-    public void CleanStock()
+    public void Clear()
     {
         foreach (var item in _itemsPlacedInStack)
         {

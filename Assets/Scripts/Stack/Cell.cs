@@ -2,22 +2,20 @@ using UnityEngine;
 
 public class Cell : MonoBehaviour
 {
-    public bool _isEmpty;
-
-    public bool IsEmpty => _isEmpty;
+    public bool IsEmpty { get; private set; }
 
     private void Start()
     {
-        _isEmpty = true;
+        IsEmpty = true;
     }
 
     public void Fill()
     {
-        _isEmpty = false;
+        IsEmpty = false;
     }
 
     public void Clear()
     {
-        _isEmpty = true;
+        IsEmpty = true;
     }
 }

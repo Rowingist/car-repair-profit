@@ -1,53 +1,38 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 public class PullingArea : Area
 {
-    [SerializeField] private bool _disablingItems;
-
     private float _spentTimeAfterPut;
 
-    public event Action Complited;
+    public event Action Completed;
 
     private void Update()
     {
         _spentTimeAfterPut += Time.deltaTime;
     }
 
-    public override void OnTriggerStay(Collider other)
+    public void OnTriggerStay(Collider other)
     {
-        base.OnTriggerStay(other);
-        if (Stock.Filled)
-            return;
-
-        if (Player)
+        if (ConnectedArea)
         {
-            if (Player.Stock.Empty)
+            if (Stock.Blocked)
                 return;
-
-            if (_spentTimeAfterPut >= ActionInterval)
+            if (Stock.Filled)
             {
-                _spentTimeAfterPut = 0;
-                Item transmitting = Player.Pull();
-                if (transmitting)
-                {
-                    Stock.Push(transmitting);
-                }
-                if(_disablingItems)
-                {
-                    StartCoroutine(DisablingItem(transmitting));  
-                }
+                Completed?.Invoke();
+                return;
             }
         }
 
-        if (Stock.Filled)
-            Complited?.Invoke();
-    }
-
-    private IEnumerator DisablingItem(Item transmitting)
-    {
-        yield return new WaitForSeconds(ActionInterval + 0.2f);
-        transmitting.gameObject.SetActive(false);
+        if (_spentTimeAfterPut >= TransitionInterval)
+        {
+            _spentTimeAfterPut = 0;
+            Item transmitting = ConnectedArea.Pull();
+            if (transmitting)
+            {
+                Stock.PushToLastFreeCell(transmitting);
+            }
+        }
     }
 }

@@ -10,7 +10,7 @@ public class CellsSequence : MonoBehaviour
     [SerializeField] private Vector3Int _lenghtXHeightXWidth = new Vector3Int(1, 1, 1);
     [SerializeField] private Cell _cellPrefab;
 
-    private Stack<Cell> _cells = new Stack<Cell>();
+    private List<Cell> _cells = new List<Cell>();
 
     private void Start()
     {
@@ -28,36 +28,42 @@ public class CellsSequence : MonoBehaviour
                 {
                     Vector3 position = new Vector3((j - offset.x) * _spacingX, _spacingY * i, (k - offset.y) * _spacingZ);
                     Cell newCell = Instantiate(cellPrefab, (position + transform.position), transform.rotation, transform);
-                    _cells.Push(newCell);
+                    _cells.Add(newCell);
                 }
             }
         }
     }
 
-    public Cell GetFreeCellLocation()
+    public Cell GetFirstEmptyCell()
     {
-        var firstEmpty = _cells.LastOrDefault(c => c.IsEmpty == true);
-        return firstEmpty;
+        return _cells.First(c => c.IsEmpty == true);
     }
 
-    public Cell GetFirstFilledCell()
+    public Cell GetTopNonEmptyCell()
     {
-        var firstFilled = _cells.FirstOrDefault(c => c.IsEmpty == false);
-        return firstFilled;
+        return _cells.Last(c => c.IsEmpty == false);
     }
 
-    public bool AllCellsAreFilled()
+    public Cell GetTopEmptyCell()
     {
-        var firstFilled = _cells.FirstOrDefault(c => c.IsEmpty == true);
-        return firstFilled == null;
+        return _cells.Last(c => c.IsEmpty == true);
+    }
+
+    public Cell GetCellByNumber(int index)
+    {
+        return _cells.ElementAt(index);
+    }
+
+    public bool CheckIfAllCellsAreNonEmpty()
+    {
+        var firstEmpty = _cells.FirstOrDefault(c => c.IsEmpty == true);
+        return firstEmpty == null;
     }
 
     public void ClearAllCells()
     {
         foreach (var cell in _cells)
-        {
             cell.Clear();
-        }
     }
 
     public int GetCount()

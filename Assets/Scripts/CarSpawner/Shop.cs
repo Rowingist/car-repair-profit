@@ -1,26 +1,29 @@
+using MoreMountains.Feedbacks;
 using UnityEngine;
 
-public class Shop : Area
+public class Shop : MonoBehaviour
 {
     [SerializeField] private ShopView _shopView;
+    [SerializeField] private MMFeedbacks _scaleFeedback;
+    [SerializeField] private MMFeedbacks _unscaleFeedback;
 
-    public override void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
-        base.OnTriggerEnter(other);
-        if (Player)
+        if (other.TryGetComponent(out Player player))
         {
             _shopView.gameObject.SetActive(true);
-            Player.EnterInShop(true);
+            _scaleFeedback?.PlayFeedbacks();
+            player.EnterShop();
         }
     }
 
-    public override void OnTriggerExit(Collider other)
+    public  void OnTriggerExit(Collider other)
     {
-        base.OnTriggerExit(other);
-        if (Player)
+        if (other.TryGetComponent(out Player player))
         {
             _shopView.gameObject.SetActive(false);
-            Player.EnterInShop(false);
+            _unscaleFeedback?.PlayFeedbacks();
+            player.ExitShop();
         }
     }
 }

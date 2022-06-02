@@ -52,16 +52,16 @@ public class Spawner : MonoBehaviour
         if (_item.ItemType != ItemType.Money && _player.ByingItemType == _item.ItemType)
         {
             _newItem.gameObject.SetActive(true);
-            _stock.Push(_newItem);
+            _stock.PushToLastFreeCell(_newItem);
             Spawn();
         }
         else if(_item.ItemType == ItemType.Money)
         {
-            if (_player.InShop)
+            if (_player.PlayerStayingOn == PlayerStayingOn.ShopArea)
                 return;
 
             _newItem.gameObject.SetActive(true);
-            _stock.Push(_newItem);
+            _stock.PushToLastFreeCell(_newItem);
             Spawn();
         }
         else
