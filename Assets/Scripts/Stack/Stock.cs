@@ -120,7 +120,7 @@ public class Stock : MonoBehaviour
         return _cellsSequense.GetCount() - _itemsPlacedInStack.Count;
     }
 
-    public void FillAllCells()
+    public void FillAllCells() // shram
     {
         _cellsSequense.FillAllCells();
     }

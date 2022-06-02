@@ -18,14 +18,14 @@ public class CarHandle : MonoBehaviour
     [SerializeField] private Transform _carSpawnPoint;
     [SerializeField] private Spawner _moneySpawner;
     [SerializeField] private PlayerToCarTransition _sitInCar;
-
     [SerializeField] private Stock _stock; //shram script
 
     private int _activeCarIndex;
+    private bool _isInBox = false;
 
     private List<GameObject> _cars = new List<GameObject>();
 
-    public bool IsInBox = false; //shram script
+    public bool IsInBox => _isInBox; //shram script
 
     private void OnEnable()
     {
@@ -87,16 +87,14 @@ public class CarHandle : MonoBehaviour
     {
         _carAnimator.SetTrigger(_liftUp);
         _pullingArea.Stock.UnblockSock();
-
-        IsInBox = true; //shram
+        _isInBox = true; //shram
     }
 
     public void OnLeftGarage()
     {
         _moneySpawner.DelayedSpawn(100);
         _carAnimator.SetTrigger(_leftGarage);
-
-        IsInBox = false; //shram
+        _isInBox = false; //shram
     }
 
     public void OnGetIntoGarage()
@@ -121,13 +119,20 @@ public class CarHandle : MonoBehaviour
         _sitInCar.Exit(_carPlatform.transform);
     }
 
-    //shram scripts
-    public void PushButtonStartWash()
+    public void PushButtonStartWash() //shram scripts
     {
         _stock.FillAllCells();
-       // _pullingArea.Stock.CleanStock();
-        //_stock.CleanStock();
+        StartCoroutine(WaitWashing());
+    }
+
+    private IEnumerator WaitWashing() //shram scripts
+    {
+        float timeLeft = 3.5f;
+        while (timeLeft > 0)
+        {
+            timeLeft -= Time.deltaTime;
+            yield return null;
+        }
         _carAnimator.SetTrigger(_startWashing);
-        print("washing start");
     }
 }
