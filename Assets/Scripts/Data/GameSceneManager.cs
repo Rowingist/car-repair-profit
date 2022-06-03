@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class GameSceneManager : MonoBehaviour
+ public class GameSceneManager : MonoBehaviour
 {
 /*    [SerializeField] private TMP_Text _levelText;*/
     [SerializeField] private AnalyticManager _analytic;
@@ -37,12 +37,13 @@ public class GameSceneManager : MonoBehaviour
     public void LoadNextScene()
     {
         _analytic.SendEventOnLevelComplete(_data.GetDisplayedLevelNumber());
-        _data.Save();
         if (SceneManager.GetActiveScene().buildIndex + 1 >= SceneManager.sceneCountInBuildSettings)
             _nextLevelIndex = 1;
         else
             _nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        SaveNextLevelIndex();
+        _data.SetLevelIndex(_nextLevelIndex);
+        _data.AddDisplayedLevelNumber();
+        _data.Save();
         SceneManager.LoadScene(_nextLevelIndex);
     }
 
@@ -50,11 +51,5 @@ public class GameSceneManager : MonoBehaviour
     {
         _analytic.SendEventOnLevelRestart(_data.GetDisplayedLevelNumber());
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    private void SaveNextLevelIndex()
-    {
-        _data.SetLevelIndex(_nextLevelIndex);
-        _data.AddDisplayedLevelNumber();
     }
 }
