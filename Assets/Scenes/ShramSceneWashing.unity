@@ -3683,7 +3683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stock: {fileID: 951086117}
-  _disablingItems: 0
+  _transitionInterval: 0.2
 --- !u!65 &1353957775
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5008,6 +5008,8 @@ GameObject:
   - component: {fileID: 1782267247}
   - component: {fileID: 1782267248}
   - component: {fileID: 1782267249}
+  - component: {fileID: 1782267251}
+  - component: {fileID: 1782267250}
   m_Layer: 0
   m_Name: TriggerBodyCollider
   m_TagString: Untagged
@@ -5055,8 +5057,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69529fbbc9468df43af3fd3acfcd617a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stock: {fileID: 1706873104}
   _walletPoint: {fileID: 608959351}
+  _pushArea: {fileID: 1782267251}
+  _pullArea: {fileID: 1782267250}
 --- !u!114 &1782267249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5072,6 +5075,34 @@ MonoBehaviour:
   _bodyForparenting: {fileID: 360189894}
   _noParentPoint: {fileID: 3160430616416305758, guid: 7555457c303fe114b85621220d444cd7, type: 3}
   _playerStock: {fileID: 1706873104}
+--- !u!114 &1782267250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782267245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91d4c0fcd0f66cb4a9c71b70a3d8d2b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stock: {fileID: 1706873104}
+  _transitionInterval: 0.2
+--- !u!114 &1782267251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782267245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ba4678499118a54c8564c01b0753bde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stock: {fileID: 1706873104}
+  _transitionInterval: 0.2
 --- !u!1 &1831546728
 GameObject:
   m_ObjectHideFlags: 0
@@ -5838,8 +5869,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e29abe8c239c47148a693b913b480905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stock: {fileID: 919132148422816101}
   _shopView: {fileID: 2109266171}
+  _scaleFeedback: {fileID: 0}
+  _unscaleFeedback: {fileID: 0}
 --- !u!114 &919132148422816101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5868,7 +5900,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scaleFeedback: {fileID: 121748774}
   _unscaleFeedback: {fileID: 1166359985}
-  _relatedArea: {fileID: 919132148422816100}
+  _relatedArea: {fileID: 0}
 --- !u!114 &919132148422816103
 MonoBehaviour:
   m_ObjectHideFlags: 0
