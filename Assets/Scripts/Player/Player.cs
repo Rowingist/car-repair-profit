@@ -56,6 +56,10 @@ public class Player : MonoBehaviour
             _moneyDropArea.Push(oneDollar);
             WithdrowCash?.Invoke();
         }
+        else
+        {
+            _animationActivator.SetActive(false);
+        }
     }
 
     private void OnDisableAnimation()
