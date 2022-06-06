@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform _walletPoint;
     [SerializeField] private GameObject _animationActivator;
     [SerializeField] private MoneyDropAnimation _dropAnimation;
+    [SerializeField] private Data _data;
 
     private IWallet _wallet = new Wallet(0);
     private MoneyDropArea _moneyDropArea;
@@ -55,6 +56,7 @@ public class Player : MonoBehaviour
             SetMoneyDropPoint(dropPoint);
             _moneyDropArea.Push(oneDollar);
             WithdrowCash?.Invoke();
+            _data.SetCurrentSoft(_wallet.GetCashAmount());
         }
         else
         {
@@ -76,6 +78,7 @@ public class Player : MonoBehaviour
     {
         _wallet.Replenish(value);
         GotCash?.Invoke();
+        _data.SetCurrentSoft(_wallet.GetCashAmount());
     }
 
     public void Pay(int cash)
@@ -84,6 +87,7 @@ public class Player : MonoBehaviour
         {
             Payed?.Invoke(BuyingItemType);
             WithdrowCash?.Invoke();
+            _data.SetCurrentSoft(_wallet.GetCashAmount());
         }
     }
 

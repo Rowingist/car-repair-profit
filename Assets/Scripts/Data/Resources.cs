@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Resources : MonoBehaviour
 {
@@ -7,7 +7,7 @@ public class Resources : MonoBehaviour
 
     public void ActivateServiceZones(int count)
     {
-        for (int i = 0; i < count - 1; i++)
+        for (int i = 0; i < count; i++)
         {
             _sceneServiceZones[i].SetActive(true);
         }
@@ -15,7 +15,7 @@ public class Resources : MonoBehaviour
 
     public void DeactivateMoneyDropZones(int count)
     {
-        for (int i = 0; i < count - 1; i++)
+        for (int i = 0; i < count; i++)
         {
             _moneyDropZones[i].SetActive(false);
         }
@@ -40,7 +40,7 @@ public class Resources : MonoBehaviour
         int inactiveZones = 0;
         for (int i = 0; i < _sceneServiceZones.Length; i++)
         {
-            if (_sceneServiceZones[i].activeSelf == false)
+            if (_sceneServiceZones[i].activeSelf)
             {
                 inactiveZones++;
             }
