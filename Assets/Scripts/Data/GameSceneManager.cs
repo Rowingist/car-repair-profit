@@ -6,7 +6,10 @@ using UnityEngine.SceneManagement;
 {
 /*    [SerializeField] private TMP_Text _levelText;*/
     [SerializeField] private AnalyticManager _analytic;
-    [SerializeField] private Data _data; 
+    [SerializeField] private Data _data;
+    [SerializeField] private Transform _playerTransform;
+    [SerializeField] private Player _player;
+    [SerializeField] private Resources _resources;
 
     private int _nextLevelIndex;
 
@@ -14,6 +17,10 @@ using UnityEngine.SceneManagement;
     {
         _data.Load();
         _data.SetLevelIndex(SceneManager.GetActiveScene().buildIndex);
+        _playerTransform.position = Vector3.zero;
+        _player.Replenish(_data.GetCurrentSoft());
+        _resources.ActivateServiceZones(_data.GetOpennedServiceZones());
+        _resources.DeactivateMoneyDropZones(_data.GetClosedMoneyDropZones());
         _data.Save();
 /*        _levelText.text = $"Level {GetDisplayedLevelNumber()}";*/
     }
@@ -26,6 +33,9 @@ using UnityEngine.SceneManagement;
     private void OnApplicationQuit()
     {
         _analytic.SendEventOnGameExit(_data.GetRegistrationDate(), _data.GetSessionCount(), _data.GetNumberDaysAfterRegistration(), _data.GetCurrentSoft());
+        _data.SetCurrentSoft(_player.GetWalletCash());
+        _data.SetOppenedServiceZones(_resources.GetActiveServiceZones());
+        _data.SetClosedMoneyDropZones(_resources.GetInactiveDropZones());
         _data.Save();
     }
 

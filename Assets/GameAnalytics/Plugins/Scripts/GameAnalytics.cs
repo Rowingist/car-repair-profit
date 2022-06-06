@@ -126,7 +126,7 @@ namespace GameAnalyticsSDK
         {
             try
             {
-                _settings = (GameAnalyticsSDK.Setup.Settings)Resources.Load("GameAnalytics/Settings", typeof(GameAnalyticsSDK.Setup.Settings));
+                _settings = (GameAnalyticsSDK.Setup.Settings)UnityEngine.Resources.Load("GameAnalytics/Settings", typeof(GameAnalyticsSDK.Setup.Settings));
                 GameAnalyticsSDK.State.GAState.Init();
 
 #if UNITY_EDITOR

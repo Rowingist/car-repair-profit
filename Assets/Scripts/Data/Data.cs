@@ -54,6 +54,16 @@ public class Data : MonoBehaviour
         _options.SessionCount++;
     }
 
+    public void SetOppenedServiceZones(int count)
+    {
+        _options.OpenedServiceZones = count;
+    }
+
+    public void SetClosedMoneyDropZones(int count)
+    {
+        _options.OpenedDropZones = count;
+    }
+
     public string GetDataKeyName()
     {
         return _dataKeyName;
@@ -93,6 +103,16 @@ public class Data : MonoBehaviour
     {
         return _options.CurrentSoft;
     }
+
+    public int GetOpennedServiceZones()
+    {
+        return _options.OpenedServiceZones;
+    }
+
+    public int GetClosedMoneyDropZones()
+    {
+        return _options.OpenedDropZones;
+    }
 }
 
 [Serializable]
@@ -104,5 +124,11 @@ public class SaveOptions
     public string RegistrationDate;
     public int DisplayedLevelNumber = 1;
     public int CurrentSoft;
+    public int OpenedServiceZones;
+    public int OpenedDropZones;
+    public int OpenRacks;
+    public int WheelsOnRack;
+    public int EnginesOnRack;
+    public int PaintOnRack;
 }
 
