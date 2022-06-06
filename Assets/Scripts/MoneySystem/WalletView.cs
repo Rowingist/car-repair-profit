@@ -8,7 +8,7 @@ public class WalletView : MonoBehaviour
 
     private void OnEnable()
     {
-        _player.Payed += OnChangeView;
+        _player.WithdrowCash += OnChangeView;
         _player.GotCash += OnChangeView;
     }
 
@@ -19,7 +19,7 @@ public class WalletView : MonoBehaviour
 
     private void OnDisable()
     {
-        _player.Payed -= OnChangeView;
+        _player.WithdrowCash -= OnChangeView;
         _player.GotCash -= OnChangeView;
     }
 

@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &205055392116456747
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5509331975923543360}
+  m_Layer: 0
+  m_Name: View
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5509331975923543360
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205055392116456747}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 703400141119387061}
+  m_Father: {fileID: 7192145407238794551}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1388944382178019040
 GameObject:
   m_ObjectHideFlags: 0
@@ -27,10 +58,10 @@ Transform:
   m_GameObject: {fileID: 1388944382178019040}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.015000002, y: 0.014999997, z: 0.015000005}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7055128985480139938}
-  - {fileID: 703400141119387061}
+  - {fileID: 5509331975923543360}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -59,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7738141b739542a498cbdd0ad5de21c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemType: 1
+  _itemType: 0
   _itemMover: {fileID: 7055128985480139939}
 --- !u!1 &5537449634622918782
 GameObject:
@@ -86,12 +117,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5537449634622918782}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.015000002, y: 0.014999997, z: 0.015000005}
   m_Children: []
-  m_Father: {fileID: 7192145407238794551}
-  m_RootOrder: 1
+  m_Father: {fileID: 5509331975923543360}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6232154201414490364
 MeshFilter:
@@ -224,7 +255,7 @@ PrefabInstance:
     - target: {fileID: 8202731933959801398, guid: d6d3fe6cf4391c342bfbd431c0232e23, type: 3}
       propertyPath: AnimateScaleTarget
       value: 
-      objectReference: {fileID: 703400141119387061}
+      objectReference: {fileID: 5509331975923543360}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d3fe6cf4391c342bfbd431c0232e23, type: 3}
 --- !u!4 &7055128985480139938 stripped

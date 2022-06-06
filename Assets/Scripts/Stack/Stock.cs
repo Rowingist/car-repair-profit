@@ -6,6 +6,7 @@ using System.Linq;
 [RequireComponent(typeof(CellsSequence))]
 public class Stock : MonoBehaviour
 {
+    [SerializeField] private GameObject _itemsPool;
     [SerializeField] private StockType _stockType;
     [SerializeField] private ItemType _itemsType;
 
@@ -35,24 +36,21 @@ public class Stock : MonoBehaviour
         if (Filled)
             return;
 
-        if (_stockType == StockType.Single)
+        if (item)
         {
-            if (ItemsType == item.ItemType)
+            if (_stockType == StockType.Single)
+            {
+                if (ItemsType == item.ItemType)
+                {
+                    Push(item);
+                    return;
+                }
+            }
+
+            if (_stockType == StockType.Multiple)
             {
                 Push(item);
-                return;
             }
-        }
-
-        if (item.ItemType == ItemType.Money)
-        {
-            MoveToDestination(item, transform);
-            return;
-        }
-
-        if (_stockType == StockType.Multiple)
-        {
-            Push(item);
         }
     }
 
@@ -61,10 +59,13 @@ public class Stock : MonoBehaviour
         Cell lastEmpty = _cellsSequense.GetFirstEmptyCell();
         if (lastEmpty)
         {
-            _itemsPlacedInStack.Add(item);
-            LocateInEmptyCell(lastEmpty, item);
-            lastEmpty.Fill();
-            TakenItem?.Invoke();
+            if (item)
+            {
+                _itemsPlacedInStack.Add(item);
+                LocateInEmptyCell(lastEmpty, item);
+                lastEmpty.Fill();
+                TakenItem?.Invoke();
+            }
         }
     }
 
@@ -75,7 +76,7 @@ public class Stock : MonoBehaviour
         item.transform.parent = empty.transform;
     }
 
-    private void MoveToDestination(Item item, Transform destination)
+    public void MoveToDestination(Item item, Transform destination)
     {
         item.ItemMover.SetDestination(destination);
         item.ItemMover.Move();
@@ -86,57 +87,56 @@ public class Stock : MonoBehaviour
         if (Empty)
             return null;
 
-        if (_stockType == StockType.Single)
-        {
-            return UnparentTopItem();
-        }
-
-        if (_stockType == StockType.Multiple)
-        {
-            return Unparent(itemType);
-        }
-
-        return null;
+        Item toRemove;
+        Unparent(out toRemove, itemType);
+        return toRemove;
     }
 
-    private Item UnparentTopItem()
+    public void PullFast(Transform destination)
     {
-        Item removing = _itemsPlacedInStack[_itemsPlacedInStack.Count - 1];
-        removing.transform.parent = null;
-        _itemsPlacedInStack.Remove(removing);
-        _cellsSequense.GetTopNonEmptyCell().Clear();
-        return removing;
-    }
-
-    private Item Unparent(ItemType itemType)
-    {
-        List<Item> items = new List<Item>();
-        foreach (var item in _itemsPlacedInStack)
+        for (int i = 0; i < _itemsPlacedInStack.Count; i++)
         {
-            if (item.ItemType == itemType)
-                items.Add(item);
+            MoveToDestination(_itemsPlacedInStack[i], destination);
         }
-
-        int removeIndex = items.Count - 1;
-        print(removeIndex + " Item index");
-        items[removeIndex].transform.parent = null;
-        _itemsPlacedInStack.RemoveAt(removeIndex);
-        _cellsSequense.GetCellByNumber(removeIndex).Clear();
-        print(_cellsSequense.GetCellByNumber(removeIndex) + " Cell by index");
-        print(_cellsSequense.GetCellByNumber(removeIndex).IsEmpty + " Cell isEmpty");
-
-        //ShiftDown();
-        return items[removeIndex];
     }
 
-    private void ShiftDown()
+    public void HideInPool()
     {
-        for (int i = 0; i < _cellsSequense.GetCount() + 1; i++)
+        for (int i = 0; i < _itemsPlacedInStack.Count; i++)
         {
-            if (_cellsSequense.GetCellByNumber(i).IsEmpty)
+            _itemsPlacedInStack[i].transform.parent = _itemsPool.transform;
+            _itemsPlacedInStack[i].gameObject.SetActive(false);
+        }
+        Clear();
+    }
+
+    private void Unparent(out Item item, ItemType itemType)
+    {
+        Item toDelete = null;
+        for (int i = _itemsPlacedInStack.Count - 1; i >= 0; --i)
+        {
+            if (_itemsPlacedInStack[i].ItemType == itemType)
             {
-
+                toDelete = _itemsPlacedInStack[i];
+                break;
             }
+        }
+
+        if (toDelete == null)
+        {
+            item = null;
+            return;
+        }
+
+        toDelete.transform.parent = null;
+        item = toDelete;
+        _itemsPlacedInStack.Remove(toDelete);
+        _cellsSequense.ClearAllCells();
+
+        for (int i = 0; i < _itemsPlacedInStack.Count; i++)
+        {
+            LocateInEmptyCell(_cellsSequense.GetCellByNumber(i), _itemsPlacedInStack[i]);
+            _cellsSequense.GetCellByNumber(i).Fill();
         }
     }
 
@@ -145,29 +145,44 @@ public class Stock : MonoBehaviour
         return _itemsPlacedInStack[_itemsPlacedInStack.Count - 1];
     }
 
-    public void BlockSock()
+    public void Block()
     {
         Blocked = true;
     }
 
-    public void UnblockSock()
+    public void Unblock()
     {
         Blocked = false;
     }
 
+    [ContextMenu("Open all cells")]
     public void Clear()
     {
-        foreach (var item in _itemsPlacedInStack)
+        for (int i = 0; i < _cellsSequense.GetCount(); i++)
         {
-            Destroy(item.gameObject);
+            _cellsSequense.GetCellByNumber(i).Clear();
         }
-        _cellsSequense.ClearAllCells();
+
+        if (_itemsPool)
+        {
+            for (int i = 0; i < _itemsPlacedInStack.Count; i++)
+            {
+                _itemsPlacedInStack[i].transform.parent = _itemsPool.transform;
+                _itemsPlacedInStack[i].gameObject.SetActive(false);
+            }
+        }
+
         _itemsPlacedInStack.Clear();
     }
 
     public int GetDemandedCount()
     {
         return _cellsSequense.GetCount() - _itemsPlacedInStack.Count;
+    }
+
+    public int GetCount()
+    {
+        return _itemsPlacedInStack.Count;
     }
 
     public void FillAllCells() // shram
@@ -180,6 +195,5 @@ public class Stock : MonoBehaviour
 public enum StockType
 {
     Single,
-    Multiple,
-    ForMoney
+    Multiple
 }

@@ -17,16 +17,16 @@ public class PushingArea : Area
                 return;
             if (ConnectedArea.Stock.Filled)
                 return;
-        }
 
-        if (_spentTimeAfterPush >= TransitionInterval)
-        {
-            _spentTimeAfterPush = 0;
-
-            Item transmitting = Stock.Pull(Stock.ItemsType);
-            if (transmitting)
+            if (_spentTimeAfterPush >= TransitionInterval)
             {
-                ConnectedArea.Push(transmitting);
+                _spentTimeAfterPush = 0;
+
+                Item transmitting = Stock.Pull(Stock.ItemsType);
+                if (transmitting)
+                {
+                    ConnectedArea.Push(transmitting);
+                }
             }
         }
     }

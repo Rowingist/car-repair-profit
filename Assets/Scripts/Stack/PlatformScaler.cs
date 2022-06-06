@@ -5,27 +5,15 @@ public class PlatformScaler : MonoBehaviour
 {
     [SerializeField] private MMFeedbacks _scaleFeedback;
     [SerializeField] private MMFeedbacks _unscaleFeedback;
-    [SerializeField] private Area _relatedArea;
 
-    private void OnEnable()
+
+    private void OnTriggerEnter(Collider other)
     {
-        _relatedArea.Entered += OnPlayScaleFeedback;
-        _relatedArea.Left += OnPlayUnscaleFeedback;
+        if (other.GetComponent<Player>()) { _scaleFeedback?.PlayFeedbacks(); }
     }
 
-    private void OnDisable()
+    private void OnTriggerExit(Collider other)
     {
-        _relatedArea.Entered -= OnPlayScaleFeedback;
-        _relatedArea.Left -= OnPlayUnscaleFeedback;
-    }
-
-    private void OnPlayScaleFeedback()
-    {
-        _scaleFeedback?.PlayFeedbacks();
-    }
-
-    private void OnPlayUnscaleFeedback()
-    {
-        _unscaleFeedback?.PlayFeedbacks();
+        if (other.GetComponent<Player>()) { _unscaleFeedback?.PlayFeedbacks(); }
     }
 }
