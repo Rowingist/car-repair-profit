@@ -4,61 +4,87 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private Transform _walletPoint;
-    [SerializeField] private PushingArea _pushArea;
-    [SerializeField] private PullingArea _pullArea;
+    [SerializeField] private GameObject _animationActivator;
+    [SerializeField] private MoneyDropAnimation _dropAnimation;
 
     private IWallet _wallet = new Wallet(0);
+    private MoneyDropArea _moneyDropArea;
 
-    public event Action Payed;
+    public event Action<ItemType> Payed;
     public event Action GotCash;
+    public event Action WithdrowCash;
 
-    public ItemType ByingItemType { get; private set; }
+    public ItemType BuyingItemType { get; private set; }
     public PlayerStayingOn PlayerStayingOn { get; private set; }
-
-    private void Start()
-    {
-        _wallet.Replenish(1000);
-        _pushArea.enabled = false;
-        _pullArea.enabled = false;
-    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<PushingArea>()) { _pullArea.enabled = true; }
-        else if (other.GetComponent<PullingArea>()) { _pushArea.enabled = true; }     
+        if (other.TryGetComponent(out MoneyDropArea moneyDropArea))
+        {
+            _moneyDropArea = moneyDropArea;
+            _moneyDropArea.Sold += OnDisableAnimation;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.TryGetComponent(out MoneyDropArea moneyDropArea))
+        {
+            OpeningNewZone(moneyDropArea.transform);
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.GetComponent<Area>())
+        OnDisableAnimation();
+    }
+
+    private void OnDisable()
+    {
+        if(_moneyDropArea)
+                _moneyDropArea.Sold -= OnDisableAnimation;
+    }
+
+    private void OpeningNewZone(Transform dropPoint)
+    {
+        int oneDollar = 1;
+        bool isAbleToPay = _wallet.TryWithdraw(oneDollar);
+        if (isAbleToPay)
         {
-            _pushArea.enabled = false;
-            _pullArea.enabled = false;
+            _animationActivator.SetActive(true);
+            SetMoneyDropPoint(dropPoint);
+            _moneyDropArea.Push(oneDollar);
+            WithdrowCash?.Invoke();
+        }
+        else
+        {
+            _animationActivator.SetActive(false);
         }
     }
 
-    //public void Push(Item item)
-    //{
-    //    if (item)
-    //    {
-    //        if (item.ItemType == ItemType.Money)
-    //        {
-    //            GameCash cash = (GameCash)item;
-    //            _wallet.Replenish(cash.Value);
-    //            GotCash?.Invoke();
-    //            cash.Collect();
-    //            return;
-    //        }
+    private void OnDisableAnimation()
+    {
+        _animationActivator.SetActive(false);
+    }
 
-    //        _stock.PushToLastFreeCell(item);
-    //    }
-    //}
+    private void SetMoneyDropPoint(Transform point)
+    {
+        _dropAnimation.SetPositionPoint(point);
+    }
+
+    public void Replenish(int value)
+    {
+        _wallet.Replenish(value);
+        GotCash?.Invoke();
+    }
 
     public void Pay(int cash)
     {
-        bool canPay = _wallet.TryWithdraw(cash);
-        if (canPay)
-            Payed?.Invoke();
+        if (_wallet.TryWithdraw(cash))
+        {
+            Payed?.Invoke(BuyingItemType);
+            WithdrowCash?.Invoke();
+        }
     }
 
     public int GetWalletCash()
@@ -68,7 +94,7 @@ public class Player : MonoBehaviour
 
     public void SetByingItemType(ItemType itemType)
     {
-        ByingItemType = itemType;
+        BuyingItemType = itemType;
     }
 
     public void EnterShop()

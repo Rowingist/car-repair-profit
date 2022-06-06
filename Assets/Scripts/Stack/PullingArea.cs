@@ -23,15 +23,14 @@ public class PullingArea : Area
                 Completed?.Invoke();
                 return;
             }
-        }
-
-        if (_spentTimeAfterPut >= TransitionInterval)
-        {
-            _spentTimeAfterPut = 0;
-            Item transmitting = ConnectedArea.Pull();
-            if (transmitting)
+            if (_spentTimeAfterPut >= TransitionInterval)
             {
-                Stock.PushToLastFreeCell(transmitting);
+                _spentTimeAfterPut = 0;
+                Item transmitting = ConnectedArea.Pull();
+                if (transmitting)
+                {
+                    Push(transmitting);
+                }
             }
         }
     }

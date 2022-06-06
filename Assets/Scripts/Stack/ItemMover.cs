@@ -18,8 +18,11 @@ public class ItemMover : MonoBehaviour
     public void Move()
     {
         StartCoroutine(UpdateInitialPosition(_transitionTime));
-        _scaleFeedback.Initialization();
-        _scaleFeedback?.PlayFeedbacks();
+        if (_scaleFeedback)
+        {
+            _scaleFeedback.Initialization();
+            _scaleFeedback?.PlayFeedbacks();
+        }
     }
 
     private IEnumerator UpdateInitialPosition(float updateTime)

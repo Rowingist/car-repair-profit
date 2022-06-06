@@ -32,13 +32,17 @@ public class Area : MonoBehaviour
     {
         if (other.GetComponent<Area>())
         {
+            ConnectedArea = null;
             Left?.Invoke();
         }
     }
 
     public void Push(Item item)
     {
-        _stock.PushToLastFreeCell(item);
+        if (item)
+        {
+            _stock.PushToLastFreeCell(item);
+        }
     }
 
     public Item Pull()

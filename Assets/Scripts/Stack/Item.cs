@@ -15,5 +15,6 @@ public enum ItemType
     Engine,
     Oil,
     Paint,
-    Money
+    Money,
+    Multiple
 }

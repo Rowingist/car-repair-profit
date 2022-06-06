@@ -16,9 +16,9 @@ public class CarHandle : MonoBehaviour
     [SerializeField] private PullingArea _pullingArea;
     [SerializeField] private GameObject[] _vihiclePrefabs;
     [SerializeField] private Transform _carSpawnPoint;
-    [SerializeField] private Spawner _moneySpawner;
     [SerializeField] private PlayerToCarTransition _sitInCar;
     [SerializeField] private Stock _stock; //shram script
+    [SerializeField] private MoneySpawner _moneySpawner;
 
     private int _activeCarIndex;
     private bool _isInBox = false;
@@ -79,20 +79,20 @@ public class CarHandle : MonoBehaviour
 
     private void OnLiftDown()
     {
-        _pullingArea.Stock.BlockSock();
+        _pullingArea.Stock.Block();
         _carAnimator.SetTrigger(_liftDown);
     }
 
     public void OnLiftUp()
     {
         _carAnimator.SetTrigger(_liftUp);
-        _pullingArea.Stock.UnblockSock();
+        _pullingArea.Stock.Unblock();
         _isInBox = true; //shram
     }
 
     public void OnLeftGarage()
     {
-        _moneySpawner.DelayedSpawn(100);
+        _moneySpawner.StartSpawn(50);
         _carAnimator.SetTrigger(_leftGarage);
         _isInBox = false; //shram
     }
@@ -100,7 +100,7 @@ public class CarHandle : MonoBehaviour
     public void OnGetIntoGarage()
     {
         ChangeCar();
-        _pullingArea.Stock.BlockSock();
+        _pullingArea.Stock.Block();
         _carAnimator.SetTrigger(_getIntoGarage);
     }
 
