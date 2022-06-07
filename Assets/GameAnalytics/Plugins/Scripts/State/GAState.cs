@@ -17,7 +17,7 @@ namespace GameAnalyticsSDK.State
 		public static void Init ()
 		{
 			try {
-				_settings = (GameAnalyticsSDK.Setup.Settings)Resources.Load ("GameAnalytics/Settings", typeof(GameAnalyticsSDK.Setup.Settings));
+                _settings = (GameAnalyticsSDK.Setup.Settings)UnityEngine.Resources.Load ("GameAnalytics/Settings", typeof(GameAnalyticsSDK.Setup.Settings));
 			} catch (Exception ex) {
 				Debug.Log ("Could not get Settings during event validation \n" + ex.ToString ());
 			}
