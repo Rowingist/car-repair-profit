@@ -23,6 +23,7 @@ public class Data : MonoBehaviour
             _options = JsonUtility.FromJson<SaveOptions>(PlayerPrefs.GetString(_dataKeyName));
     }
 
+    [ContextMenu("RemoveSevedData")]
     public void RemoveData()
     {
         PlayerPrefs.DeleteKey(_dataKeyName);
