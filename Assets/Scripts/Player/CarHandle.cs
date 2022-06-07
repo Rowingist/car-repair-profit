@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CarHandle : MonoBehaviour
 {
@@ -21,11 +22,18 @@ public class CarHandle : MonoBehaviour
     [SerializeField] private MoneySpawner _moneySpawner;
 
     private int _activeCarIndex;
-    private bool _isInBox = false;
+    private bool _isInBox = false; //shram
+    private bool _isCarTutorComlete = false;//shram
+    private bool _isShopTutorComlete = false; //shram
+    private bool _isWhellChangeTutorComplete = false; //shram
 
     private List<GameObject> _cars = new List<GameObject>();
 
     public bool IsInBox => _isInBox; //shram script
+
+    public event UnityAction CarArrived; //shram script
+    public event UnityAction CarUpOnLift; //shram script
+    public event UnityAction CarGoOut; //shram script
 
     private void OnEnable()
     {
@@ -88,13 +96,26 @@ public class CarHandle : MonoBehaviour
         _carAnimator.SetTrigger(_liftUp);
         _pullingArea.Stock.Unblock();
         _isInBox = true; //shram
+
+        if (!_isShopTutorComlete)
+        {
+            CarUpOnLift?.Invoke();//shram
+            _isShopTutorComlete = true;
+        }
     }
 
     public void OnLeftGarage()
     {
         _moneySpawner.StartSpawn(50);
         _carAnimator.SetTrigger(_leftGarage);
+
         _isInBox = false; //shram
+
+        if (!_isWhellChangeTutorComplete)
+        {
+            CarGoOut?.Invoke();
+            _isWhellChangeTutorComplete = true;
+        }
     }
 
     public void OnGetIntoGarage()
@@ -123,6 +144,15 @@ public class CarHandle : MonoBehaviour
     {
         _stock.FillAllCells();
         StartCoroutine(WaitWashing());
+    }
+
+    public void OnArrived()
+    {
+        if (!_isCarTutorComlete)
+        {
+            CarArrived?.Invoke();
+            _isCarTutorComlete = true;
+        }
     }
 
     private IEnumerator WaitWashing() //shram scripts

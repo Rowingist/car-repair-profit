@@ -1,11 +1,16 @@
 using MoreMountains.Feedbacks;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Shop : MonoBehaviour
 {
     [SerializeField] private ShopView _shopView;
     [SerializeField] private MMFeedbacks _scaleFeedback;
     [SerializeField] private MMFeedbacks _unscaleFeedback;
+
+    private bool _isShopTutorialComlete = false;
+
+    public event UnityAction PlayerExitFromShop;
 
     public void OnTriggerEnter(Collider other)
     {
@@ -17,13 +22,19 @@ public class Shop : MonoBehaviour
         }
     }
 
-    public  void OnTriggerExit(Collider other)
+    public void OnTriggerExit(Collider other)
     {
         if (other.TryGetComponent(out Player player))
         {
             _shopView.gameObject.SetActive(false);
             _unscaleFeedback?.PlayFeedbacks();
             player.ExitShop();
+
+            if (!_isShopTutorialComlete)
+            {
+                PlayerExitFromShop?.Invoke();
+                _isShopTutorialComlete = true;
+            }
         }
     }
 }
