@@ -26,6 +26,7 @@ public class CarHandle : MonoBehaviour
     private bool _isCarTutorComlete = false;//shram
     private bool _isShopTutorComlete = false; //shram
     private bool _isWhellChangeTutorComplete = false; //shram
+    private int _arrivedCarCount;
 
     private List<GameObject> _cars = new List<GameObject>();
 
@@ -113,8 +114,12 @@ public class CarHandle : MonoBehaviour
 
         if (!_isWhellChangeTutorComplete)
         {
-            CarGoOut?.Invoke();
-            _isWhellChangeTutorComplete = true;
+            _arrivedCarCount++;
+            if (_arrivedCarCount >= 2)
+            {
+                CarGoOut?.Invoke();
+                _isWhellChangeTutorComplete = true;
+            }
         }
     }
 

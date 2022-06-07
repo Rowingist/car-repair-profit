@@ -108,7 +108,6 @@ public class MovingTutorial : MonoBehaviour
         StartCoroutine(ShowOnTimer(_washCamera));
     }
 
-
     private IEnumerator ShowOnTimer(CinemachineVirtualCamera currentCamera)
     {
         float timeLeft = 3f;
