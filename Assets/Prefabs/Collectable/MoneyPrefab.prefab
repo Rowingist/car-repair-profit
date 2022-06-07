@@ -204,5 +204,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemTransform: {fileID: 7192145407238794551}
-  _transitionTime: 0.2
+  _transitionTime: 0.4
   _scaleFeedback: {fileID: 0}

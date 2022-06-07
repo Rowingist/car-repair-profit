@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using System.Linq;
 
@@ -94,9 +95,15 @@ public class Stock : MonoBehaviour
 
     public void PullFast(Transform destination)
     {
-        for (int i = 0; i < _itemsPlacedInStack.Count; i++)
+        StartCoroutine(Pulling(destination));
+    }
+
+    private IEnumerator Pulling(Transform destination)
+    {
+        for (int i = _itemsPlacedInStack.Count - 1; i >= 0; i--)
         {
             MoveToDestination(_itemsPlacedInStack[i], destination);
+            yield return new WaitForSeconds(0.001f);
         }
     }
 

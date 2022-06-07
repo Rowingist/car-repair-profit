@@ -11,7 +11,7 @@ public class MoneyArea : Area
                 return;
 
             Stock.PullFast(player.transform);
-            StartCoroutine(ReplneishingWallet(Stock.GetCount(), player));
+            StartCoroutine(ReplneishingWallet(Stock.GetCount() + 1, player));
             StartCoroutine(Deactiwating());
         }
     }
@@ -21,14 +21,15 @@ public class MoneyArea : Area
         int target = player.GetWalletCash() + moneyAmount;
         while (player.GetWalletCash() <= target)
         {
-            player.Replenish(1);
+            player.Replenish(target / 35);
             yield return null;
         }
+        player.Replenish(-player.GetWalletCash() + target);
     }
 
     private IEnumerator Deactiwating()
     {
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(1f);
         Stock.HideInPool();
     }
 }
