@@ -20,7 +20,7 @@ public class UnlockedArea : MonoBehaviour
         _carHandle.CarGoOut += OnOpenWashArea;
         _washingHandle.ManyCarsWashed += OnOpenRepairArea;
     }
-   
+
     private void OnDisable()
     {
         _carHandle.CarGoOut -= OnOpenWashArea;
@@ -37,7 +37,7 @@ public class UnlockedArea : MonoBehaviour
         StartCoroutine(WaitUnlockTimer(_repairArea, _repairLock));
     }
 
-    private IEnumerator WaitUnlockTimer(GameObject currentArea, GameObject currentLock) 
+    private IEnumerator WaitUnlockTimer(GameObject currentArea, GameObject currentLock)
     {
         float timeLeft = 2.1f;
         while (timeLeft > 0)
@@ -47,6 +47,7 @@ public class UnlockedArea : MonoBehaviour
         }
         currentArea.gameObject.SetActive(true);
         currentLock.gameObject.SetActive(false);
+
         ChangeScaleEffect(currentArea);
     }
 

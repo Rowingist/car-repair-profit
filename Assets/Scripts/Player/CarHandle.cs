@@ -27,6 +27,7 @@ public class CarHandle : MonoBehaviour
     private bool _isShopTutorComlete = false; //shram
     private bool _isWhellChangeTutorComplete = false; //shram
     private int _arrivedCarCount; //shram
+    private CarCleaner _carCleaner;
 
     private List<GameObject> _cars = new List<GameObject>();
 
@@ -137,6 +138,9 @@ public class CarHandle : MonoBehaviour
         int random = Random.Range(0, _cars.Count);
         _activeCarIndex = random;
         _cars[_activeCarIndex].gameObject.SetActive(true);
+
+        _carCleaner = _cars[_activeCarIndex].GetComponentInChildren<CarCleaner>();
+        _carCleaner.SetDryColor();
     }
 
     public void GetPlayerOut()
@@ -167,6 +171,13 @@ public class CarHandle : MonoBehaviour
             timeLeft -= Time.deltaTime;
             yield return null;
         }
+        WashCar();
+    }
+
+    private void WashCar()
+    {
         _carAnimator.SetTrigger(_startWashing);
+        _carCleaner = _cars[_activeCarIndex].GetComponentInChildren<CarCleaner>();
+        _carCleaner.ChangeCleanMesh();
     }
 }
