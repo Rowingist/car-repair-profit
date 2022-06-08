@@ -26,7 +26,7 @@ public class CarHandle : MonoBehaviour
     private bool _isCarTutorComlete = false;//shram
     private bool _isShopTutorComlete = false; //shram
     private bool _isWhellChangeTutorComplete = false; //shram
-    private int _arrivedCarCount;
+    private int _arrivedCarCount; //shram
 
     private List<GameObject> _cars = new List<GameObject>();
 
@@ -107,20 +107,19 @@ public class CarHandle : MonoBehaviour
 
     public void OnLeftGarage()
     {
+        int needWhellCarToUnlockArea = 1;
+
         _moneySpawner.StartSpawn(50);
         _carAnimator.SetTrigger(_leftGarage);
 
         _isInBox = false; //shram
 
-        if (!_isWhellChangeTutorComplete)
+        if (!_isWhellChangeTutorComplete && _arrivedCarCount >= needWhellCarToUnlockArea)
         {
-            _arrivedCarCount++;
-            if (_arrivedCarCount >= 2)
-            {
-                CarGoOut?.Invoke();
-                _isWhellChangeTutorComplete = true;
-            }
+            CarGoOut?.Invoke();
+            _isWhellChangeTutorComplete = true;
         }
+        _arrivedCarCount++;
     }
 
     public void OnGetIntoGarage()

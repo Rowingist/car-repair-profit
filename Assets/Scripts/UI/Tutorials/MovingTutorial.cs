@@ -12,11 +12,14 @@ public class MovingTutorial : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _shopCamera;
     [SerializeField] private CinemachineVirtualCamera _rackCamera;
     [SerializeField] private CinemachineVirtualCamera _washCamera;
+    [SerializeField] private CinemachineVirtualCamera _repairCamera;
+
 
     [SerializeField] private Image _tutorialMesh;
     [SerializeField] private GetFirstMoneyTutorial _moneyArea;
     [SerializeField] private CarHandle _carHandle;
     [SerializeField] private Shop _shop;
+    [SerializeField] private WashingHandle _washingHandle;
 
     private bool _isMoneyTutorComlete = false;
 
@@ -27,6 +30,7 @@ public class MovingTutorial : MonoBehaviour
         _carHandle.CarUpOnLift += SetShopCamera;
         _carHandle.CarGoOut += SetWashCamera;
         _shop.PlayerExitFromShop += SetRackCamera;
+        _washingHandle.ManyCarsWashed += SetRepairCamera;
     }
 
     private void Start()
@@ -51,6 +55,7 @@ public class MovingTutorial : MonoBehaviour
         _carHandle.CarUpOnLift -= SetShopCamera;
         _shop.PlayerExitFromShop -= SetRackCamera;
         _carHandle.CarGoOut -= SetWashCamera;
+        _washingHandle.ManyCarsWashed -= SetRepairCamera;
     }
 
     private void SetMainCamera(CinemachineVirtualCamera currentCamera) // 0 фокус на главную камеру
@@ -106,6 +111,14 @@ public class MovingTutorial : MonoBehaviour
         _washCamera.Priority = 1;
 
         StartCoroutine(ShowOnTimer(_washCamera));
+    }
+
+    private void SetRepairCamera() // 7 помыто 2 машины, фокус на цех починки
+    {
+        _playCamera.Priority = 0;
+        _repairCamera.Priority = 1;
+
+        StartCoroutine(ShowOnTimer(_repairCamera));
     }
 
     private IEnumerator ShowOnTimer(CinemachineVirtualCamera currentCamera)

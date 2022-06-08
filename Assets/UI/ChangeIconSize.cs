@@ -12,5 +12,4 @@ public class ChangeIconSize : MonoBehaviour
     {
         transform.DOScale(1.5f, 1f).SetLoops(-1, LoopType.Yoyo);
     }
-
 }
