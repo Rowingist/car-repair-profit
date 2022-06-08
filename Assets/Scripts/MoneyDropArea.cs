@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using DG.Tweening;
 
 public class MoneyDropArea : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class MoneyDropArea : MonoBehaviour
     [SerializeField] private int _zonePrice;
     [SerializeField] private TMP_Text _price;
     [SerializeField] private bool _isSellingZones;
+    [SerializeField] private ParticleSystem _spawnAreaParticle;
 
     public event Action Sold;
 
@@ -26,6 +28,7 @@ public class MoneyDropArea : MonoBehaviour
             if (_zonePrice <= 0)
             {
                 _zoneToOpen.SetActive(true);
+                ChangeScaleEffect(_zoneToOpen);
                 _dropArea.gameObject.SetActive(false);
                 Sold?.Invoke();
             }
@@ -36,5 +39,9 @@ public class MoneyDropArea : MonoBehaviour
     private void UpdateText(int value)
     {
         _price.text = value.ToString();
+    }
+    private void ChangeScaleEffect(GameObject currentArea)
+    {
+       currentArea.transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 0.5f);
     }
 }
