@@ -1295,10 +1295,10 @@ MonoBehaviour:
   _carPlatform: {fileID: 4354611997284841794}
   _pullingArea: {fileID: 4354611997719221682}
   _vihiclePrefabs:
-  - {fileID: 4195426807719001275, guid: cf3a91073436e264e855ed034b4e083e, type: 3}
-  - {fileID: 4614407199857106241, guid: 3d1d6b89913541743adc29fcc68639fe, type: 3}
-  - {fileID: 8034637420526516774, guid: ebac46eeb2923c84b983001d26902200, type: 3}
-  - {fileID: 4499760052962286723, guid: db0c5f496fb47664a8e8ca82910981e3, type: 3}
+  - {fileID: 4195426807719001275, guid: 9628119738ee3584e8531e0db119e8b0, type: 3}
+  - {fileID: 4614407199857106241, guid: e9d96b780be849a46bb0f5ad7d70eeeb, type: 3}
+  - {fileID: 8034637420526516774, guid: 43af1f43fc5ad3e43aec8540d1aef91d, type: 3}
+  - {fileID: 4499760052962286723, guid: 0a4c732eee133e345bcd5c74c6513538, type: 3}
   _carSpawnPoint: {fileID: 456999905430933896}
   _sitInCar: {fileID: 0}
   _stock: {fileID: 4354611998337673430}

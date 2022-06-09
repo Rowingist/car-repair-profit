@@ -14,6 +14,7 @@ public class MovingTutorial : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _shopCamera;
     [SerializeField] private CinemachineVirtualCamera _rackCamera;
     [SerializeField] private CinemachineVirtualCamera _repairCamera;
+    [SerializeField] private CinemachineVirtualCamera _paintCamera;
 
 
     [SerializeField] private Image _tutorialMesh;
@@ -21,8 +22,12 @@ public class MovingTutorial : MonoBehaviour
     [SerializeField] private CarHandle _carHandle;
     [SerializeField] private Shop _shop;
     [SerializeField] private WashingHandle _washingHandle;
+    [SerializeField] private EngineRepairCount _engineRepairCount;
 
     private bool _isMoneyTutorComlete = false;
+    private bool _isWashingTutorialComplete = false;
+    public bool _isWhellTutorialComplete = false;// свойство
+
 
     public event UnityAction WashingTutorialShowed;
 
@@ -34,6 +39,7 @@ public class MovingTutorial : MonoBehaviour
         _carHandle.CarUpOnLift += SetShopCamera;
         _shop.PlayerExitFromShop += SetRackCamera;
         _carHandle.CarGoOut += SetRepairCamera;
+        _engineRepairCount.CarExitFromEngine += SetPaintCamera;
     }
 
     private void Start()
@@ -59,15 +65,16 @@ public class MovingTutorial : MonoBehaviour
         _carHandle.CarUpOnLift -= SetShopCamera;
         _shop.PlayerExitFromShop -= SetRackCamera;
         _carHandle.CarGoOut -= SetRepairCamera;
+        _engineRepairCount.CarExitFromEngine += SetPaintCamera;
     }
 
-    private void SetMainCamera(CinemachineVirtualCamera currentCamera) 
+    private void SetMainCamera(CinemachineVirtualCamera currentCamera)
     {
         currentCamera.Priority = 0;
         _playCamera.Priority = 1;
     }
 
-    private void SetMoneyAreaCamera() 
+    private void SetMoneyAreaCamera()
     {
         _moneyCamera.Priority = 1;
         _playCamera.Priority = 0;
@@ -76,25 +83,26 @@ public class MovingTutorial : MonoBehaviour
         StartCoroutine(ShowOnTimer(_moneyCamera));
     }
 
-    private void SetWashCamera() 
+    private void SetWashCamera()
     {
         _playCamera.Priority = 0;
         _washCamera.Priority = 1;
+        _isWashingTutorialComplete = true;
 
         StartCoroutine(ShowOnTimer(_washCamera));
 
         WashingTutorialShowed?.Invoke();
     }
 
-    private void SetWhellChangeAreaCamera() 
+    private void SetWhellChangeAreaCamera()
     {
         _playCamera.Priority = 0;
         _whellCamera.Priority = 1;
-
+        _isWhellTutorialComplete = true;
         StartCoroutine(ShowOnTimer(_playCamera));
     }
 
-    private void SetCarDoorCamera() 
+    private void SetCarDoorCamera()
     {
         _playCamera.Priority = 0;
         _carsDoorCamera.Priority = 1;
@@ -102,28 +110,37 @@ public class MovingTutorial : MonoBehaviour
         StartCoroutine(ShowOnTimer(_carsDoorCamera));
     }
 
-    private void SetShopCamera() 
+    private void SetShopCamera()
     {
-        _playCamera.Priority = 0;
-        _shopCamera.Priority = 1;
-
-        StartCoroutine(ShowOnTimer(_shopCamera));
+            _playCamera.Priority = 0;
+            _shopCamera.Priority = 1;
+            StartCoroutine(ShowOnTimer(_shopCamera));
     }
 
-    private void SetRackCamera() 
+    private void SetRackCamera()
     {
-        _playCamera.Priority = 0;
-        _rackCamera.Priority = 1;
-
-        StartCoroutine(ShowOnTimer(_rackCamera));
+        if (_isWashingTutorialComplete)
+        {
+            _playCamera.Priority = 0;
+            _rackCamera.Priority = 1;
+            StartCoroutine(ShowOnTimer(_rackCamera));
+        }
     }
 
-    private void SetRepairCamera() 
+    private void SetRepairCamera()
     {
         _playCamera.Priority = 0;
         _repairCamera.Priority = 1;
 
         StartCoroutine(ShowOnTimer(_repairCamera));
+    }
+
+    private void SetPaintCamera()
+    {
+        _playCamera.Priority = 0;
+        _paintCamera.Priority = 1;
+
+        StartCoroutine(ShowOnTimer(_paintCamera));
     }
 
     private IEnumerator ShowOnTimer(CinemachineVirtualCamera currentCamera)

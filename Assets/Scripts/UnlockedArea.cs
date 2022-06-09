@@ -15,12 +15,14 @@ public class UnlockedArea : MonoBehaviour
     [SerializeField] private CarHandle _carHandle;
     [SerializeField] private WashingHandle _washingHandle;
     [SerializeField] private MovingTutorial _movingTutorial;
+    [SerializeField] private EngineRepairCount _engineRepairCount;
 
     private void OnEnable()
     {
         _movingTutorial.WashingTutorialShowed += OnOpenWashArea;
         _washingHandle.ManyCarsWashed += OnOpenWhellArea;
         _carHandle.CarGoOut += OnOpenRepairArea;
+        _engineRepairCount.CarExitFromEngine += OnOpenPaintArea;
     }
 
     private void OnDisable()
@@ -28,6 +30,7 @@ public class UnlockedArea : MonoBehaviour
         _movingTutorial.WashingTutorialShowed -= OnOpenWashArea;
         _washingHandle.ManyCarsWashed -= OnOpenWhellArea;
         _carHandle.CarGoOut -= OnOpenRepairArea;
+        _engineRepairCount.CarExitFromEngine -= OnOpenPaintArea;
     }
 
     private void OnOpenWashArea()
@@ -43,6 +46,11 @@ public class UnlockedArea : MonoBehaviour
     private void OnOpenRepairArea()
     {
         StartCoroutine(WaitUnlockTimer(_repairArea, _repairLock));
+    }
+
+    private void OnOpenPaintArea()
+    {
+        StartCoroutine(WaitUnlockTimer(_paintArea, _paintLock));
     }
 
     private IEnumerator WaitUnlockTimer(GameObject currentArea, GameObject currentLock)

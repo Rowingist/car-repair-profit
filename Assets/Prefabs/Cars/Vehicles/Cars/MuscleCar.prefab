@@ -395,6 +395,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6474942555373815861}
   - component: {fileID: 3740332425286790088}
+  - component: {fileID: 8974660348310600517}
   m_Layer: 0
   m_Name: MuscleCar
   m_TagString: Untagged
@@ -437,6 +438,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cleanMesh: {fileID: 6823248181709165216}
   _dryMesh: {fileID: 6823248181709165216}
+--- !u!65 &8974660348310600517
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034637420526516774}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 3.3231013, z: 1}
+  m_Center: {x: 0, y: -1.1615502, z: 0}
 --- !u!1 &8446829825205388144
 GameObject:
   m_ObjectHideFlags: 0
