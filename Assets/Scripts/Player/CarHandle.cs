@@ -129,6 +129,7 @@ public class CarHandle : MonoBehaviour
         _arrivedCarCount++;
     }
 
+   
     public void OnGetIntoGarage()
     {
         ChangeCar();

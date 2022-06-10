@@ -7,6 +7,7 @@ public class Shop : MonoBehaviour
     [SerializeField] private ShopView _shopView;
     [SerializeField] private MMFeedbacks _scaleFeedback;
     [SerializeField] private MMFeedbacks _unscaleFeedback;
+    [SerializeField] private MovingTutorial _movingTutorial;
 
     private bool _isShopTutorialComlete = false;
 
@@ -30,7 +31,7 @@ public class Shop : MonoBehaviour
             _unscaleFeedback?.PlayFeedbacks();
             player.ExitShop();
 
-            if (!_isShopTutorialComlete)
+            if (!_isShopTutorialComlete && _movingTutorial._isWhellTutorialComplete)
             {
                 PlayerExitFromShop?.Invoke();
                 _isShopTutorialComlete = true;
