@@ -10,6 +10,8 @@ public class CarCleaner : MonoBehaviour
     public void SetDryColor()
     {
         _dryMesh.gameObject.SetActive(true);
+        _cleanMesh.gameObject.SetActive(false);
+
     }
 
     public void ChangeCleanMesh()
