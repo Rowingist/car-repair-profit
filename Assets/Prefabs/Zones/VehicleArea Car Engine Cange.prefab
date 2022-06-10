@@ -1003,6 +1003,8 @@ GameObject:
   - component: {fileID: 41088113176491934}
   - component: {fileID: 41088113176491935}
   - component: {fileID: 41088113176491929}
+  - component: {fileID: 293477198}
+  - component: {fileID: 293477197}
   m_Layer: 0
   m_Name: TriggerColliders
   m_TagString: Untagged
@@ -1065,6 +1067,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scaleFeedback: {fileID: 41088112355688282}
   _unscaleFeedback: {fileID: 41088112008769657}
+--- !u!54 &293477198
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41088113176491933}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &293477197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41088113176491933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e995785e4f287c3459dd3d55e0a250e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &41088113231717592
 GameObject:
   m_ObjectHideFlags: 0
@@ -1435,7 +1465,7 @@ GameObject:
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &41088113621013313
 Transform:
   m_ObjectHideFlags: 0
