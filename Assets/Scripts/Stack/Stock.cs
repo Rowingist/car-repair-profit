@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
-using System.Linq;
 
 [RequireComponent(typeof(CellsSequence))]
 public class Stock : MonoBehaviour
@@ -10,6 +9,7 @@ public class Stock : MonoBehaviour
     [SerializeField] private GameObject _itemsPool;
     [SerializeField] private StockType _stockType;
     [SerializeField] private ItemType _itemsType;
+    [SerializeField] private int _maxAllovedCapacity;
 
     private CellsSequence _cellsSequense;
 
@@ -19,10 +19,11 @@ public class Stock : MonoBehaviour
     public event Action DroppedItem;
 
     public bool Empty => _itemsPlacedInStack.Count == 0;
-    public bool Filled => _cellsSequense.CheckIfAllCellsAreNonEmpty();
+    public bool Filled => _maxAllovedCapacity - _itemsPlacedInStack.Count == 0;
     public bool Blocked { get; private set; }
     public StockType StockType => _stockType;
     public ItemType ItemsType => _itemsType;
+    public int Lifespan { get; private set; }
 
     private void Start()
     {
@@ -63,6 +64,7 @@ public class Stock : MonoBehaviour
             if (item)
             {
                 _itemsPlacedInStack.Add(item);
+                Lifespan += 1;
                 LocateInEmptyCell(lastEmpty, item);
                 lastEmpty.Fill();
                 TakenItem?.Invoke();
@@ -100,10 +102,10 @@ public class Stock : MonoBehaviour
 
     private IEnumerator Pulling(Transform destination)
     {
-        for (int i = _itemsPlacedInStack.Count - 1; i >= 0; i--)
+        for (int i = 0; i < _itemsPlacedInStack.Count; i++)
         {
             MoveToDestination(_itemsPlacedInStack[i], destination);
-            yield return new WaitForSeconds(0.001f);
+            yield return null;
         }
     }
 
@@ -112,9 +114,23 @@ public class Stock : MonoBehaviour
         for (int i = 0; i < _itemsPlacedInStack.Count; i++)
         {
             _itemsPlacedInStack[i].transform.parent = _itemsPool.transform;
-            _itemsPlacedInStack[i].gameObject.SetActive(false);
+            StartCoroutine(Scaling(_itemsPlacedInStack[i], 0.2f));
+            _cellsSequense.GetCellByNumber(i).Clear();
         }
-        Clear();
+        _itemsPlacedInStack.Clear();
+    }
+
+    private IEnumerator Scaling(Item item, float duration)
+    {
+        float t = 0;
+        while (t < 1)
+        {
+            item.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, t);
+            t += Time.deltaTime / duration;
+            yield return null;
+        }
+        item.transform.localScale = Vector3.one;
+        item.gameObject.SetActive(false);
     }
 
     private void Unparent(out Item item, ItemType itemType)
@@ -147,11 +163,6 @@ public class Stock : MonoBehaviour
         }
     }
 
-    public Item GetTopItem()
-    {
-        return _itemsPlacedInStack[_itemsPlacedInStack.Count - 1];
-    }
-
     public void Block()
     {
         Blocked = true;
@@ -162,7 +173,6 @@ public class Stock : MonoBehaviour
         Blocked = false;
     }
 
-    [ContextMenu("Open all cells")]
     public void Clear()
     {
         for (int i = 0; i < _cellsSequense.GetCount(); i++)
@@ -184,7 +194,7 @@ public class Stock : MonoBehaviour
 
     public int GetDemandedCount()
     {
-        return _cellsSequense.GetCount() - _itemsPlacedInStack.Count;
+        return _maxAllovedCapacity - _itemsPlacedInStack.Count;
     }
 
     public int GetCount()
@@ -195,6 +205,11 @@ public class Stock : MonoBehaviour
     public void FillAllCells() // shram
     {
         _cellsSequense.FillAllCells();
+    }
+
+    public void IncreaceMaxAllowedCapacity(int value)
+    {
+        _maxAllovedCapacity += value;
     }
 }
 

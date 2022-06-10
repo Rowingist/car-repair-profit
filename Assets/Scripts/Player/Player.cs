@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
 
     public ItemType BuyingItemType { get; private set; }
     public PlayerStayingOn PlayerStayingOn { get; private set; }
+    public Transform WalletPoint => _walletPoint;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -42,19 +43,19 @@ public class Player : MonoBehaviour
 
     private void OnDisable()
     {
-        if(_moneyDropArea)
-                _moneyDropArea.Sold -= OnDisableAnimation;
+        if (_moneyDropArea)
+            _moneyDropArea.Sold -= OnDisableAnimation;
     }
 
     private void OpeningNewZone(Transform dropPoint)
     {
-        int oneDollar = 1;
-        bool isAbleToPay = _wallet.TryWithdraw(oneDollar);
+        int price = _moneyDropArea.GetZonePrice();
+        bool isAbleToPay = _wallet.TryWithdraw(price / 25);
         if (isAbleToPay)
         {
             _animationActivator.SetActive(true);
             SetMoneyDropPoint(dropPoint);
-            _moneyDropArea.Push(oneDollar);
+            _moneyDropArea.Push(price / 25);
             WithdrowCash?.Invoke();
             _data.SetCurrentSoft(_wallet.GetCashAmount());
         }

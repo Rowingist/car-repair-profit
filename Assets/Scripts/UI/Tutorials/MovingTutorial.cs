@@ -19,7 +19,7 @@ public class MovingTutorial : MonoBehaviour
     [SerializeField] private GetFirstMoneyTutorial _moneyArea;
     [SerializeField] private CarHandle _carHandle;
     [SerializeField] private Shop _shop;
-    [SerializeField] private WashingHandle _washingHandle;
+    [SerializeField] private PaintingHandle _washingHandle;
 
     private bool _isMoneyTutorComlete = false;
 

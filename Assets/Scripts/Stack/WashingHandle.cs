@@ -1,22 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class WashingHandle : MonoBehaviour
 {
     [SerializeField] private CarHandle _carHandle;
+    [SerializeField] private ParticleSystem _washParticle;
+    [SerializeField] private Stock _relatedStock;
 
     private int _carWashedCount;
-    private ParticleSystem _washParticle;
     private bool _isWashingTutorialComplete = false;
 
     public event UnityAction ManyCarsWashed;
-
-    private void Start()
-    {
-        _washParticle = GetComponentInChildren<ParticleSystem>();
-    }
 
     private void OnTriggerEnter(Collider other)
     {

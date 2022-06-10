@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class MoneyArea : Area
 {
+    [SerializeField] private ParticleSystem _smokePoofEffect;
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.TryGetComponent(out Player player))
@@ -10,7 +12,7 @@ public class MoneyArea : Area
             if (Stock.Empty)
                 return;
 
-            Stock.PullFast(player.transform);
+            Stock.PullFast(player.WalletPoint);
             StartCoroutine(ReplneishingWallet(Stock.GetCount() + 1, player));
             StartCoroutine(Deactiwating());
         }
@@ -21,7 +23,7 @@ public class MoneyArea : Area
         int target = player.GetWalletCash() + moneyAmount;
         while (player.GetWalletCash() <= target)
         {
-            player.Replenish(target / 35);
+            player.Replenish(target / 7);
             yield return null;
         }
         player.Replenish(-player.GetWalletCash() + target);
@@ -29,7 +31,9 @@ public class MoneyArea : Area
 
     private IEnumerator Deactiwating()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.4f);
         Stock.HideInPool();
+        yield return new WaitForSeconds(0.1f);
+        _smokePoofEffect.Play();
     }
 }

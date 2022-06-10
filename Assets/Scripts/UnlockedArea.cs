@@ -13,7 +13,7 @@ public class UnlockedArea : MonoBehaviour
     [SerializeField] private GameObject _paintArea;
     [SerializeField] private GameObject _paintLock;
     [SerializeField] private CarHandle _carHandle;
-    [SerializeField] private WashingHandle _washingHandle;
+    [SerializeField] private PaintingHandle _washingHandle;
 
     private void OnEnable()
     {

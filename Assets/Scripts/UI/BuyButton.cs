@@ -12,6 +12,8 @@ public class BuyButton : MonoBehaviour
     [SerializeField] private TMP_Text _name;
     [SerializeField] private ItemType _itemType;
     [SerializeField] private Stock _relatedStock;
+    [SerializeField] private GameObject _relatedArea;
+    [SerializeField] private Image _blockImage;
 
     public event Action<int, ItemType> Clicked;
 
@@ -25,6 +27,11 @@ public class BuyButton : MonoBehaviour
     private void Start()
     {
         SettingButton(_relatedPrice);
+    }
+
+    private void Update()
+    {
+        _blockImage.gameObject.SetActive(!_relatedArea.gameObject.activeSelf);
     }
 
     private void OnDisable()

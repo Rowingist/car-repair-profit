@@ -78,6 +78,7 @@ public class CarHandle : MonoBehaviour
         {
             _carAnimator.SetTrigger(_driveToExit);
             _pullingArea.Stock.Clear();
+            _pullingArea.Stock.IncreaceMaxAllowedCapacity(Random.Range(0, 5));
             yield break;
         }
         else
@@ -85,6 +86,11 @@ public class CarHandle : MonoBehaviour
             _carAnimator.SetTrigger(_driveToLift);
             yield break;
         }
+    }
+
+    public void DriveToExit()
+    {
+        _carAnimator.SetTrigger(_driveToExit);
     }
 
     private void OnLiftDown()

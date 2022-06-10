@@ -5,12 +5,16 @@ using DG.Tweening;
 
 public class MoneyDropArea : MonoBehaviour
 {
-    [SerializeField] private GameObject _dropArea;
+    [SerializeField] private GameObject _bodyTurnOff;
     [SerializeField] private GameObject _zoneToOpen;
     [SerializeField] private int _zonePrice;
     [SerializeField] private TMP_Text _price;
     [SerializeField] private bool _isSellingZones;
     [SerializeField] private ParticleSystem _spawnAreaParticle;
+    [SerializeField] private Stock _relatedStack;
+    [SerializeField] private int _oppenedCellsAmount;
+
+    private int _startPrice;
 
     public event Action Sold;
 
@@ -18,6 +22,8 @@ public class MoneyDropArea : MonoBehaviour
     {
         if (_isSellingZones)
             UpdateText(_zonePrice);
+
+        _startPrice = _zonePrice;
     }
 
     public void Push(int value)
@@ -28,12 +34,19 @@ public class MoneyDropArea : MonoBehaviour
             if (_zonePrice <= 0)
             {
                 _zoneToOpen.SetActive(true);
+                _relatedStack.IncreaceMaxAllowedCapacity(_oppenedCellsAmount);
                 ChangeScaleEffect(_zoneToOpen);
-                _dropArea.gameObject.SetActive(false);
                 Sold?.Invoke();
+                _bodyTurnOff.SetActive(false);
+
             }
             UpdateText(_zonePrice);
         }
+    }
+
+    public int GetZonePrice()
+    {
+        return _startPrice;
     }
 
     private void UpdateText(int value)
@@ -42,6 +55,7 @@ public class MoneyDropArea : MonoBehaviour
     }
     private void ChangeScaleEffect(GameObject currentArea)
     {
-       currentArea.transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 0.5f);
+        _spawnAreaParticle.Play();
+        currentArea.transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 0.5f);
     }
 }

@@ -6,6 +6,7 @@ public class MoneySpawner : ObjectPool
     [SerializeField] private GameObject _moneyPrefab;
     [SerializeField] private int _startSpawn;
     [SerializeField] private Stock _stock;
+    [SerializeField] private ParticleSystem _dollarsPoofEffect;
 
     private void Start()
     {
@@ -26,6 +27,7 @@ public class MoneySpawner : ObjectPool
         {
             TakeItem();
         }
+        _dollarsPoofEffect.Play();
     }
 
     private void TakeItem()

@@ -36,7 +36,6 @@ public class Spawner : ObjectPool
                     _stock.PushToLastFreeCell(item);
                 }
             }
-
         }
     }
 

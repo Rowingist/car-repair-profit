@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
  public class GameSceneManager : MonoBehaviour
 {
-/*    [SerializeField] private TMP_Text _levelText;*/
     [SerializeField] private AnalyticManager _analytic;
     [SerializeField] private Data _data;
     [SerializeField] private Transform _playerTransform;
@@ -17,12 +16,11 @@ using UnityEngine.SceneManagement;
     {
         _data.Load();
         _data.SetLevelIndex(SceneManager.GetActiveScene().buildIndex);
-        _playerTransform.position = new Vector3(15f, 0f, 4f);
+        _playerTransform.position = new Vector3(47.5f, 0f, -25f);
         _player.Replenish(_data.GetCurrentSoft());
         _resources.ActivateServiceZones(_data.GetOpennedServiceZones());
         _resources.DeactivateMoneyDropZones(_data.GetClosedMoneyDropZones());
         _data.Save();
-/*        _levelText.text = $"Level {GetDisplayedLevelNumber()}";*/
     }
 
     private void Start()
