@@ -5,7 +5,7 @@ using UnityEngine.Events;
 public class GetFirstMoneyTutorial : MonoBehaviour
 {
     private bool _isTutorialComlete = false;
-    
+
     public event UnityAction PlayerExitFromMoneyArea;
 
 
