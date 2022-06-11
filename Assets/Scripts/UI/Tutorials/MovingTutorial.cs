@@ -15,7 +15,7 @@ public class MovingTutorial : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _rackCamera;
     [SerializeField] private CinemachineVirtualCamera _repairCamera;
     [SerializeField] private CinemachineVirtualCamera _paintCamera;
-
+    [SerializeField] private CinemachineVirtualCamera _paintBallonCamera;
 
     [SerializeField] private Image _tutorialMesh;
     [SerializeField] private GetFirstMoneyTutorial _moneyArea;
@@ -23,6 +23,7 @@ public class MovingTutorial : MonoBehaviour
     [SerializeField] private Shop _shop;
     [SerializeField] private WashingHandle _washingHandle;
     [SerializeField] private EngineRepairCount _engineRepairCount;
+    [SerializeField] private PaintingCount _paintingCount;
 
     private bool _isMoneyTutorComlete = false;
     private bool _isWashingTutorialComplete = false;
@@ -40,6 +41,7 @@ public class MovingTutorial : MonoBehaviour
         _shop.PlayerExitFromShop += SetRackCamera;
         _carHandle.CarGoOut += SetRepairCamera;
         _engineRepairCount.CarExitFromEngine += SetPaintCamera;
+        _paintingCount.CarExitFromPainting += OnSetPaintBallonCamera;
     }
 
     private void Start()
@@ -65,7 +67,9 @@ public class MovingTutorial : MonoBehaviour
         _carHandle.CarUpOnLift -= SetShopCamera;
         _shop.PlayerExitFromShop -= SetRackCamera;
         _carHandle.CarGoOut -= SetRepairCamera;
-        _engineRepairCount.CarExitFromEngine += SetPaintCamera;
+        _engineRepairCount.CarExitFromEngine -= SetPaintCamera;
+        _paintingCount.CarExitFromPainting -= OnSetPaintBallonCamera;
+
     }
 
     private void SetMainCamera(CinemachineVirtualCamera currentCamera)
@@ -141,6 +145,14 @@ public class MovingTutorial : MonoBehaviour
         _paintCamera.Priority = 1;
 
         StartCoroutine(ShowOnTimer(_paintCamera));
+    }
+
+    private void OnSetPaintBallonCamera()
+    {
+        _playCamera.Priority = 0;
+        _paintBallonCamera.Priority = 1;
+
+        StartCoroutine(ShowOnTimer(_paintBallonCamera));
     }
 
     private IEnumerator ShowOnTimer(CinemachineVirtualCamera currentCamera)

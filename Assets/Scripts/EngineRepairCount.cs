@@ -13,7 +13,7 @@ public class EngineRepairCount : MonoBehaviour
         {
             _carRepaered++;
 
-            if (_carRepaered == 3)
+            if (_carRepaered == 2)
                 CarExitFromEngine?.Invoke();
         }
     }
