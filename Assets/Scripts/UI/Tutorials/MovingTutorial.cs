@@ -41,7 +41,7 @@ public class MovingTutorial : MonoBehaviour
         _shop.PlayerExitFromShop += SetRackCamera;
         _carHandle.CarGoOut += SetRepairCamera;
         _engineRepairCount.CarExitFromEngine += SetPaintCamera;
-        _paintingCount.CarExitFromPainting += OnSetPaintBallonCamera;
+        _paintingCount.CarArrivedToPainting += OnSetPaintBallonCamera;
     }
 
     private void Start()
@@ -68,8 +68,7 @@ public class MovingTutorial : MonoBehaviour
         _shop.PlayerExitFromShop -= SetRackCamera;
         _carHandle.CarGoOut -= SetRepairCamera;
         _engineRepairCount.CarExitFromEngine -= SetPaintCamera;
-        _paintingCount.CarExitFromPainting -= OnSetPaintBallonCamera;
-
+        _paintingCount.CarArrivedToPainting -= OnSetPaintBallonCamera;
     }
 
     private void SetMainCamera(CinemachineVirtualCamera currentCamera)

@@ -10,19 +10,20 @@ public class PaintingCount : MonoBehaviour
     private int _carPainting;
     private bool _isTutorialComleted = false;
 
-    public event UnityAction CarExitFromPainting;
+    public event UnityAction CarArrivedToPainting;
 
     public void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out CarCleaner car))
         {
             _carPainting++;
+            Debug.LogError("car num = " + _carPainting);
 
-            if (_carPainting >= 2 && !_isTutorialComleted)
+            if (_carPainting >= 1 && !_isTutorialComleted)
             {
                 _imageTutorial.gameObject.SetActive(true);
 
-                CarExitFromPainting?.Invoke();
+                CarArrivedToPainting?.Invoke();
 
                 StartCoroutine(ShowOnTimer());
 
@@ -33,7 +34,7 @@ public class PaintingCount : MonoBehaviour
 
     private IEnumerator ShowOnTimer()
     {
-        float timeLeft = 4f;
+        float timeLeft = 3.5f;
         while (timeLeft > 0)
         {
             timeLeft -= Time.deltaTime;

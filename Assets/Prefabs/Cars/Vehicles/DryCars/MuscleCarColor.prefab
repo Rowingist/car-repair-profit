@@ -477,6 +477,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6474942555373815861}
   - component: {fileID: 137667986927450300}
+  - component: {fileID: 4853569668341424076}
   m_Layer: 0
   m_Name: MuscleCarColor
   m_TagString: Untagged
@@ -520,6 +521,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cleanMesh: {fileID: 6823248181709165216}
   _dryMesh: {fileID: 1657854844096805262}
+--- !u!65 &4853569668341424076
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034637420526516774}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 6.889785, z: 1}
+  m_Center: {x: 0, y: -2.9448922, z: 0}
 --- !u!1 &8446829825205388144
 GameObject:
   m_ObjectHideFlags: 0

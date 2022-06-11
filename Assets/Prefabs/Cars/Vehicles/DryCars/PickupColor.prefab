@@ -122,6 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4499760052961853603}
   - component: {fileID: 4707218719030436988}
+  - component: {fileID: 4747174745508875192}
   m_Layer: 0
   m_Name: PickupColor
   m_TagString: Untagged
@@ -165,6 +166,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cleanMesh: {fileID: 4499760052964278851}
   _dryMesh: {fileID: 8731874574628156457}
+--- !u!65 &4747174745508875192
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4499760052962286723}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 5.073943, z: 1}
+  m_Center: {x: 0, y: -2.036971, z: 0}
 --- !u!1 &4499760052962286725
 GameObject:
   m_ObjectHideFlags: 0

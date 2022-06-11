@@ -314,6 +314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4195426807718764699}
   - component: {fileID: 2863079000228385254}
+  - component: {fileID: 380348480420353702}
   m_Layer: 0
   m_Name: HellcatDry
   m_TagString: Untagged
@@ -357,6 +358,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cleanMesh: {fileID: 4195426807716995707}
   _dryMesh: {fileID: 6139637439749138231}
+--- !u!65 &380348480420353702
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4195426807719001275}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 6.341337, z: 1}
+  m_Center: {x: 0, y: -2.6706693, z: 0}
 --- !u!1 &4195426807719001277
 GameObject:
   m_ObjectHideFlags: 0
