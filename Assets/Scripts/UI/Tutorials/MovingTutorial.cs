@@ -18,7 +18,7 @@ public class MovingTutorial : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _paintBallonCamera;
 
     [SerializeField] private Image _tutorialMesh;
-    [SerializeField] private GetFirstMoneyTutorial _moneyArea;
+    [SerializeField] private FirstMoneyTutorial _moneyArea;
     [SerializeField] private CarHandle _carHandle;
     [SerializeField] private Shop _shop;
     [SerializeField] private WashingHandle _washingHandle;
@@ -30,11 +30,19 @@ public class MovingTutorial : MonoBehaviour
     public bool _isWhellTutorialComplete = false;// свойство
 
 
+    public event UnityAction FirstTutorialShoewed;
     public event UnityAction WashingTutorialShowed;
+    public event UnityAction WhellTutorialShowed;
+    public event UnityAction CarDoorTutorialShowed;
+    public event UnityAction ShopTutorialShowed;
+    public event UnityAction RackTutorialShowed;
+    public event UnityAction RepairTutorialShowed;
+    public event UnityAction PaintTutorialShowed;
+    public event UnityAction PaintBallonTutorialShowed;
 
     private void OnEnable()
     {
-        _moneyArea.PlayerExitFromMoneyArea += SetWashCamera;
+        _moneyArea.FirstTutorialMoneyZoneLeft += SetWashCamera;
         _washingHandle.ManyCarsWashed += SetWhellChangeAreaCamera;
         _carHandle.CarArrived += SetCarDoorCamera;
         _carHandle.CarUpOnLift += SetShopCamera;
@@ -53,15 +61,18 @@ public class MovingTutorial : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && !_isMoneyTutorComlete)
         {
+            FirstTutorialShoewed?.Invoke();
+
             _tutorialMesh.gameObject.SetActive(false);
 
             SetMoneyAreaCamera();
+
         }
     }
 
     private void OnDisable()
     {
-        _moneyArea.PlayerExitFromMoneyArea -= SetWashCamera;
+        _moneyArea.FirstTutorialMoneyZoneLeft -= SetWashCamera;
         _washingHandle.ManyCarsWashed -= SetWhellChangeAreaCamera;
         _carHandle.CarArrived -= SetCarDoorCamera;
         _carHandle.CarUpOnLift -= SetShopCamera;
@@ -99,6 +110,8 @@ public class MovingTutorial : MonoBehaviour
 
     private void SetWhellChangeAreaCamera()
     {
+        WhellTutorialShowed?.Invoke();
+
         _playCamera.Priority = 0;
         _whellCamera.Priority = 1;
         _isWhellTutorialComplete = true;
@@ -107,6 +120,7 @@ public class MovingTutorial : MonoBehaviour
 
     private void SetCarDoorCamera()
     {
+        CarDoorTutorialShowed?.Invoke();
         _playCamera.Priority = 0;
         _carsDoorCamera.Priority = 1;
 
@@ -115,15 +129,17 @@ public class MovingTutorial : MonoBehaviour
 
     private void SetShopCamera()
     {
-            _playCamera.Priority = 0;
-            _shopCamera.Priority = 1;
-            StartCoroutine(ShowOnTimer(_shopCamera));
+        ShopTutorialShowed?.Invoke();
+        _playCamera.Priority = 0;
+        _shopCamera.Priority = 1;
+        StartCoroutine(ShowOnTimer(_shopCamera));
     }
 
     private void SetRackCamera()
     {
         if (_isWashingTutorialComplete)
         {
+            RackTutorialShowed?.Invoke();
             _playCamera.Priority = 0;
             _rackCamera.Priority = 1;
             StartCoroutine(ShowOnTimer(_rackCamera));
@@ -132,6 +148,8 @@ public class MovingTutorial : MonoBehaviour
 
     private void SetRepairCamera()
     {
+        RepairTutorialShowed?.Invoke();
+
         _playCamera.Priority = 0;
         _repairCamera.Priority = 1;
 
@@ -140,6 +158,8 @@ public class MovingTutorial : MonoBehaviour
 
     private void SetPaintCamera()
     {
+        PaintTutorialShowed?.Invoke();
+
         _playCamera.Priority = 0;
         _paintCamera.Priority = 1;
 
@@ -148,6 +168,8 @@ public class MovingTutorial : MonoBehaviour
 
     private void OnSetPaintBallonCamera()
     {
+        PaintBallonTutorialShowed?.Invoke();
+
         _playCamera.Priority = 0;
         _paintBallonCamera.Priority = 1;
 

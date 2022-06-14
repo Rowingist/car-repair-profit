@@ -7,9 +7,6 @@ using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
-    //[SerializeField] private Animator _animator;
-    //[SerializeField] private JoystickTemp _joystick;
-
     [SerializeField] private FloatingJoystick _joystick;
     [SerializeField] private Stock _playerBag;
     [SerializeField] private float _transitionSpeed = 10f;
