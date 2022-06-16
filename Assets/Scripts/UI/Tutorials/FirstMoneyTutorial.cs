@@ -1,19 +1,17 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-
-public class GetFirstMoneyTutorial : MonoBehaviour
+public class FirstMoneyTutorial : MonoBehaviour
 {
     private bool _isTutorialComlete = false;
 
-    public event UnityAction PlayerExitFromMoneyArea;
-
+    public event UnityAction FirstTutorialMoneyZoneLeft;
 
     private void OnTriggerExit(Collider other)
     {
         if ((other.gameObject.TryGetComponent(out Player player)) && !_isTutorialComlete)
         {
-            PlayerExitFromMoneyArea?.Invoke();
+            FirstTutorialMoneyZoneLeft?.Invoke();
 
             _isTutorialComlete = true;
         }

@@ -7,7 +7,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Transform _viewToRotate;
-
     private void FixedUpdate()
     {
         _rigidbody.velocity = (transform.forward * _joystick.Vertical + _joystick.Horizontal * transform.right) * _moveSpeed;
