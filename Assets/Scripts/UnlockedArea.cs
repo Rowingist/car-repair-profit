@@ -18,9 +18,14 @@ public class UnlockedArea : MonoBehaviour
 
     [SerializeField] private GameObject _repairArea;
     [SerializeField] private GameObject _repairLock;
+    [SerializeField] private GateOpen _gateRepair; // + logick
+
 
     [SerializeField] private GameObject _paintArea;
     [SerializeField] private GameObject _paintLock;
+    [SerializeField] private GateOpen _gatePaintOne; // + logick
+    [SerializeField] private GateOpen _gatePaintTwo; // + logick
+
 
     [SerializeField] private CarHandle _carHandle;
 
@@ -65,11 +70,14 @@ public class UnlockedArea : MonoBehaviour
   
     private void OnOpenRepairArea()
     {
+        _gateRepair.ShutterUp();
         StartCoroutine(WaitUnlockTimer(_repairArea, _repairLock));
     }
 
     private void OnOpenPaintArea()
     {
+        _gatePaintOne.ShutterUp();
+        _gatePaintTwo.ShutterUp();
         StartCoroutine(WaitUnlockTimer(_paintArea, _paintLock));
     }
 
