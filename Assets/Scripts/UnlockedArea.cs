@@ -4,22 +4,30 @@ using DG.Tweening;
 
 public class UnlockedArea : MonoBehaviour
 {
-    [SerializeField] private GameObject _rackArea;
-    [SerializeField] private GameObject _rackLock;
-
+   
 
     [SerializeField] private GameObject _washingArea;
     [SerializeField] private GameObject _washLock;
+    [SerializeField] private GateOpen _gateWashOne;
+
     [SerializeField] private GameObject _whellgArea;
     [SerializeField] private GameObject _whellLock;
+
+    [SerializeField] private GameObject _rackArea;
+    [SerializeField] private GameObject _rackLock;
+
     [SerializeField] private GameObject _repairArea;
     [SerializeField] private GameObject _repairLock;
+
     [SerializeField] private GameObject _paintArea;
     [SerializeField] private GameObject _paintLock;
+
     [SerializeField] private CarHandle _carHandle;
+
     [SerializeField] private WashingHandle _washingHandle;
     [SerializeField] private MovingTutorial _movingTutorial;
     [SerializeField] private EngineRepairCount _engineRepairCount;
+
 
     private void OnEnable()
     {
@@ -46,6 +54,7 @@ public class UnlockedArea : MonoBehaviour
 
     private void OnOpenWhellArea()
     {
+        _gateWashOne.ShutterUp();
         StartCoroutine(WaitUnlockTimer(_whellgArea, _rackLock));
     }
 
