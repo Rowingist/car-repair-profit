@@ -44,8 +44,9 @@ public class DisableMovementPlayer : MonoBehaviour
         StartCoroutine(EnableMovementOnTimer());
     }
 
-        private IEnumerator EnableMovementOnTimer()
+    private IEnumerator EnableMovementOnTimer()
     {
+
         float timeToChangeCamera = 4f;
 
         float timeLeft = timeToChangeCamera;

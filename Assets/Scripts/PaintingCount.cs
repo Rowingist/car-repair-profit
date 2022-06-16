@@ -17,7 +17,6 @@ public class PaintingCount : MonoBehaviour
         if (other.TryGetComponent(out CarCleaner car))
         {
             _carPainting++;
-            Debug.LogError("car num = " + _carPainting);
 
             if (_carPainting >= 1 && !_isTutorialComleted)
             {

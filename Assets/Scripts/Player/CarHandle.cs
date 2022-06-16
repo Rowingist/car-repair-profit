@@ -35,7 +35,9 @@ public class CarHandle : MonoBehaviour
 
     public event UnityAction CarArrived; //shram script
     public event UnityAction CarUpOnLift; //shram script
+    public event UnityAction CarInzone; //shram script
     public event UnityAction CarGoOut; //shram script
+    public event UnityAction CarWashed;
 
     private void OnEnable()
     {
@@ -104,6 +106,7 @@ public class CarHandle : MonoBehaviour
         _carAnimator.SetTrigger(_liftUp);
         _pullingArea.Stock.Unblock();
         _isInBox = true; //shram
+        CarInzone?.Invoke();
 
         if (!_isShopTutorComlete)
         {
@@ -118,6 +121,7 @@ public class CarHandle : MonoBehaviour
 
         _moneySpawner.StartSpawn(50);
         _carAnimator.SetTrigger(_leftGarage);
+        CarWashed?.Invoke();
 
         _isInBox = false; //shram
 

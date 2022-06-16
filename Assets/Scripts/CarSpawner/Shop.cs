@@ -29,7 +29,7 @@ public class Shop : MonoBehaviour
         {
             _shopView.gameObject.SetActive(false);
             _unscaleFeedback?.PlayFeedbacks();
-            player.ExitShop();
+            player.ExitShop(); // hete open rack
 
             if (!_isShopTutorialComlete && _movingTutorial._isWhellTutorialComplete)
             {

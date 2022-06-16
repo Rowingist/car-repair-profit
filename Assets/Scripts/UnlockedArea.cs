@@ -4,6 +4,10 @@ using DG.Tweening;
 
 public class UnlockedArea : MonoBehaviour
 {
+    [SerializeField] private GameObject _rackArea;
+    [SerializeField] private GameObject _rackLock;
+
+
     [SerializeField] private GameObject _washingArea;
     [SerializeField] private GameObject _washLock;
     [SerializeField] private GameObject _whellgArea;
@@ -20,6 +24,7 @@ public class UnlockedArea : MonoBehaviour
     private void OnEnable()
     {
         _movingTutorial.WashingTutorialShowed += OnOpenWashArea;
+        _movingTutorial.RackTutorialShowed += OnOpenRacks;
         _washingHandle.ManyCarsWashed += OnOpenWhellArea;
         _carHandle.CarGoOut += OnOpenRepairArea;
         _engineRepairCount.CarExitFromEngine += OnOpenPaintArea;
@@ -28,6 +33,7 @@ public class UnlockedArea : MonoBehaviour
     private void OnDisable()
     {
         _movingTutorial.WashingTutorialShowed -= OnOpenWashArea;
+        _movingTutorial.RackTutorialShowed -= OnOpenRacks;
         _washingHandle.ManyCarsWashed -= OnOpenWhellArea;
         _carHandle.CarGoOut -= OnOpenRepairArea;
         _engineRepairCount.CarExitFromEngine -= OnOpenPaintArea;
@@ -40,7 +46,12 @@ public class UnlockedArea : MonoBehaviour
 
     private void OnOpenWhellArea()
     {
-        StartCoroutine(WaitUnlockTimer(_whellgArea, _whellLock));
+        StartCoroutine(WaitUnlockTimer(_whellgArea, _rackLock));
+    }
+
+    private void OnOpenRacks()
+    {
+        StartCoroutine(WaitUnlockTimer(_rackArea, _whellLock));
     }
   
     private void OnOpenRepairArea()

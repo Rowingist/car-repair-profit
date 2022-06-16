@@ -10,6 +10,6 @@ public class ChangeIconSize : MonoBehaviour
 
     private void PlayAnimation()
     {
-        transform.DOScale(1.5f, 0.5f).SetLoops(-1, LoopType.Yoyo);
+        transform.DOScale(0.9f, 0.5f).SetLoops(-1, LoopType.Yoyo);
     }
 }
