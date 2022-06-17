@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 
     private IWallet _wallet = new Wallet(0);
     private MoneyDropArea _moneyDropArea;
+    private DropMoneyToOpenGate _dropMoneyToOpenGate;
 
     public event Action<ItemType> Payed;
     public event Action GotCash;
@@ -26,6 +27,12 @@ public class Player : MonoBehaviour
             _moneyDropArea = moneyDropArea;
             _moneyDropArea.Sold += OnDisableAnimation;
         }
+
+        if (other.TryGetComponent(out DropMoneyToOpenGate dropMoneyToOpenGate))//
+        {
+            _dropMoneyToOpenGate = dropMoneyToOpenGate;
+            _dropMoneyToOpenGate.Sold += OnDisableAnimation;
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -33,6 +40,11 @@ public class Player : MonoBehaviour
         if (other.TryGetComponent(out MoneyDropArea moneyDropArea))
         {
             OpeningNewZone(moneyDropArea.transform);
+        }
+
+        if (other.TryGetComponent(out DropMoneyToOpenGate dropMoneyToOpenGate))//
+        {
+            OpenGates(dropMoneyToOpenGate.transform);
         }
     }
 
@@ -56,6 +68,24 @@ public class Player : MonoBehaviour
             _animationActivator.SetActive(true);
             SetMoneyDropPoint(dropPoint);
             _moneyDropArea.Push(price / 25);
+            WithdrowCash?.Invoke();
+            _data.SetCurrentSoft(_wallet.GetCashAmount());
+        }
+        else
+        {
+            _animationActivator.SetActive(false);
+        }
+    }
+    
+    private void OpenGates(Transform point)
+    {
+        int price = _dropMoneyToOpenGate.GetZonePrice();
+        bool isAbleToPay = _wallet.TryWithdraw(price / 25);
+        if (isAbleToPay)
+        {
+            _animationActivator.SetActive(true);
+            SetMoneyDropPoint(point);
+            _dropMoneyToOpenGate.Push(price / 25);
             WithdrowCash?.Invoke();
             _data.SetCurrentSoft(_wallet.GetCashAmount());
         }

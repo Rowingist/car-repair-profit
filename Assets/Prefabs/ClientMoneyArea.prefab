@@ -395,7 +395,7 @@ MonoBehaviour:
   _container: {fileID: 4103760587971003894}
   _capacity: 600
   _moneyPrefab: {fileID: 1388944382178019040, guid: 65929b617588f5448ba54539e6f79909, type: 3}
-  _startSpawn: 50
+  _startSpawn: 600
   _stock: {fileID: 987823274568355095}
   _dollarsPoofEffect: {fileID: 1938960449950319405}
 --- !u!1 &987823274621666654

@@ -247,7 +247,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687493612}
   m_LocalRotation: {x: 0.6532815, y: 0.27059808, z: -0.27059808, w: 0.6532815}
-  m_LocalPosition: {x: 0, y: 0, z: -4.21}
+  m_LocalPosition: {x: 0, y: 0, z: -11.2}
   m_LocalScale: {x: -0.009200772, y: 0.009200772, z: 0.009200772}
   m_Children:
   - {fileID: 362428620}
@@ -256,7 +256,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: -45, z: -90}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -6.07, y: 0.025}
+  m_AnchoredPosition: {x: -7.82, y: 0.025}
   m_SizeDelta: {x: 674, y: 629}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1687493615
@@ -6514,8 +6514,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 5.0292544, z: 1}
-  m_Center: {x: 0, y: 2.0146272, z: 0}
+  m_Size: {x: 2.6905203, y: 5.0292544, z: 3.1134572}
+  m_Center: {x: 0.002895236, y: 2.0146275, z: -1.0567287}
 --- !u!114 &4354611997284841794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7478,7 +7478,7 @@ GameObject:
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4354611998278447468
 Transform:
   m_ObjectHideFlags: 0

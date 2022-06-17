@@ -8,7 +8,7 @@ public class UnlockedArea : MonoBehaviour
 
     [SerializeField] private GameObject _washingArea;
     [SerializeField] private GameObject _washLock;
-    [SerializeField] private GateOpen _gateWashOne;
+  //  [SerializeField] private GateOpen _gateWashOne;
 
     [SerializeField] private GameObject _whellgArea;
     [SerializeField] private GameObject _whellLock;
@@ -18,13 +18,13 @@ public class UnlockedArea : MonoBehaviour
 
     [SerializeField] private GameObject _repairArea;
     [SerializeField] private GameObject _repairLock;
-    [SerializeField] private GateOpen _gateRepair; // + logick
+   // [SerializeField] private GateOpen _gateRepair; 
 
 
     [SerializeField] private GameObject _paintArea;
     [SerializeField] private GameObject _paintLock;
-    [SerializeField] private GateOpen _gatePaintOne; // + logick
-    [SerializeField] private GateOpen _gatePaintTwo; // + logick
+  //  [SerializeField] private GateOpen _gatePaintOne;
+  //  [SerializeField] private GateOpen _gatePaintTwo; 
 
 
     [SerializeField] private CarHandle _carHandle;
@@ -59,7 +59,7 @@ public class UnlockedArea : MonoBehaviour
 
     private void OnOpenWhellArea()
     {
-        _gateWashOne.ShutterUp();
+      //  _gateWashOne.ShutterUp();
         StartCoroutine(WaitUnlockTimer(_whellgArea, _rackLock));
     }
 
@@ -70,14 +70,14 @@ public class UnlockedArea : MonoBehaviour
   
     private void OnOpenRepairArea()
     {
-        _gateRepair.ShutterUp();
+      //  _gateRepair.ShutterUp();
         StartCoroutine(WaitUnlockTimer(_repairArea, _repairLock));
     }
 
     private void OnOpenPaintArea()
     {
-        _gatePaintOne.ShutterUp();
-        _gatePaintTwo.ShutterUp();
+       // _gatePaintOne.ShutterUp();
+       // _gatePaintTwo.ShutterUp();
         StartCoroutine(WaitUnlockTimer(_paintArea, _paintLock));
     }
 

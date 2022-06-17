@@ -5,6 +5,6 @@ public class GateOpen : MonoBehaviour
 {
     public void ShutterUp()
     {
-        transform.DOScaleZ(0.1f, 15f);
+        transform.DOScaleZ(0.1f, 3f);
     }
 }

@@ -162,17 +162,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892807716}
-  m_LocalRotation: {x: 0.6532815, y: -0.27059805, z: 0.27059805, w: 0.6532815}
-  m_LocalPosition: {x: 0, y: 0, z: -2.3}
+  m_LocalRotation: {x: 0.6806495, y: -0.19161494, z: 0.19161494, w: 0.6806495}
+  m_LocalPosition: {x: 0, y: 0, z: -9.53}
   m_LocalScale: {x: 0.00920077, y: 0.00920077, z: 0.00920077}
   m_Children:
   - {fileID: 366883036}
   m_Father: {fileID: 474495285637932761}
   m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 90, y: -45, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 31.446}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 5.48, y: 0.025}
+  m_AnchoredPosition: {x: -1.79, y: 0.02}
   m_SizeDelta: {x: 674, y: 629}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &892807720
@@ -768,8 +768,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 5.0292544, z: 1}
-  m_Center: {x: 0, y: 2.0146272, z: 0}
+  m_Size: {x: 1.34, y: 5.09, z: 1.66}
+  m_Center: {x: -0.3, y: 2.0146272, z: 0}
 --- !u!114 &474495284912631543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1348,7 +1348,7 @@ GameObject:
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &474495285637932761
 Transform:
   m_ObjectHideFlags: 0
@@ -2604,6 +2604,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 474495285637932761}
     m_Modifications:
+    - target: {fileID: 987823273975706431, guid: 9256231b42527be4096babace5c131ef, type: 3}
+      propertyPath: m_Center.x
+      value: 0.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 987823273975706431, guid: 9256231b42527be4096babace5c131ef, type: 3}
+      propertyPath: m_Center.z
+      value: -2.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 987823274568355089, guid: 9256231b42527be4096babace5c131ef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 987823274568355089, guid: 9256231b42527be4096babace5c131ef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.07
+      objectReference: {fileID: 0}
     - target: {fileID: 987823274621666654, guid: 9256231b42527be4096babace5c131ef, type: 3}
       propertyPath: m_Name
       value: ClientMoneyArea Wheels
