@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,8 +11,10 @@ public class WashingHandle : MonoBehaviour
     [SerializeField] private ParticleSystem _buttonPushParticle;
 
 
-    private int _carWashedCount;
     private bool _isWashingTutorialComplete = false;
+    private int _carWashedCount;
+    private int _carWashedToOpenNewZone = 2;
+    private bool _isButtonPressed = false;
 
     public event UnityAction ManyCarsWashed;
 
@@ -31,21 +34,37 @@ public class WashingHandle : MonoBehaviour
     {
         if (other.TryGetComponent(out Player player))
         {
-            if (_carHandle.IsInBox)
+            if (_carHandle.IsInBox && !_isButtonPressed)
             {
+
                 _washParticle.Play();
                 _buttonPushParticle.Play();
                 _carHandle.PushButtonStartWash();
+                _isButtonPressed = true;
+
+                StartCoroutine(PushByttonOnTimer());
 
                 _carWashedCount++;
 
-                if (!_isWashingTutorialComplete && _carWashedCount >= 2)
+                if (!_isWashingTutorialComplete && _carWashedCount >= _carWashedToOpenNewZone)
                 {
                     ManyCarsWashed?.Invoke();
                     _isWashingTutorialComplete = true;
                 }
             }
         }
+    }
+
+    private IEnumerator PushByttonOnTimer()
+    {
+        float timeLeft = 7f;
+
+        while (timeLeft > 0)
+        {
+            timeLeft -= Time.deltaTime;
+            yield return null;
+        }
+        _isButtonPressed = false;
     }
 
     private void OnStartParticle()
