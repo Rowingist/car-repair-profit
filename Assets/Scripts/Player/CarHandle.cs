@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.Events;  
 
 public class CarHandle : MonoBehaviour
 {
+    [SerializeField] private int _amount = 10;
+
     [SerializeField] private Animator _carAnimator;
     [SerializeField] private string _getIntoGarage = "GetIntoGarage";
     [SerializeField] private string _driveToLift = "DriveToLift";
@@ -119,7 +121,8 @@ public class CarHandle : MonoBehaviour
     {
         int needWhellCarToUnlockArea = 1;
 
-        _moneySpawner.StartSpawn(50);
+        //_moneySpawner.StartSpawn(_amount);
+        _moneySpawner.StartSpawn(Random.Range(_amount, _amount *2));
         _carAnimator.SetTrigger(_leftGarage);
         CarWashed?.Invoke();
 

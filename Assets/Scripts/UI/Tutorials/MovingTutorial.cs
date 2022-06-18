@@ -16,6 +16,8 @@ public class MovingTutorial : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _repairCamera;
     [SerializeField] private CinemachineVirtualCamera _paintCamera;
     [SerializeField] private CinemachineVirtualCamera _paintBallonCamera;
+    [SerializeField] private CinemachineVirtualCamera _newLevelCamera;
+
 
     [SerializeField] private Image _tutorialMesh;
     [SerializeField] private FirstMoneyTutorial _moneyArea;
@@ -24,6 +26,7 @@ public class MovingTutorial : MonoBehaviour
     [SerializeField] private WashingHandle _washingHandle;
     [SerializeField] private EngineRepairCount _engineRepairCount;
     [SerializeField] private PaintingCount _paintingCount;
+    [SerializeField] private OpenNewGarage _openNewGarage;
 
     private bool _isMoneyTutorComlete = false;
     private bool _isWashingTutorialComplete = false;
@@ -50,6 +53,7 @@ public class MovingTutorial : MonoBehaviour
         _carHandle.CarGoOut += SetRepairCamera;
         _engineRepairCount.CarExitFromEngine += SetPaintCamera;
         _paintingCount.CarArrivedToPainting += OnSetPaintBallonCamera;
+        _openNewGarage.LevelComplete += OnSetNewLevelCamera;
     }
 
     private void Start()
@@ -80,6 +84,7 @@ public class MovingTutorial : MonoBehaviour
         _carHandle.CarGoOut -= SetRepairCamera;
         _engineRepairCount.CarExitFromEngine -= SetPaintCamera;
         _paintingCount.CarArrivedToPainting -= OnSetPaintBallonCamera;
+        _openNewGarage.LevelComplete -= OnSetNewLevelCamera;
     }
 
     private void SetMainCamera(CinemachineVirtualCamera currentCamera)
@@ -174,6 +179,14 @@ public class MovingTutorial : MonoBehaviour
         _paintBallonCamera.Priority = 1;
 
         StartCoroutine(ShowOnTimer(_paintBallonCamera));
+    }
+
+    private void OnSetNewLevelCamera()
+    {
+        _playCamera.Priority = 0;
+        _newLevelCamera.Priority = 1;
+
+        StartCoroutine(ShowOnTimer(_newLevelCamera));
     }
 
     private IEnumerator ShowOnTimer(CinemachineVirtualCamera currentCamera)
