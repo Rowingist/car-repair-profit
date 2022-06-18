@@ -7,7 +7,6 @@ using UnityEngine.Events;
 public class MovingTutorial : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera _playCamera;
-    [SerializeField] private CinemachineVirtualCamera _moneyCamera;
     [SerializeField] private CinemachineVirtualCamera _washCamera;
     [SerializeField] private CinemachineVirtualCamera _whellCamera;
     [SerializeField] private CinemachineVirtualCamera _carsDoorCamera;
@@ -18,7 +17,6 @@ public class MovingTutorial : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _paintBallonCamera;
     [SerializeField] private CinemachineVirtualCamera _newLevelCamera;
 
-
     [SerializeField] private Image _tutorialMesh;
     [SerializeField] private FirstMoneyTutorial _moneyArea;
     [SerializeField] private CarHandle _carHandle;
@@ -28,10 +26,8 @@ public class MovingTutorial : MonoBehaviour
     [SerializeField] private PaintingCount _paintingCount;
     [SerializeField] private OpenNewGarage _openNewGarage;
 
-    private bool _isMoneyTutorComlete = false;
     private bool _isWashingTutorialComplete = false;
     public bool _isWhellTutorialComplete = false;// свойство
-
 
     public event UnityAction FirstTutorialShoewed;
     public event UnityAction WashingTutorialShowed;
@@ -63,15 +59,8 @@ public class MovingTutorial : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0) && !_isMoneyTutorComlete)
-        {
-            FirstTutorialShoewed?.Invoke();
-
+        if (Input.GetMouseButton(0))
             _tutorialMesh.gameObject.SetActive(false);
-
-            SetMoneyAreaCamera();
-
-        }
     }
 
     private void OnDisable()
@@ -91,15 +80,6 @@ public class MovingTutorial : MonoBehaviour
     {
         currentCamera.Priority = 0;
         _playCamera.Priority = 1;
-    }
-
-    private void SetMoneyAreaCamera()
-    {
-        _moneyCamera.Priority = 1;
-        _playCamera.Priority = 0;
-        _isMoneyTutorComlete = true;
-
-        StartCoroutine(ShowOnTimer(_moneyCamera));
     }
 
     private void SetWashCamera()

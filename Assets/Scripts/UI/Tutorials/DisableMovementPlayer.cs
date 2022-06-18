@@ -12,7 +12,6 @@ public class DisableMovementPlayer : MonoBehaviour
     private void OnEnable()
     {
         _firstMoneyTutorial.FirstTutorialMoneyZoneLeft += OnDIsableMovementPlayer;
-        _movingTutorial.FirstTutorialShoewed += OnDIsableMovementPlayer;
         _movingTutorial.WhellTutorialShowed += OnDIsableMovementPlayer;
         _movingTutorial.CarDoorTutorialShowed += OnDIsableMovementPlayer;
         _movingTutorial.ShopTutorialShowed += OnDIsableMovementPlayer;
@@ -25,7 +24,6 @@ public class DisableMovementPlayer : MonoBehaviour
     private void OnDisable()
     {
         _firstMoneyTutorial.FirstTutorialMoneyZoneLeft -= OnDIsableMovementPlayer;
-        _movingTutorial.FirstTutorialShoewed -= OnDIsableMovementPlayer;
         _movingTutorial.WhellTutorialShowed -= OnDIsableMovementPlayer;
         _movingTutorial.CarDoorTutorialShowed -= OnDIsableMovementPlayer;
         _movingTutorial.ShopTutorialShowed -= OnDIsableMovementPlayer;
