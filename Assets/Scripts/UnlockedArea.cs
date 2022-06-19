@@ -20,6 +20,7 @@ public class UnlockedArea : MonoBehaviour
     [SerializeField] private GameObject _rackLockPaint;
 
     [SerializeField] private GameObject _repairArea;
+
     [SerializeField] private GameObject _repairLock;
     [SerializeField] private GameObject _gateEngineArea;
     [SerializeField] private GameObject _gateEngineLock;
@@ -81,7 +82,6 @@ public class UnlockedArea : MonoBehaviour
         StartCoroutine(WaitUnlockTimer(_gateEngineArea, _gateEngineLock));
         StartCoroutine(WaitUnlockTimer(_repairArea, _repairLock));
         StartCoroutine(WaitUnlockTimer(_rackAreaEngine, _rackLockEngine));
-
     }
 
     private void OnOpenPaintArea()

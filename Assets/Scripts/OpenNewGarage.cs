@@ -14,13 +14,15 @@ public class OpenNewGarage : MonoBehaviour
     [SerializeField] private CarHandle _washCarHandle;
     [SerializeField] private CarHandle _whellCarHandle;
     [SerializeField] private CarHandle _engineCarHandle;
+    [SerializeField] private CarHandle _engineCarHandle1;
+
     [SerializeField] private CarHandle _paintCarHandle;
     [SerializeField] private GameObject _congratulationText;
 
-    private int _washCarCount = 2;
-    private int _whellCarCount = 2;
-    private int _engineCarCount = 3;
-    private int _paintCarCount = 1;
+    private int _washCarCount = 25;
+    private int _whellCarCount = 15;
+    private int _engineCarCount = 20;
+    private int _paintCarCount = 7;
 
     public event UnityAction LevelComplete;
 
@@ -34,15 +36,17 @@ public class OpenNewGarage : MonoBehaviour
         _washCarHandle.CarWashed += CalculateReadyCarsWash;
         _whellCarHandle.CarWashed += CalculateReadyCarsWhell;
         _engineCarHandle.CarWashed += CalculateReadyCarsEngine;
+        _engineCarHandle1.CarWashed += CalculateReadyCarsEngine;
         _paintCarHandle.CarWashed += CalculateReadyCarsPaint;
     }
 
     private void OnDisable()
     {
-        _washCarHandle.CarWashed += CalculateReadyCarsWash;
-        _whellCarHandle.CarWashed += CalculateReadyCarsWhell;
-        _engineCarHandle.CarWashed += CalculateReadyCarsEngine;
-        _paintCarHandle.CarWashed += CalculateReadyCarsPaint;
+        _washCarHandle.CarWashed -= CalculateReadyCarsWash;
+        _whellCarHandle.CarWashed -= CalculateReadyCarsWhell;
+        _engineCarHandle.CarWashed -= CalculateReadyCarsEngine;
+        _engineCarHandle1.CarWashed -= CalculateReadyCarsEngine;
+        _paintCarHandle.CarWashed -= CalculateReadyCarsPaint;
     }
 
     private void CalculateReadyCarsWash()
