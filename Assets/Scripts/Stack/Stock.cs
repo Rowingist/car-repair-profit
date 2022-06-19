@@ -206,12 +206,12 @@ public class Stock : MonoBehaviour
         return _itemsPlacedInStack.Count;
     }
 
-    public void FillAllCells() // shram
+    public void FillAllCells() 
     {
         _cellsSequense.FillAllCells();
     }
 
-    public void IncreaceMaxAllowedCapacity(int value) // увеличение €чеек в стоке
+    public void IncreaceMaxAllowedCapacity(int value) 
     {
         _maxAllovedCapacity += value;
     }

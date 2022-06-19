@@ -14,31 +14,31 @@ public class CarHandle : MonoBehaviour
     [SerializeField] private string _liftDown = "LiftDown";
     [SerializeField] private string _driveToExit = "DriveToExit";
     [SerializeField] private string _leftGarage = "LeftGarage";
-    [SerializeField] private string _startWashing = "StartWashing"; //shram script
+    [SerializeField] private string _startWashing = "StartWashing"; 
     [SerializeField] private CarDoor _carPlatform;
     [SerializeField] private PullingArea _pullingArea;
     [SerializeField] private GameObject[] _vihiclePrefabs;
     [SerializeField] private Transform _carSpawnPoint;
     [SerializeField] private PlayerToCarTransition _sitInCar;
-    [SerializeField] private Stock _stock; //shram script
+    [SerializeField] private Stock _stock; 
     [SerializeField] private MoneySpawner _moneySpawner;
 
     private int _activeCarIndex;
-    private bool _isInBox = false; //shram
-    private bool _isCarTutorComlete = false;//shram
-    private bool _isShopTutorComlete = false; //shram
-    private bool _isWhellChangeTutorComplete = false; //shram
-    private int _arrivedCarCount; //shram
+    private bool _isInBox = false; 
+    private bool _isCarTutorComlete = false;
+    private bool _isShopTutorComlete = false; 
+    private bool _isWhellChangeTutorComplete = false; 
+    private int _arrivedCarCount; 
     private CarCleaner _carCleaner;
 
     private List<GameObject> _cars = new List<GameObject>();
 
-    public bool IsInBox => _isInBox; //shram script
+    public bool IsInBox => _isInBox; 
 
-    public event UnityAction CarArrived; //shram script
-    public event UnityAction CarUpOnLift; //shram script
-    public event UnityAction CarInzone; //shram script
-    public event UnityAction CarGoOut; //shram script
+    public event UnityAction CarArrived; 
+    public event UnityAction CarUpOnLift; 
+    public event UnityAction CarInzone; 
+    public event UnityAction CarGoOut; 
     public event UnityAction CarWashed;
 
     private void OnEnable()
@@ -82,7 +82,7 @@ public class CarHandle : MonoBehaviour
         {
             _carAnimator.SetTrigger(_driveToExit);
             _pullingArea.Stock.Clear();
-            //   _pullingArea.Stock.IncreaceMaxAllowedCapacity(Random.Range(0, 5));
+            //   _pullingArea.Stock.IncreaceMaxAllowedCapacity(Random.Range(0, 5)); // Убрал бесконечное увеличение размера требуемых запчачтей
             _pullingArea.Stock.SetRandomCapacity();
             yield break;
         }
@@ -108,26 +108,26 @@ public class CarHandle : MonoBehaviour
     {
         _carAnimator.SetTrigger(_liftUp);
         _pullingArea.Stock.Unblock();
-        _isInBox = true; //shram
+        _isInBox = true;
         CarInzone?.Invoke();
 
         if (!_isShopTutorComlete)
         {
-            CarUpOnLift?.Invoke();//shram
+            CarUpOnLift?.Invoke();
             _isShopTutorComlete = true;
         }
     }
 
     public void OnLeftGarage()
     {
-        int needWhellCarToUnlockArea = 4;//////
+        int needWhellCarToUnlockArea = 4;
 
         //_moneySpawner.StartSpawn(_amount);
         _moneySpawner.StartSpawn(Random.Range(_amount, _amount *2));
         _carAnimator.SetTrigger(_leftGarage);
         CarWashed?.Invoke();
 
-        _isInBox = false; //shram
+        _isInBox = false; 
 
         if (!_isWhellChangeTutorComplete && _arrivedCarCount >= needWhellCarToUnlockArea)
         {
@@ -163,7 +163,7 @@ public class CarHandle : MonoBehaviour
         _sitInCar.Exit(_carPlatform.transform);
     }
 
-    public void PushButtonStartWash() //shram scripts
+    public void PushButtonStartWash() 
     {
         _stock.FillAllCells();
         StartCoroutine(WaitWashing());
@@ -178,7 +178,7 @@ public class CarHandle : MonoBehaviour
         }
     }
 
-    private IEnumerator WaitWashing() //shram scripts
+    private IEnumerator WaitWashing() 
     {
         float timeLeft = 3.5f;
         while (timeLeft > 0)

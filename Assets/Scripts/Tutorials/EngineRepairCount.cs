@@ -4,6 +4,7 @@ using UnityEngine.Events;
 public class EngineRepairCount : MonoBehaviour
 {
     private int _carRepaered;
+    private int _needCarToUnlock = 4;
 
     public event UnityAction CarExitFromEngine;
 
@@ -13,7 +14,7 @@ public class EngineRepairCount : MonoBehaviour
         {
             _carRepaered++;
 
-            if (_carRepaered == 4)
+            if (_carRepaered == _needCarToUnlock)
                 CarExitFromEngine?.Invoke();
         }
     }

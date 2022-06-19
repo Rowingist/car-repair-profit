@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CarCleaner : MonoBehaviour
@@ -11,7 +9,6 @@ public class CarCleaner : MonoBehaviour
     {
         _dryMesh.gameObject.SetActive(true);
         _cleanMesh.gameObject.SetActive(false);
-
     }
 
     public void ChangeCleanMesh()

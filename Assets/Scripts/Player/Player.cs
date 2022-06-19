@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
             _moneyDropArea.Sold += OnDisableAnimation;
         }
 
-        if (other.TryGetComponent(out DropMoneyToOpenGate dropMoneyToOpenGate))//
+        if (other.TryGetComponent(out DropMoneyToOpenGate dropMoneyToOpenGate))
         {
             _dropMoneyToOpenGate = dropMoneyToOpenGate;
             _dropMoneyToOpenGate.Sold += OnDisableAnimation;
@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
             OpeningNewZone(moneyDropArea.transform);
         }
 
-        if (other.TryGetComponent(out DropMoneyToOpenGate dropMoneyToOpenGate))//
+        if (other.TryGetComponent(out DropMoneyToOpenGate dropMoneyToOpenGate))
         {
             OpenGates(dropMoneyToOpenGate.transform);
         }

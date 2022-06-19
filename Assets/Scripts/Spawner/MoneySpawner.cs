@@ -40,7 +40,6 @@ public class MoneySpawner : ObjectPool
             SetItem(itemObject);
             _stock.PushToLastFreeCell(itemObject.GetComponent<Item>());
         }
-
     }
 
     private void SetItem(GameObject item)
