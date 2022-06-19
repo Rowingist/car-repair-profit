@@ -6,22 +6,24 @@ public class UnlockedArea : MonoBehaviour
 {
     [SerializeField] private GameObject _washingArea;
     [SerializeField] private GameObject _washLock;
-    
     [SerializeField] private GameObject _gateWhellArea;
     [SerializeField] private GameObject _gateWhellLock;
 
-    [SerializeField] private GameObject _whellgArea;
+    [SerializeField] private GameObject _whellArea;
     [SerializeField] private GameObject _whellLock;
 
-    [SerializeField] private GameObject _rackArea;
-    [SerializeField] private GameObject _rackLock;
+    [SerializeField] private GameObject _rackAreaWhell;
+    [SerializeField] private GameObject _rackLockWhell;
+    [SerializeField] private GameObject _rackAreaEngine;
+    [SerializeField] private GameObject _rackLockEngine;
+    [SerializeField] private GameObject _rackAreaPaint;
+    [SerializeField] private GameObject _rackLockPaint;
 
     [SerializeField] private GameObject _repairArea;
     [SerializeField] private GameObject _repairLock;
     [SerializeField] private GameObject _gateEngineArea;
     [SerializeField] private GameObject _gateEngineLock;
     // [SerializeField] private GateOpen _gateRepair; 
-
 
     [SerializeField] private GameObject _paintArea;
     [SerializeField] private GameObject _paintLock;
@@ -65,12 +67,12 @@ public class UnlockedArea : MonoBehaviour
         //  _gateWashOne.ShutterUp();
         StartCoroutine(WaitUnlockTimer(_gateWhellArea, _gateWhellLock));
 
-        StartCoroutine(WaitUnlockTimer(_whellgArea, _rackLock));
+        StartCoroutine(WaitUnlockTimer(_whellArea, _whellLock));
     }
 
     private void OnOpenRacks()
     {
-        StartCoroutine(WaitUnlockTimer(_rackArea, _whellLock));
+        StartCoroutine(WaitUnlockTimer(_rackAreaWhell, _rackLockWhell));
     }
   
     private void OnOpenRepairArea()
@@ -78,6 +80,8 @@ public class UnlockedArea : MonoBehaviour
         //  _gateRepair.ShutterUp();
         StartCoroutine(WaitUnlockTimer(_gateEngineArea, _gateEngineLock));
         StartCoroutine(WaitUnlockTimer(_repairArea, _repairLock));
+        StartCoroutine(WaitUnlockTimer(_rackAreaEngine, _rackLockEngine));
+
     }
 
     private void OnOpenPaintArea()
@@ -85,8 +89,8 @@ public class UnlockedArea : MonoBehaviour
         // _gatePaintOne.ShutterUp();
         // _gatePaintTwo.ShutterUp();
         StartCoroutine(WaitUnlockTimer(_gatePaintArea, _gatePaintLock));
-
         StartCoroutine(WaitUnlockTimer(_paintArea, _paintLock));
+        StartCoroutine(WaitUnlockTimer(_rackAreaPaint, _rackLockPaint));
     }
 
     private IEnumerator WaitUnlockTimer(GameObject currentArea, GameObject currentLock)

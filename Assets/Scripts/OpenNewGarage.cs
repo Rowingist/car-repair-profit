@@ -107,7 +107,7 @@ public class OpenNewGarage : MonoBehaviour
 
     private IEnumerator ShowOnTimer()
     {
-        float timeLeft = 4f;
+        float timeLeft = 6f;
 
         while (timeLeft > 0)
         {

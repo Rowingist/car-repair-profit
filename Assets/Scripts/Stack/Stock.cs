@@ -10,6 +10,9 @@ public class Stock : MonoBehaviour
     [SerializeField] private StockType _stockType;
     [SerializeField] private ItemType _itemsType;
     [SerializeField] private int _maxAllovedCapacity;
+    [SerializeField] private int _currentMaxCapacity;
+    [SerializeField] private int _currentMinCapacity;
+
 
     private CellsSequence _cellsSequense;
 
@@ -65,6 +68,7 @@ public class Stock : MonoBehaviour
             {
                 _itemsPlacedInStack.Add(item);
                 Lifespan += 1;
+
                 LocateInEmptyCell(lastEmpty, item);
                 lastEmpty.Fill();
                 TakenItem?.Invoke();
@@ -207,9 +211,14 @@ public class Stock : MonoBehaviour
         _cellsSequense.FillAllCells();
     }
 
-    public void IncreaceMaxAllowedCapacity(int value)
+    public void IncreaceMaxAllowedCapacity(int value) // увеличение €чеек в стоке
     {
         _maxAllovedCapacity += value;
+    }
+
+    public void SetRandomCapacity()
+    {
+        _maxAllovedCapacity = UnityEngine.Random.Range(_currentMinCapacity, _currentMaxCapacity);
     }
 }
 

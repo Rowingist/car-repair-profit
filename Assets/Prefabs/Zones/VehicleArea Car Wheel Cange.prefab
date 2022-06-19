@@ -163,7 +163,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892807716}
   m_LocalRotation: {x: 0.6806495, y: -0.19161494, z: 0.19161494, w: 0.6806495}
-  m_LocalPosition: {x: 0, y: 0, z: -9.53}
+  m_LocalPosition: {x: 0, y: 0, z: -4.4}
   m_LocalScale: {x: 0.00920077, y: 0.00920077, z: 0.00920077}
   m_Children:
   - {fileID: 366883036}
@@ -172,7 +172,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 31.446}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -1.79, y: 0.02}
+  m_AnchoredPosition: {x: 5.27, y: 0.32}
   m_SizeDelta: {x: 674, y: 629}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &892807720
@@ -332,6 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8ac579f0a5e7764990ff865679860c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _amount: 50
   _carAnimator: {fileID: 474495284514174058}
   _getIntoGarage: GetIntoGarage
   _driveToLift: DriveToLift
@@ -1348,7 +1349,7 @@ GameObject:
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &474495285637932761
 Transform:
   m_ObjectHideFlags: 0
@@ -1543,7 +1544,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474495285697167201}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.76, z: 0}
+  m_LocalPosition: {x: 0, y: -1.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 474495285637932761}
@@ -1584,6 +1585,8 @@ MonoBehaviour:
   _stockType: 0
   _itemsType: 0
   _maxAllovedCapacity: 4
+  _currentMaxCapacity: 5
+  _currentMinCapacity: 1
 --- !u!1 &474495285801697161
 GameObject:
   m_ObjectHideFlags: 0
