@@ -10,10 +10,9 @@ public class WashingHandle : MonoBehaviour
     [SerializeField] private ParticleSystem _areaParticle;
     [SerializeField] private ParticleSystem _buttonPushParticle;
 
-
     private bool _isWashingTutorialComplete = false;
     private int _carWashedCount;
-    private int _carWashedToOpenNewZone = 2;
+    private int _carWashedToOpenNewZone = 3;
     private bool _isButtonPressed = false;
 
     public event UnityAction ManyCarsWashed;

@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class MovingTutorial : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera _playCamera;
+    [SerializeField] private CinemachineVirtualCamera _firstStepsCamera;
     [SerializeField] private CinemachineVirtualCamera _washCamera;
     [SerializeField] private CinemachineVirtualCamera _whellCamera;
     [SerializeField] private CinemachineVirtualCamera _carsDoorCamera;
@@ -18,14 +19,16 @@ public class MovingTutorial : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _newLevelCamera;
 
     [SerializeField] private Image _tutorialMesh;
-    [SerializeField] private FirstMoneyTutorial _moneyArea;
+    [SerializeField] private OpenWahTutorial _moneyArea;
     [SerializeField] private CarHandle _carHandle;
     [SerializeField] private Shop _shop;
     [SerializeField] private WashingHandle _washingHandle;
     [SerializeField] private EngineRepairCount _engineRepairCount;
     [SerializeField] private PaintingCount _paintingCount;
     [SerializeField] private OpenNewGarage _openNewGarage;
+    [SerializeField] private GameObject _firstStepMassege;
 
+    private bool _isFirstStepsTutorialComplete = false;
     private bool _isWashingTutorialComplete = false;
     public bool _isWhellTutorialComplete = false;// свойство
 
@@ -59,8 +62,11 @@ public class MovingTutorial : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !_isFirstStepsTutorialComplete)
+        {
             _tutorialMesh.gameObject.SetActive(false);
+            SetFirstStepsCamera();
+        }
     }
 
     private void OnDisable()
@@ -80,6 +86,21 @@ public class MovingTutorial : MonoBehaviour
     {
         currentCamera.Priority = 0;
         _playCamera.Priority = 1;
+    }
+
+    private void SetFirstStepsCamera()
+    {
+        FirstTutorialShoewed?.Invoke();
+
+        _playCamera.Priority = 0;
+        _firstStepsCamera.Priority = 1;
+        _isFirstStepsTutorialComplete = true;
+
+        _firstStepMassege.gameObject.SetActive(true);
+        Destroy(_firstStepMassege.gameObject, 4f);
+
+        StartCoroutine(ShowOnTimer(_firstStepsCamera));
+
     }
 
     private void SetWashCamera()

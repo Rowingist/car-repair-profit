@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class FirstMoneyTutorial : MonoBehaviour
+public class OpenWahTutorial : MonoBehaviour
 {
     private bool _isTutorialComlete = false;
 

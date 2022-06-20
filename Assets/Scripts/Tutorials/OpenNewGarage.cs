@@ -19,7 +19,7 @@ public class OpenNewGarage : MonoBehaviour
     [SerializeField] private CarHandle _paintCarHandle;
     [SerializeField] private GameObject _congratulationText;
 
-    private int _washCarCount = 25;
+    private int _washCarCount = 18;
     private int _whellCarCount = 15;
     private int _engineCarCount = 20;
     private int _paintCarCount = 7;
