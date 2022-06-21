@@ -10,7 +10,7 @@ public class MovingTutorial : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _firstStepsCamera;
     [SerializeField] private CinemachineVirtualCamera _washCamera;
     [SerializeField] private CinemachineVirtualCamera _whellCamera;
-    [SerializeField] private CinemachineVirtualCamera _carsDoorCamera;
+ //   [SerializeField] private CinemachineVirtualCamera _carsDoorCamera;
     [SerializeField] private CinemachineVirtualCamera _shopCamera;
     [SerializeField] private CinemachineVirtualCamera _rackCamera;
     [SerializeField] private CinemachineVirtualCamera _repairCamera;
@@ -46,7 +46,7 @@ public class MovingTutorial : MonoBehaviour
     {
         _moneyArea.FirstTutorialMoneyZoneLeft += SetWashCamera;
         _washingHandle.ManyCarsWashed += SetWhellChangeAreaCamera;
-        _carHandle.CarArrived += SetCarDoorCamera;
+       // _carHandle.CarArrived += SetCarDoorCamera;
         _carHandle.CarUpOnLift += SetShopCamera;
         _shop.PlayerExitFromShop += SetRackCamera;
         _carHandle.CarGoOut += SetRepairCamera;
@@ -73,7 +73,7 @@ public class MovingTutorial : MonoBehaviour
     {
         _moneyArea.FirstTutorialMoneyZoneLeft -= SetWashCamera;
         _washingHandle.ManyCarsWashed -= SetWhellChangeAreaCamera;
-        _carHandle.CarArrived -= SetCarDoorCamera;
+       // _carHandle.CarArrived -= SetCarDoorCamera;
         _carHandle.CarUpOnLift -= SetShopCamera;
         _shop.PlayerExitFromShop -= SetRackCamera;
         _carHandle.CarGoOut -= SetRepairCamera;
@@ -124,14 +124,14 @@ public class MovingTutorial : MonoBehaviour
         StartCoroutine(ShowOnTimer(_playCamera));
     }
 
-    private void SetCarDoorCamera()
-    {
-        CarDoorTutorialShowed?.Invoke();
-        _playCamera.Priority = 0;
-        _carsDoorCamera.Priority = 1;
+    //private void SetCarDoorCamera()
+    //{
+    //    CarDoorTutorialShowed?.Invoke();
+    //    _playCamera.Priority = 0;
+    //    _carsDoorCamera.Priority = 1;
 
-        StartCoroutine(ShowOnTimer(_carsDoorCamera));
-    }
+    //    StartCoroutine(ShowOnTimer(_carsDoorCamera));
+    //}
 
     private void SetShopCamera()
     {

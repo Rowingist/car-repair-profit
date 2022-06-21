@@ -14,7 +14,6 @@ public class OpenNewGarage : MonoBehaviour
     [SerializeField] private CarHandle _washCarHandle;
     [SerializeField] private CarHandle _whellCarHandle;
     [SerializeField] private CarHandle _engineCarHandle;
-    [SerializeField] private CarHandle _engineCarHandle1;
 
     [SerializeField] private CarHandle _paintCarHandle;
     [SerializeField] private GameObject _congratulationText;
@@ -36,7 +35,6 @@ public class OpenNewGarage : MonoBehaviour
         _washCarHandle.CarWashed += CalculateReadyCarsWash;
         _whellCarHandle.CarWashed += CalculateReadyCarsWhell;
         _engineCarHandle.CarWashed += CalculateReadyCarsEngine;
-        _engineCarHandle1.CarWashed += CalculateReadyCarsEngine;
         _paintCarHandle.CarWashed += CalculateReadyCarsPaint;
     }
 
@@ -45,7 +43,6 @@ public class OpenNewGarage : MonoBehaviour
         _washCarHandle.CarWashed -= CalculateReadyCarsWash;
         _whellCarHandle.CarWashed -= CalculateReadyCarsWhell;
         _engineCarHandle.CarWashed -= CalculateReadyCarsEngine;
-        _engineCarHandle1.CarWashed -= CalculateReadyCarsEngine;
         _paintCarHandle.CarWashed -= CalculateReadyCarsPaint;
     }
 
