@@ -120,7 +120,7 @@ public class CarHandle : MonoBehaviour
 
     public void OnLeftGarage()
     {
-        int needWhellCarToUnlockArea = 4;
+        int needWhellCarToUnlockArea = 1;
 
         //_moneySpawner.StartSpawn(_amount);
         _moneySpawner.StartSpawn(Random.Range(_amount, _amount *2));
