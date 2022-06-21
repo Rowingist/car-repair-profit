@@ -9,6 +9,7 @@ public class WashingHandle : MonoBehaviour
     [SerializeField] private Stock _relatedStock;
     [SerializeField] private ParticleSystem _areaParticle;
     [SerializeField] private ParticleSystem _buttonPushParticle;
+    [SerializeField] private GameObject _textPressToWash;
 
     private bool _isWashingTutorialComplete = false;
     private int _carWashedCount;
@@ -54,6 +55,14 @@ public class WashingHandle : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out Player player))
+        {
+            _textPressToWash.gameObject.SetActive(false);
+        }
+    }
+
     private IEnumerator PushByttonOnTimer()
     {
         float timeLeft = 7f;
@@ -68,6 +77,7 @@ public class WashingHandle : MonoBehaviour
 
     private void OnStartParticle()
     {
+        _textPressToWash.gameObject.SetActive(true);
         _areaParticle.Play();
     }
 
