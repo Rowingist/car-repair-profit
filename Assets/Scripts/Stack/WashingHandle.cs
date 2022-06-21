@@ -13,7 +13,7 @@ public class WashingHandle : MonoBehaviour
 
     private bool _isWashingTutorialComplete = false;
     private int _carWashedCount;
-    private int _carWashedToOpenNewZone = 3;
+    private int _carWashedToOpenNewZone = 1;
     private bool _isButtonPressed = false;
 
     public event UnityAction ManyCarsWashed;
