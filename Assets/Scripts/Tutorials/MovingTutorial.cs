@@ -10,7 +10,6 @@ public class MovingTutorial : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _firstStepsCamera;
     [SerializeField] private CinemachineVirtualCamera _washCamera;
     [SerializeField] private CinemachineVirtualCamera _whellCamera;
- //   [SerializeField] private CinemachineVirtualCamera _carsDoorCamera;
     [SerializeField] private CinemachineVirtualCamera _shopCamera;
     [SerializeField] private CinemachineVirtualCamera _rackCamera;
     [SerializeField] private CinemachineVirtualCamera _repairCamera;
@@ -19,14 +18,13 @@ public class MovingTutorial : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _newLevelCamera;
 
     [SerializeField] private Image _tutorialMesh;
-    [SerializeField] private OpenWahTutorial _moneyArea;
+    [SerializeField] private OpenWashTutorial _moneyArea;
     [SerializeField] private CarHandle _carHandle;
     [SerializeField] private Shop _shop;
     [SerializeField] private WashingHandle _washingHandle;
     [SerializeField] private EngineRepairCount _engineRepairCount;
     [SerializeField] private PaintingCount _paintingCount;
     [SerializeField] private OpenNewGarage _openNewGarage;
-    [SerializeField] private GameObject _firstStepMassege;
 
     private bool _isFirstStepsTutorialComplete = false;
     private bool _isWashingTutorialComplete = false;
@@ -46,7 +44,6 @@ public class MovingTutorial : MonoBehaviour
     {
         _moneyArea.FirstTutorialMoneyZoneLeft += SetWashCamera;
         _washingHandle.ManyCarsWashed += SetWhellChangeAreaCamera;
-       // _carHandle.CarArrived += SetCarDoorCamera;
         _carHandle.CarUpOnLift += SetShopCamera;
         _shop.PlayerExitFromShop += SetRackCamera;
         _carHandle.CarGoOut += SetRepairCamera;
@@ -73,7 +70,6 @@ public class MovingTutorial : MonoBehaviour
     {
         _moneyArea.FirstTutorialMoneyZoneLeft -= SetWashCamera;
         _washingHandle.ManyCarsWashed -= SetWhellChangeAreaCamera;
-       // _carHandle.CarArrived -= SetCarDoorCamera;
         _carHandle.CarUpOnLift -= SetShopCamera;
         _shop.PlayerExitFromShop -= SetRackCamera;
         _carHandle.CarGoOut -= SetRepairCamera;
@@ -95,9 +91,6 @@ public class MovingTutorial : MonoBehaviour
         _playCamera.Priority = 0;
         _firstStepsCamera.Priority = 1;
         _isFirstStepsTutorialComplete = true;
-
-        _firstStepMassege.gameObject.SetActive(true);
-        Destroy(_firstStepMassege.gameObject, 4f);
 
         StartCoroutine(ShowOnTimer(_firstStepsCamera));
 
@@ -123,15 +116,6 @@ public class MovingTutorial : MonoBehaviour
         _isWhellTutorialComplete = true;
         StartCoroutine(ShowOnTimer(_playCamera));
     }
-
-    //private void SetCarDoorCamera()
-    //{
-    //    CarDoorTutorialShowed?.Invoke();
-    //    _playCamera.Priority = 0;
-    //    _carsDoorCamera.Priority = 1;
-
-    //    StartCoroutine(ShowOnTimer(_carsDoorCamera));
-    //}
 
     private void SetShopCamera()
     {

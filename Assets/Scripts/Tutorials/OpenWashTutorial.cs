@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class OpenWahTutorial : MonoBehaviour
+public class OpenWashTutorial : MonoBehaviour
 {
     private bool _isTutorialComlete = false;
 

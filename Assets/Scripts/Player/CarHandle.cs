@@ -123,7 +123,9 @@ public class CarHandle : MonoBehaviour
         int needWhellCarToUnlockArea = 1;
 
         //_moneySpawner.StartSpawn(_amount);
-        _moneySpawner.StartSpawn(Random.Range(_amount, _amount *2));
+        // _moneySpawner.StartSpawn(Random.Range(_amount, _amount *2));
+        _moneySpawner.StartSpawn((_amount));
+
         _carAnimator.SetTrigger(_leftGarage);
         CarWashed?.Invoke();
 
