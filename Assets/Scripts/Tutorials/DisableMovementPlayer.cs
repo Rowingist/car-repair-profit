@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DisableMovementPlayer : MonoBehaviour
 {
-    [SerializeField] private OpenWahTutorial _firstMoneyTutorial;
+    [SerializeField] private OpenWashTutorial _firstMoneyTutorial;
     [SerializeField] private MovingTutorial _movingTutorial;
     [SerializeField] private UnlockedArea _unlockedArea;
     [SerializeField] private GameObject _joistickHandler;

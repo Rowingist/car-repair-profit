@@ -13,9 +13,7 @@ public class MoneyDropArea : MonoBehaviour
     [SerializeField] private ParticleSystem _spawnAreaParticle;
     [SerializeField] private Stock _relatedStack;
     [SerializeField] private int _oppenedCellsAmount;
-
     [SerializeField] private ParticleSystem _openZoneParticle;
-    [SerializeField] private GameObject _congratulationMessage;
 
     private int _startPrice;
 
@@ -36,9 +34,6 @@ public class MoneyDropArea : MonoBehaviour
             _zonePrice -= value;
             if (_zonePrice <= 0)
             {
-                _congratulationMessage.gameObject.SetActive(true);
-                Destroy(_congratulationMessage.gameObject, 4f);
-
                 _zoneToOpen.SetActive(true);
                 _openZoneParticle.Play();
 
