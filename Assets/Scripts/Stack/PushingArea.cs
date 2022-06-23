@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class PushingArea : Area
 {
-    private float _spentTimeAfterPush;
+    private float _spentTimeAfterLastPush;
 
     private void Update()
     {
-        _spentTimeAfterPush += Time.deltaTime;
+        _spentTimeAfterLastPush += Time.deltaTime;
     }
 
     public void OnTriggerStay(Collider other)
@@ -18,14 +18,14 @@ public class PushingArea : Area
             if (ConnectedArea.Stock.Filled)
                 return;
 
-            if (_spentTimeAfterPush >= TransitionInterval)
+            if (_spentTimeAfterLastPush >= TransitionInterval)
             {
-                _spentTimeAfterPush = 0;
+                _spentTimeAfterLastPush = 0;
 
-                Item transmitting = Stock.Pull(Stock.ItemsType);
+                Item transmitting = Stock.Remove(Stock.ItemsType);
                 if (transmitting)
                 {
-                    ConnectedArea.Push(transmitting);
+                    ConnectedArea.Add(transmitting);
                 }
             }
         }

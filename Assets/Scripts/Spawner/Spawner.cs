@@ -33,7 +33,7 @@ public class Spawner : ObjectPool
                         return;
 
                     SetItem(itemObject);
-                    _stock.PushToLastFreeCell(item);
+                    _stock.AddToLastFreeCell(item);
                 }
             }
         }

@@ -16,7 +16,7 @@ using UnityEngine.SceneManagement;
     {
         _data.Load();
         _data.SetLevelIndex(SceneManager.GetActiveScene().buildIndex);
-        _playerTransform.position = new Vector3(47.5f, 0f, -25f);
+        _playerTransform.position = new Vector3(10f, 0f, -23f);
         _player.Replenish(_data.GetCurrentSoft());
         _resources.ActivateServiceZones(_data.GetOpennedServiceZones());
         _resources.DeactivateMoneyDropZones(_data.GetClosedMoneyDropZones());

@@ -40,4 +40,11 @@ public class ObjectPool : MonoBehaviour
 
         return result != null;
     }
+
+    protected bool TryGetActiveObjects(out List<GameObject> result)
+    {
+        var activeList = _pool.Where(p => p.activeSelf.Equals(true)).ToList();
+        result = activeList;
+        return result != null;
+    }
 }

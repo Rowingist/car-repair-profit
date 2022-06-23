@@ -142,11 +142,3 @@ public class Player : MonoBehaviour
         PlayerStayingOn = PlayerStayingOn.Floor;
     }
 }
-
-public enum PlayerStayingOn
-{
-    ShopArea,
-    PullArea,
-    PushArea,
-    Floor
-}

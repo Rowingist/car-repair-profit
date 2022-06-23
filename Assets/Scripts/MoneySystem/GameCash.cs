@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GameCash : Item
+public class GameCash : MonoBehaviour
 {
     [SerializeField] private int _value;
     

@@ -4,20 +4,17 @@ using UnityEngine;
 
 public class ItemMover : MonoBehaviour
 {
-    [SerializeField] private Transform _itemTransform;
-    [SerializeField] private float _transitionTime;
     [SerializeField] private MMFeedbacks _scaleFeedback;
 
-    private Transform _target;
+    private Transform _transform;
 
-    public void SetDestination(Transform destination)
+    private void Awake()
     {
-        _target = destination;
+        _transform = GetComponent<Transform>();
     }
 
-    public void Move()
+    public void Scale()
     {
-        StartCoroutine(UpdateInitialPosition(_transitionTime));
         if (_scaleFeedback)
         {
             _scaleFeedback.Initialization();
@@ -25,15 +22,22 @@ public class ItemMover : MonoBehaviour
         }
     }
 
-    private IEnumerator UpdateInitialPosition(float updateTime)
+    public void Transmit(float durationInSeconds, Transform targetPosition)
+    {
+        StartCoroutine(Moving(durationInSeconds, targetPosition));
+    }
+
+    private IEnumerator Moving(float moveDuration, Transform target)
     {
         float t = 0;
         while (t < 1)
         {
-            _itemTransform.transform.position = Vector3.Lerp(_itemTransform.transform.position, _target.position, t);
-            t += Time.deltaTime / updateTime;
+            _transform.position = Vector3.Lerp(_transform.position, target.position, t);
+            _transform.rotation = Quaternion.Lerp(_transform.rotation, target.rotation, t);
+            t += Time.deltaTime / moveDuration;
             yield return null;
         }
+        _transform.position = target.position;
+        _transform.parent = target;
     }
-
 }

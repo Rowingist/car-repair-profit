@@ -10,12 +10,12 @@ public class PartZonesOpener : MonoBehaviour
 
     private void OnEnable()
     {
-        _relatedStack.TakenItem += OnUnblockNextZone;
+        _relatedStack.AddedItem += OnUnblockNextZone;
     }
 
     private void OnDisable()
     {
-        _relatedStack.TakenItem += OnUnblockNextZone;
+        _relatedStack.AddedItem += OnUnblockNextZone;
     }
 
     private void OnUnblockNextZone()

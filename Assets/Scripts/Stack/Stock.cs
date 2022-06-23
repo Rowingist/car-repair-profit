@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CellsSequence))]
@@ -12,206 +12,122 @@ public class Stock : MonoBehaviour
     [SerializeField] private int _maxAllovedCapacity;
     [SerializeField] private int _currentMaxCapacity;
     [SerializeField] private int _currentMinCapacity;
+    [SerializeField] private bool _needResetAfterRemove;
+    [SerializeField] private float _addItemDuration = 0.5f;
 
+    private CellsSequence _cells;
 
-    private CellsSequence _cellsSequense;
+    private List<Item> _items = new List<Item>();
 
-    private List<Item> _itemsPlacedInStack = new List<Item>();
+    public event Action AddedItem;
+    public event Action RemovedItem;
 
-    public event Action TakenItem;
-    public event Action DroppedItem;
-
-    public bool Empty => _itemsPlacedInStack.Count == 0;
-    public bool Filled => _maxAllovedCapacity - _itemsPlacedInStack.Count == 0;
+    public bool Empty => _items.Count == 0;
+    public bool Filled => _items.Count == _cells.GetCount();
     public bool Blocked { get; private set; }
-    public StockType StockType => _stockType;
     public ItemType ItemsType => _itemsType;
     public int Lifespan { get; private set; }
 
-    private void Start()
+    private void Awake()
     {
-        _cellsSequense = GetComponent<CellsSequence>();
+        _cells = GetComponent<CellsSequence>();
     }
 
-    public void PushToLastFreeCell(Item item)
+    public void AddToLastFreeCell(Item item)
     {
-        if (Blocked)
-            return;
-
-        if (Filled)
+        if (Blocked || Filled)
             return;
 
         if (item)
         {
-            if (_stockType == StockType.Single)
+            if (_stockType == StockType.Single && ItemsType == item.ItemType)
             {
-                if (ItemsType == item.ItemType)
-                {
-                    Push(item);
-                    return;
-                }
+                Add(item);
+                return;
             }
 
             if (_stockType == StockType.Multiple)
             {
-                Push(item);
+                Add(item);
             }
         }
     }
 
-    private void Push(Item item)
+    private void Add(Item item)
     {
-        Cell lastEmpty = _cellsSequense.GetFirstEmptyCell();
-        if (lastEmpty)
-        {
-            if (item)
-            {
-                _itemsPlacedInStack.Add(item);
-                Lifespan += 1;
-
-                LocateInEmptyCell(lastEmpty, item);
-                lastEmpty.Fill();
-                TakenItem?.Invoke();
-            }
-        }
+        _items.Add(item);
+        item.ItemMover.Transmit(_addItemDuration, _cells.GetCellByNumber(_items.Count - 1).transform);
+        item.ItemMover.Scale();
+        AddedItem?.Invoke();
+        Lifespan += 1;
     }
 
-    private void LocateInEmptyCell(Cell empty, Item item)
-    {
-        MoveToDestination(item, empty.transform);
-        item.transform.rotation = empty.transform.rotation;
-        item.transform.parent = empty.transform;
-    }
-
-    public void MoveToDestination(Item item, Transform destination)
-    {
-        item.ItemMover.SetDestination(destination);
-        item.ItemMover.Move();
-    }
-
-    public Item Pull(ItemType itemType)
+    public Item Remove(ItemType itemType)
     {
         if (Empty)
             return null;
 
-        Item toRemove;
-        Unparent(out toRemove, itemType);
-        return toRemove;
-    }
-
-    public void PullFast(Transform destination)
-    {
-        StartCoroutine(Pulling(destination));
-    }
-
-    private IEnumerator Pulling(Transform destination)
-    {
-        for (int i = 0; i < _itemsPlacedInStack.Count; i++)
+        Item removingItem = null;
+        for (int i = 0; i < _items.Count; i++)
         {
-            MoveToDestination(_itemsPlacedInStack[i], destination);
-            yield return null;
-        }
-    }
-
-    public void HideInPool()
-    {
-        for (int i = 0; i < _itemsPlacedInStack.Count; i++)
-        {
-            _itemsPlacedInStack[i].transform.parent = _itemsPool.transform;
-            StartCoroutine(Scaling(_itemsPlacedInStack[i], 0.2f));
-            _cellsSequense.GetCellByNumber(i).Clear();
-        }
-        _itemsPlacedInStack.Clear();
-    }
-
-    private IEnumerator Scaling(Item item, float duration)
-    {
-        float t = 0;
-        while (t < 1)
-        {
-            item.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, t);
-            t += Time.deltaTime / duration;
-            yield return null;
-        }
-        item.transform.localScale = Vector3.one;
-        item.gameObject.SetActive(false);
-    }
-
-    private void Unparent(out Item item, ItemType itemType)
-    {
-        Item toDelete = null;
-        for (int i = _itemsPlacedInStack.Count - 1; i >= 0; --i)
-        {
-            if (_itemsPlacedInStack[i].ItemType == itemType)
+            if (_items[i].ItemType == itemType)
             {
-                toDelete = _itemsPlacedInStack[i];
+                removingItem = _items[i];
                 break;
             }
         }
 
-        if (toDelete == null)
+        if (removingItem)
         {
-            item = null;
-            return;
+            removingItem.transform.parent = null;
+            _items.Remove(removingItem);
+            ResetItemsPositions();
         }
 
-        toDelete.transform.parent = null;
-        item = toDelete;
-        _itemsPlacedInStack.Remove(toDelete);
-        _cellsSequense.ClearAllCells();
+        return removingItem;
+    }
 
-        for (int i = 0; i < _itemsPlacedInStack.Count; i++)
+    private void ResetItemsPositions()
+    {
+        if (_needResetAfterRemove)
         {
-            LocateInEmptyCell(_cellsSequense.GetCellByNumber(i), _itemsPlacedInStack[i]);
-            _cellsSequense.GetCellByNumber(i).Fill();
+            for (int i = 0; i < _items.Count; i++)
+            {
+                _items[i].ItemMover.Transmit(0.2f, _cells.GetCellByNumber(i).transform);
+            }
         }
     }
 
-    public void Block()
+    public void Block(bool blocked)
     {
-        Blocked = true;
-    }
-
-    public void Unblock()
-    {
-        Blocked = false;
+        Blocked = blocked;
     }
 
     public void Clear()
     {
-        for (int i = 0; i < _cellsSequense.GetCount(); i++)
-        {
-            _cellsSequense.GetCellByNumber(i).Clear();
-        }
-
         if (_itemsPool)
         {
-            for (int i = 0; i < _itemsPlacedInStack.Count; i++)
+            for (int i = 0; i < _items.Count; i++)
             {
-                _itemsPlacedInStack[i].transform.parent = _itemsPool.transform;
-                _itemsPlacedInStack[i].gameObject.SetActive(false);
+                _items[i].transform.parent = _itemsPool.transform;
+                _items[i].gameObject.SetActive(false);
             }
         }
 
-        _itemsPlacedInStack.Clear();
+        _items.Clear();
     }
 
     public int GetDemandedCount()
     {
-        return _maxAllovedCapacity - _itemsPlacedInStack.Count;
+        return _maxAllovedCapacity - _items.Count;
     }
 
     public int GetCount()
     {
-        return _itemsPlacedInStack.Count;
+        return _items.Count;
     }
 
-    public void FillAllCells() 
-    {
-        _cellsSequense.FillAllCells();
-    }
-
-    public void IncreaceMaxAllowedCapacity(int value) 
+    public void IncreaceMaxAllowedCapacity(int value)
     {
         _maxAllovedCapacity += value;
     }
@@ -220,11 +136,4 @@ public class Stock : MonoBehaviour
     {
         _maxAllovedCapacity = UnityEngine.Random.Range(_currentMinCapacity, _currentMaxCapacity);
     }
-}
-
-
-public enum StockType
-{
-    Single,
-    Multiple
 }

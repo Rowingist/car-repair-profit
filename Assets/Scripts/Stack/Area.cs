@@ -28,7 +28,7 @@ public class Area : MonoBehaviour
         }
     }
 
-    public void OnTriggerExit(Collider other)
+    public virtual void OnTriggerExit(Collider other)
     {
         if (other.GetComponent<Area>())
         {
@@ -37,16 +37,16 @@ public class Area : MonoBehaviour
         }
     }
 
-    public void Push(Item item)
+    public void Add(Item item)
     {
         if (item)
         {
-            _stock.PushToLastFreeCell(item);
+            _stock.AddToLastFreeCell(item);
         }
     }
 
-    public Item Pull()
+    public Item Remove()
     {
-        return _stock.Pull(ConnectedArea.Stock.ItemsType);
+        return _stock.Remove(ConnectedArea.Stock.ItemsType);
     }
 }

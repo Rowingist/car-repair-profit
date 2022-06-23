@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class PullingArea : Area
 {
-    private float _spentTimeAfterPut;
+    private float _spentTimeAfterLastPull;
 
     public event Action Completed;
 
     private void Update()
     {
-        _spentTimeAfterPut += Time.deltaTime;
+        _spentTimeAfterLastPull += Time.deltaTime;
     }
 
     public void OnTriggerStay(Collider other)
@@ -23,13 +23,13 @@ public class PullingArea : Area
                 Completed?.Invoke();
                 return;
             }
-            if (_spentTimeAfterPut >= TransitionInterval)
+            if (_spentTimeAfterLastPull >= TransitionInterval)
             {
-                _spentTimeAfterPut = 0;
-                Item transmitting = ConnectedArea.Pull();
+                _spentTimeAfterLastPull = 0;
+                Item transmitting = ConnectedArea.Remove();
                 if (transmitting)
                 {
-                    Push(transmitting);
+                    Add(transmitting);
                 }
             }
         }

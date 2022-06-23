@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;  
+using UnityEngine.Events;
 
 public class CarHandle : MonoBehaviour
 {
@@ -14,31 +14,31 @@ public class CarHandle : MonoBehaviour
     [SerializeField] private string _liftDown = "LiftDown";
     [SerializeField] private string _driveToExit = "DriveToExit";
     [SerializeField] private string _leftGarage = "LeftGarage";
-    [SerializeField] private string _startWashing = "StartWashing"; 
+    [SerializeField] private string _startWashing = "StartWashing";
     [SerializeField] private CarDoor _carPlatform;
     [SerializeField] private PullingArea _pullingArea;
     [SerializeField] private GameObject[] _vihiclePrefabs;
     [SerializeField] private Transform _carSpawnPoint;
     [SerializeField] private PlayerToCarTransition _sitInCar;
-    [SerializeField] private Stock _stock; 
-    [SerializeField] private MoneySpawner _moneySpawner;
+    [SerializeField] private Stock _stock;
+    [SerializeField] private Bank _moneySpawner;
 
     private int _activeCarIndex;
-    private bool _isInBox = false; 
+    private bool _isInBox = false;
     private bool _isCarTutorComlete = false;
-    private bool _isShopTutorComlete = false; 
-    private bool _isWhellChangeTutorComplete = false; 
-    private int _arrivedCarCount; 
+    private bool _isShopTutorComlete = false;
+    private bool _isWhellChangeTutorComplete = false;
+    private int _arrivedCarCount;
     private CarCleaner _carCleaner;
 
     private List<GameObject> _cars = new List<GameObject>();
 
-    public bool IsInBox => _isInBox; 
+    public bool IsInBox => _isInBox;
 
-    public event UnityAction CarArrived; 
-    public event UnityAction CarUpOnLift; 
-    public event UnityAction CarInzone; 
-    public event UnityAction CarGoOut; 
+    public event UnityAction CarArrived;
+    public event UnityAction CarUpOnLift;
+    public event UnityAction CarInzone;
+    public event UnityAction CarGoOut;
     public event UnityAction CarWashed;
 
     private void OnEnable()
@@ -100,14 +100,14 @@ public class CarHandle : MonoBehaviour
 
     private void OnLiftDown()
     {
-        _pullingArea.Stock.Block();
+        _pullingArea.Stock.Block(true);
         _carAnimator.SetTrigger(_liftDown);
     }
 
     public void OnLiftUp()
     {
         _carAnimator.SetTrigger(_liftUp);
-        _pullingArea.Stock.Unblock();
+        _pullingArea.Stock.Block(false);
         _isInBox = true;
         CarInzone?.Invoke();
 
@@ -123,11 +123,11 @@ public class CarHandle : MonoBehaviour
         int needWhellCarToUnlockArea = 1;
 
         //_moneySpawner.StartSpawn(_amount);
-        _moneySpawner.StartSpawn(Random.Range(_amount, _amount *2));
+        _moneySpawner.SpawnWithAnount(Random.Range(_amount, _amount * 2));
         _carAnimator.SetTrigger(_leftGarage);
         CarWashed?.Invoke();
 
-        _isInBox = false; 
+        _isInBox = false;
 
         if (!_isWhellChangeTutorComplete && _arrivedCarCount >= needWhellCarToUnlockArea)
         {
@@ -137,11 +137,11 @@ public class CarHandle : MonoBehaviour
         _arrivedCarCount++;
     }
 
-   
+
     public void OnGetIntoGarage()
     {
         ChangeCar();
-        _pullingArea.Stock.Block();
+        _pullingArea.Stock.Block(true);
         _carAnimator.SetTrigger(_getIntoGarage);
     }
 
@@ -163,9 +163,8 @@ public class CarHandle : MonoBehaviour
         _sitInCar.Exit(_carPlatform.transform);
     }
 
-    public void PushButtonStartWash() 
+    public void PushButtonStartWash()
     {
-        _stock.FillAllCells();
         StartCoroutine(WaitWashing());
     }
 
@@ -178,7 +177,7 @@ public class CarHandle : MonoBehaviour
         }
     }
 
-    private IEnumerator WaitWashing() 
+    private IEnumerator WaitWashing()
     {
         float timeLeft = 3.5f;
         while (timeLeft > 0)

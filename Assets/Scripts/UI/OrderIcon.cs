@@ -9,7 +9,7 @@ public class OrderIcon : MonoBehaviour
 
     private void OnEnable()
     {
-        _stock.TakenItem += OnUpdateText;
+        _stock.AddedItem += OnUpdateText;
     }
 
     private void Update()
@@ -19,7 +19,7 @@ public class OrderIcon : MonoBehaviour
 
     private void OnDisable()
     {
-        _stock.TakenItem -= OnUpdateText;
+        _stock.AddedItem -= OnUpdateText;
     }
 
     private void OnUpdateText()

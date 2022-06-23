@@ -235,8 +235,8 @@ GameObject:
   - component: {fileID: 987823273975706425}
   - component: {fileID: 987823273975706431}
   - component: {fileID: 987823273975706428}
-  - component: {fileID: 4674174436584824780}
   - component: {fileID: 1462648926}
+  - component: {fileID: 3032973238330456178}
   m_Layer: 0
   m_Name: TriggerColliders
   m_TagString: Untagged
@@ -285,21 +285,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scaleFeedback: {fileID: 987823273620855137}
   _unscaleFeedback: {fileID: 987823274729938870}
---- !u!114 &4674174436584824780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 987823273975706424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15880cb51268ebc4ab90217acc86313d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stock: {fileID: 987823274568355095}
-  _transitionInterval: 0
-  _smokePoofEffect: {fileID: 9028115560737719433}
 --- !u!114 &1462648926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,6 +297,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c2ee73e610afb44e9811c164aeef69a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3032973238330456178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987823273975706424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 633ca018540ae794bab512c8aa4f24e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _container: {fileID: 4103760587971003894}
+  _capacity: 600
+  _moneyPrefab: {fileID: 1388944382178019040, guid: 65929b617588f5448ba54539e6f79909, type: 3}
+  _startSpawn: 50
+  _cells: {fileID: 987823274568355092}
+  _dollarsPoofEffect: {fileID: 1938960449950319405}
 --- !u!1 &987823274568355088
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,8 +325,6 @@ GameObject:
   m_Component:
   - component: {fileID: 987823274568355089}
   - component: {fileID: 987823274568355092}
-  - component: {fileID: 987823274568355095}
-  - component: {fileID: 3791748587138898524}
   m_Layer: 0
   m_Name: Stack
   m_TagString: Untagged
@@ -357,47 +358,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f7ffd3ccdeebc249abb3c8365b59273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spacingX: 0.42
-  _spacingY: 0.14
-  _spacingZ: 0.43
-  _lenghtXHeightXWidth: {x: 4, y: 40, z: 4}
+  _spacingX: 0.65
+  _spacingY: 0.24
+  _spacingZ: 1.1
+  _lenghtXHeightXWidth: {x: 3, y: 40, z: 3}
   _cellPrefab: {fileID: -1477409522975354395, guid: abdadbea7728ecf489071f5e1b78107c, type: 3}
-  _rotationAfterBuild: {x: 0, y: 0, z: 0}
-  _itemsInStackRotation: {x: 0, y: 0, z: 0}
---- !u!114 &987823274568355095
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 987823274568355088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06d7838f09088f7468276f1d04e98aa8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _itemsPool: {fileID: 4103760587971003894}
-  _stockType: 0
-  _itemsType: 4
-  _maxAllovedCapacity: 600
---- !u!114 &3791748587138898524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 987823274568355088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 633ca018540ae794bab512c8aa4f24e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _container: {fileID: 4103760587971003894}
-  _capacity: 600
-  _moneyPrefab: {fileID: 1388944382178019040, guid: 65929b617588f5448ba54539e6f79909, type: 3}
-  _startSpawn: 600
-  _stock: {fileID: 987823274568355095}
-  _dollarsPoofEffect: {fileID: 1938960449950319405}
 --- !u!1 &987823274621666654
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,7 +781,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8872429252821268621
 Transform:
   m_ObjectHideFlags: 0
@@ -1028,10 +993,5 @@ PrefabInstance:
 --- !u!4 &9028115560752937115 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 443696, guid: ddb6452dfa75d59419567d35d8fda455, type: 3}
-  m_PrefabInstance: {fileID: 9028115560753020331}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &9028115560737719433 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 19855650, guid: ddb6452dfa75d59419567d35d8fda455, type: 3}
   m_PrefabInstance: {fileID: 9028115560753020331}
   m_PrefabAsset: {fileID: 0}
