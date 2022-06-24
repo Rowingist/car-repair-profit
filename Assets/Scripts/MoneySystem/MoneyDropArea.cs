@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using DG.Tweening;
+using System.Collections;
 
 public class MoneyDropArea : MonoBehaviour
 {
@@ -15,47 +16,54 @@ public class MoneyDropArea : MonoBehaviour
     [SerializeField] private int _oppenedCellsAmount;
     [SerializeField] private ParticleSystem _openZoneParticle;
 
-    private int _startPrice;
+    private int _currentPrice;
 
     public event Action Sold;
+
+    public Player Player {get; private set;}
 
     private void Start()
     {
         if (_isSellingZones)
             UpdateText(_zonePrice);
 
-        _startPrice = _zonePrice;
+        _currentPrice = _zonePrice;
     }
 
-    public void Push(int value)
+    public void UpdateState(int value)
     {
-        if (_isSellingZones)
+        _currentPrice -= value;
+        UpdateText(_currentPrice);
+
+        if (_currentPrice == 0)
         {
-            _zonePrice -= value;
-            if (_zonePrice <= 0)
-            {
-                _zoneToOpen.SetActive(true);
-                _openZoneParticle.Play();
-
-                _relatedStack.IncreaceMaxAllowedCapacity(_oppenedCellsAmount);
-                ChangeScaleEffect(_zoneToOpen);
-                Sold?.Invoke();
-                _bodyTurnOff.SetActive(false);
-
-            }
-            UpdateText(_zonePrice);
+            _zoneToOpen.gameObject.SetActive(true);
+            _spawnAreaParticle.Play();
+            return;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.TryGetComponent(out Player player))
+            Player = player;
+    }
+
+    public void Deactivate()
+    {
+        _bodyTurnOff.gameObject.SetActive(false);
     }
 
     public int GetZonePrice()
     {
-        return _startPrice;
+        return _currentPrice;
     }
 
     private void UpdateText(int value)
     {
         _price.text = value.ToString();
     }
+
     private void ChangeScaleEffect(GameObject currentArea)
     {
         _spawnAreaParticle.Play();

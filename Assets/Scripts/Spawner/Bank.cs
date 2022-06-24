@@ -9,73 +9,131 @@ public class Bank : ObjectPool
     [SerializeField] private CellsSequence _cells;
     [SerializeField] private ParticleSystem _dollarsPoofEffect;
 
-    private Transform _playerWallet;
-    private Coroutine _transition;
+    private Collider _collider;
+    private Transform _target;
     private Coroutine _transitionToTarget;
-    private float _elapsedTime;
-    private int _switchTrigger;
+    private Player _player;
+    private MoneyDropArea _dropArea;
+
+    private void Start()
+    {
+        Initialize(_moneyPrefab);
+        _collider = GetComponent<Collider>();
+        if (_startSpawn > 0)
+            SpawnWithAnount(_startSpawn);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out Player player))
         {
-            _playerWallet = player.WalletPoint;
-            _transitionToTarget = StartCoroutine(TransitingToTarget());
+            _player = player;
+            _target = player.WalletPoint;
+            _transitionToTarget = StartCoroutine(TransitingToPlayer(true, _target));
+        }
+
+        if (other.TryGetComponent(out MoneyDropArea moneyDropArea))
+        {
+            _dropArea = moneyDropArea;
+            _target = moneyDropArea.transform;
+            _transitionToTarget = StartCoroutine(UpdatingWaletView(moneyDropArea.GetZonePrice(), _target));
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<Player>())
+        if (other.GetComponent<Player>() || other.GetComponent<MoneyDropArea>())
         {
-            Invoke(nameof(StopCollecting), 0.2f);
+            Invoke(nameof(StopTransmitting), 0.2f);
+            _collider.enabled = true;
         }
     }
 
-    private void StopCollecting()
+    private void StopTransmitting()
     {
         if (_transitionToTarget != null)
-            StopCoroutine(_transitionToTarget);
+        {
+            StopAllCoroutines();
+        }
     }
 
-    private void Start()
+    [ContextMenu("Spawn")]
+    public void Spawn()
     {
-        Initialize(_moneyPrefab);
-        if (_startSpawn > 0)
-            SpawnWithAnount(_startSpawn);
+        SpawnWithAnount(100);
     }
 
     public void SpawnWithAnount(int value)
     {
-       StartCoroutine(SpawningOnTable(value));
+        StartCoroutine(SpawningOnTable(value));
     }
 
     private IEnumerator SpawningOnTable(int amount)
     {
         yield return null;
-        for (int i = 0; i < amount + 1; i++)
+        _collider.enabled = false;
+        for (int i = 0; i < amount; i++)
         {
-            if (TryGetObject(out GameObject itemObject))
+            if (TryGetObject(out GameObject item))
             {
-                itemObject.gameObject.SetActive(true);
-                itemObject.GetComponent<MoneyMover>().SetTargetPosition(false,
-                    _cells.GetCellByNumber(i).transform.position);
-                itemObject.GetComponent<MoneyMover>().enabled = true;                
+                item.gameObject.SetActive(true);
+                MoneyMover mover = item.GetComponent<MoneyMover>();
+                mover.SetTargetPosition(false, _cells.GetCellByNumber(i).transform);
+                mover.enabled = true;
+            }
+        }
+        _collider.enabled = true;
+    }
+
+    private IEnumerator TransitingToPlayer(bool disable, Transform target)
+    {
+        if (TryGetActiveObjects(out List<GameObject> activeItems))
+        {
+            for (int i = activeItems.Count - 1; i >= 0; --i)
+            {
+                MoneyMover mover = activeItems[i].GetComponent<MoneyMover>();
+                mover.SetTargetPosition(disable, target);
+                mover.enabled = true;
+                _player.Replenish(activeItems[i].GetComponent<GameCash>().Value);
+                yield return null;
             }
         }
     }
 
-    private IEnumerator TransitingToTarget()
+    private IEnumerator TransitingToOpeningArea(int amount, Transform target)
     {
-        if (TryGetActiveObjects(out List<GameObject> activeItems))
+        while (amount > 0)
         {
-            for (int i = activeItems.Count-1; i >= 0 ; i--)
+            if (TryGetObject(out GameObject item))
             {
-                activeItems[i].GetComponent<MoneyMover>().
-                    SetTargetPosition(true, _playerWallet.position);
-                activeItems[i].GetComponent<MoneyMover>().enabled = true;
-                yield return null;
+                item.gameObject.SetActive(true);
+                MoneyMover mover = item.GetComponent<MoneyMover>();
+                mover.SetTargetPosition(true, target, transform);
+                mover.enabled = true;
+                yield return new WaitForSeconds(0.1f);
             }
         }
+    }
+
+    private IEnumerator UpdatingWaletView(int amount, Transform target)
+    {
+        yield return new WaitForSeconds(1f);
+        Coroutine transition = StartCoroutine(TransitingToOpeningArea(amount, target));
+        for (int i = 0; i < amount; i++)
+        {
+            if (TryGetObject(out GameObject item))
+            {
+                _dropArea.Player.PayForZone(item.GetComponent<GameCash>().Value);
+                _dropArea.UpdateState(item.GetComponent<GameCash>().Value);
+                if (amount <= 20)
+                    yield return new WaitForSeconds(0.1f);
+                else if(amount <= 60)
+                    yield return new WaitForSeconds(0.01f);
+                else
+                    yield return null;
+            }
+        }
+        StopCoroutine(transition);
+        _dropArea.Deactivate();
     }
 }

@@ -4,11 +4,11 @@ public class MoneyMover : MonoBehaviour
 {
     [SerializeField] private float _speed;
 
-    private Vector3 _startPosition;
+    private Transform _start;
     private Vector3 _tragetPoint;
     private bool _disableAfterReach;
 
-    private void LateUpdate()
+    private void Update()
     {
         transform.position = Vector3.Lerp(transform.position,
             _tragetPoint, Time.deltaTime * _speed);
@@ -19,15 +19,31 @@ public class MoneyMover : MonoBehaviour
             if (_disableAfterReach)
             {
                 gameObject.SetActive(false);
-                transform.position = _startPosition;
+                transform.position = _start.position;
+                transform.parent = _start;
             }
         }
     }
 
-    public void SetTargetPosition(bool disable, Vector3 targetPoint)
+    public void SetTargetPosition(bool disable, Transform target, Transform bank = null)
     {
-        _startPosition = transform.position;
+        if (bank)
+        {
+            transform.position = bank.transform.position;
+            transform.parent = null;
+            _start = bank.transform;
+        }
+        else
+        {
+            _start = transform;
+        }
+
         _disableAfterReach = disable;
-        _tragetPoint = targetPoint;
+        _tragetPoint = target.position;
+    }
+
+    public void SetSpeed(float value)
+    {
+        _speed = value;
     }
 }

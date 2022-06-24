@@ -23,6 +23,6 @@ public class BuyEventsHandler : MonoBehaviour
     private void OnPlayerPay(int amount, ItemType itemType)
     {
         _player.SetByingItemType(itemType);
-        _player.Pay(amount);
+        _player.PayInShop(amount);
     }
 }

@@ -4,8 +4,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private Transform _walletPoint;
-    [SerializeField] private GameObject _animationActivator;
-    [SerializeField] private MoneyDropAnimation _dropAnimation;
     [SerializeField] private Data _data;
 
     private IWallet _wallet = new Wallet(0);
@@ -22,60 +20,14 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out MoneyDropArea moneyDropArea))
-        {
-            _moneyDropArea = moneyDropArea;
-            _moneyDropArea.Sold += OnDisableAnimation;
-        }
 
-        if (other.TryGetComponent(out DropMoneyToOpenGate dropMoneyToOpenGate))
-        {
-            _dropMoneyToOpenGate = dropMoneyToOpenGate;
-            _dropMoneyToOpenGate.Sold += OnDisableAnimation;
-        }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.TryGetComponent(out MoneyDropArea moneyDropArea))
-        {
-            OpeningNewZone(moneyDropArea.transform);
-        }
 
-        if (other.TryGetComponent(out DropMoneyToOpenGate dropMoneyToOpenGate))
-        {
-            OpenGates(dropMoneyToOpenGate.transform);
-        }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        OnDisableAnimation();
-    }
-
-    private void OnDisable()
-    {
-        if (_moneyDropArea)
-            _moneyDropArea.Sold -= OnDisableAnimation;
-    }
-
-    private void OpeningNewZone(Transform dropPoint)
-    {
-        int price = _moneyDropArea.GetZonePrice();
-        bool isAbleToPay = _wallet.TryWithdraw(price / 25);
-        if (isAbleToPay)
-        {
-            _animationActivator.SetActive(true);
-            SetMoneyDropPoint(dropPoint);
-            _moneyDropArea.Push(price / 25);
-            WithdrowCash?.Invoke();
-            _data.SetCurrentSoft(_wallet.GetCashAmount());
-        }
-        else
-        {
-            _animationActivator.SetActive(false);
-        }
-    }
     
     private void OpenGates(Transform point)
     {
@@ -83,26 +35,10 @@ public class Player : MonoBehaviour
         bool isAbleToPay = _wallet.TryWithdraw(price / 25);
         if (isAbleToPay)
         {
-            _animationActivator.SetActive(true);
-            SetMoneyDropPoint(point);
             _dropMoneyToOpenGate.Push(price / 25);
             WithdrowCash?.Invoke();
             _data.SetCurrentSoft(_wallet.GetCashAmount());
         }
-        else
-        {
-            _animationActivator.SetActive(false);
-        }
-    }
-
-    private void OnDisableAnimation()
-    {
-        _animationActivator.SetActive(false);
-    }
-
-    private void SetMoneyDropPoint(Transform point)
-    {
-        _dropAnimation.SetPositionPoint(point);
     }
 
     public void Replenish(int value)
@@ -110,15 +46,26 @@ public class Player : MonoBehaviour
         _wallet.Replenish(value);
         GotCash?.Invoke();
         _data.SetCurrentSoft(_wallet.GetCashAmount());
+        _data.Save();
     }
 
-    public void Pay(int cash)
+    public void PayInShop(int cash)
     {
         if (_wallet.TryWithdraw(cash))
         {
             Payed?.Invoke(BuyingItemType);
+            _data.SetCurrentSoft(_wallet.GetCashAmount());
+            _data.Save();
+        }
+    }
+
+    public void PayForZone(int cash)
+    {
+        if (_wallet.TryWithdraw(cash))
+        {
             WithdrowCash?.Invoke();
             _data.SetCurrentSoft(_wallet.GetCashAmount());
+            _data.Save();
         }
     }
 
